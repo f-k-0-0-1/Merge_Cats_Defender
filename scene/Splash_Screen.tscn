@@ -13,8 +13,6 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_p4tth")
-Visible_Speed = 1.5
-Exit_Wait_Time = 5.0
 
 [node name="LbsLogo" type="TextureRect" parent="." unique_id=1421441718]
 layout_mode = 1
@@ -23,13 +21,15 @@ anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -156.5
-offset_top = -193.5
-offset_right = 156.5
-offset_bottom = 119.5
+offset_left = -88.25
+offset_top = -130.25
+offset_right = 88.25
+offset_bottom = 46.25
 grow_horizontal = 2
 grow_vertical = 2
 texture = ExtResource("2_cxgm5")
+expand_mode = 1
+stretch_mode = 5
 
 [node name="Label" type="Label" parent="LbsLogo" unique_id=393992487]
 texture_filter = 1
@@ -40,9 +40,9 @@ anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
 offset_left = -123.41089
-offset_top = 68.875
+offset_top = 35.874992
 offset_right = 123.40988
-offset_bottom = 133.125
+offset_bottom = 100.125
 grow_horizontal = 2
 grow_vertical = 2
 scale = Vector2(1, 1.0030538)

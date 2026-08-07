@@ -1,8 +1,33 @@
 [gd_scene format=3 uid="uid://uuas6yn4r0fl"]
 
-[ext_resource type="Texture2D" uid="uid://bfnu3uj8begdl" path="res://assets/Ui/AddonScreen.png" id="1_4n6ep"]
+[ext_resource type="Texture2D" uid="uid://b0s25kajvgrj0" path="res://assets/Ui/diagonal-squares.png" id="1_l3asc"]
+[ext_resource type="Script" uid="uid://cmkclaedihkbl" path="res://scene/level_select.gd" id="1_pvstr"]
 [ext_resource type="Texture2D" uid="uid://dgwyhyu5gu11u" path="res://assets/Ui/TitleRibbon.png" id="2_8d0q2"]
+[ext_resource type="Texture2D" uid="uid://5wucpqcyuowl" path="res://assets/Ui/LevelMap.png" id="3_4v0iv"]
+[ext_resource type="Script" uid="uid://r4mkiiqm7jla" path="res://scene/level_map_scroller.gd" id="3_10maq"]
 [ext_resource type="FontFile" uid="uid://cps2emwsmltk1" path="res://fonts/Super Bouncer.ttf" id="3_v76dh"]
+[ext_resource type="Texture2D" uid="uid://b7s2eqokeok4e" path="res://assets/Ui/BtnTab_Active.png" id="4_l3asc"]
+[ext_resource type="Texture2D" uid="uid://b3yxvxx564cd0" path="res://assets/Ui/BtnTab_on.png" id="5_4nec8"]
+[ext_resource type="Texture2D" uid="uid://bhar4ulrq7787" path="res://assets/Ui/closebutton.png" id="6_4nec8"]
+[ext_resource type="Texture2D" uid="uid://dpu71y3f37fh0" path="res://assets/Ui/Icon_home.png" id="8_10maq"]
+[ext_resource type="Texture2D" uid="uid://clc2uxhey26ho" path="res://assets/Ui/Icon_Cat.png" id="10_yna7j"]
+[ext_resource type="Texture2D" uid="uid://drywyiomdsrs8" path="res://assets/Ui/Icon_Addon.png" id="11_crqhg"]
+[ext_resource type="Texture2D" uid="uid://berhuijweptbq" path="res://assets/Ui/Icon_Shop.png" id="12_s24pp"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_14mdo"]
+bg_color = Color(0.4627451, 0.5019608, 0.46666667, 1)
+border_width_left = 3
+border_color = Color(0.35686275, 0.38039216, 0.36078432, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_qbdj3"]
+bg_color = Color(0.3034555, 0.32709408, 0.30346334, 1)
+border_width_top = 3
+border_color = Color(0.20118919, 0.20118922, 0.20118904, 1)
+corner_radius_top_left = 5
+corner_radius_top_right = 5
+corner_radius_bottom_right = 5
+corner_radius_bottom_left = 5
+corner_detail = 20
 
 [node name="LevelSelect" type="Control" unique_id=851681697]
 layout_mode = 3
@@ -11,41 +36,291 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+script = ExtResource("1_pvstr")
+tab_normal = ExtResource("4_l3asc")
+tab_selected = ExtResource("5_4nec8")
 
-[node name="UI_BG" type="TextureRect" parent="." unique_id=1375312376]
+[node name="LeftTexture" type="TextureRect" parent="." unique_id=1334975862]
+layout_mode = 0
+offset_right = 395.0
+offset_bottom = 360.0
+texture = ExtResource("1_l3asc")
+expand_mode = 1
+stretch_mode = 4
+
+[node name="RightPanel" type="Panel" parent="." unique_id=1271289518]
+z_index = 1
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 124.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_14mdo")
+
+[node name="Panel" type="Panel" parent="RightPanel" unique_id=13306862]
+modulate = Color(1, 1, 1, 0.5803922)
+z_index = 1
+layout_mode = 1
+anchors_preset = -1
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_left = 120.0
+offset_top = -89.0
+offset_right = -79.0
+offset_bottom = 133.0
+grow_horizontal = 0
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_qbdj3")
+
+[node name="Content" type="Control" parent="RightPanel/Panel" unique_id=64408451]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-texture = ExtResource("1_4n6ep")
-expand_mode = 1
+mouse_filter = 1
 
-[node name="Title_Ribbon" type="TextureRect" parent="." unique_id=92367797]
+[node name="HomePage" type="Control" parent="RightPanel/Panel/Content" unique_id=377255480]
 layout_mode = 1
-anchors_preset = 5
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 1
+
+[node name="ScrollContainer" type="ScrollContainer" parent="RightPanel/Panel/Content/HomePage" unique_id=931514629]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+horizontal_scroll_mode = 3
+vertical_scroll_mode = 0
+scroll_horizontal_by_default = true
+script = ExtResource("3_10maq")
+
+[node name="MapContainer" type="Control" parent="RightPanel/Panel/Content/HomePage/ScrollContainer" unique_id=231586377]
+custom_minimum_size = Vector2(2200, 220)
+layout_mode = 2
+mouse_filter = 1
+
+[node name="MapImage" type="TextureRect" parent="RightPanel/Panel/Content/HomePage/ScrollContainer/MapContainer" unique_id=1782852922]
+custom_minimum_size = Vector2(2500, 200)
+layout_mode = 0
+offset_right = 2500.0
+offset_bottom = 220.0
+texture = ExtResource("3_4v0iv")
+expand_mode = 1
+stretch_mode = 4
+
+[node name="CatsPage" type="Control" parent="RightPanel/Panel/Content" unique_id=2022083643]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Label" type="Label" parent="RightPanel/Panel/Content/CatsPage" unique_id=1691334299]
+layout_mode = 1
+anchors_preset = 8
 anchor_left = 0.5
+anchor_top = 0.5
 anchor_right = 0.5
-offset_left = -167.0
-offset_right = 168.0
+anchor_bottom = 0.5
+offset_left = -20.0
+offset_top = -11.5
+offset_right = 20.0
+offset_bottom = 11.5
+grow_horizontal = 2
+grow_vertical = 2
+text = "Upgrade Page Comming Soon"
+
+[node name="AddonsPage" type="Control" parent="RightPanel/Panel/Content" unique_id=1183487657]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Label" type="Label" parent="RightPanel/Panel/Content/AddonsPage" unique_id=2131484158]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -20.0
+offset_top = -11.5
+offset_right = 20.0
+offset_bottom = 11.5
+grow_horizontal = 2
+grow_vertical = 2
+text = "Extras Page Comming Soon"
+
+[node name="ShopPage" type="Control" parent="RightPanel/Panel/Content" unique_id=1669835594]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Label" type="Label" parent="RightPanel/Panel/Content/ShopPage" unique_id=276919656]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -20.0
+offset_top = -11.5
+offset_right = 20.0
+offset_bottom = 11.5
+grow_horizontal = 2
+grow_vertical = 2
+text = "Shop Page Comming Soon"
+
+[node name="Title_Ribbon" type="TextureRect" parent="RightPanel" unique_id=92367797]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.381
+anchor_right = 0.381
+offset_left = -167.59601
+offset_right = 167.40399
 offset_bottom = 74.0
 grow_horizontal = 2
 texture = ExtResource("2_8d0q2")
 expand_mode = 1
 stretch_mode = 5
 
-[node name="Label" type="Label" parent="." unique_id=1420134163]
+[node name="TitleLabel" type="Label" parent="RightPanel/Title_Ribbon" unique_id=1420134163]
 layout_mode = 1
 anchors_preset = 5
 anchor_left = 0.5
 anchor_right = 0.5
-offset_left = -54.0
+offset_left = -54.5
 offset_top = 17.0
-offset_right = 54.0
+offset_right = 53.5
 offset_bottom = 40.0
 grow_horizontal = 2
 theme_override_constants/outline_size = 4
 theme_override_fonts/font = ExtResource("3_v76dh")
 theme_override_font_sizes/font_size = 20
 text = "LEVEL SELECT"
+horizontal_alignment = 1
+
+[node name="Tabs" type="Control" parent="RightPanel" unique_id=516552799]
+z_index = -1
+layout_mode = 1
+anchors_preset = 0
+offset_left = -124.0
+offset_right = -72.0
+offset_bottom = 40.0
+
+[node name="VBoxContainer" type="VBoxContainer" parent="RightPanel/Tabs" unique_id=1460703169]
+layout_mode = 0
+offset_left = 51.0
+offset_top = 88.0
+offset_right = 141.0
+offset_bottom = 312.0
+theme_override_constants/separation = -93
+
+[node name="HomeTab" type="TextureButton" parent="RightPanel/Tabs/VBoxContainer" unique_id=880172222]
+custom_maximum_size = Vector2(90, 57)
+layout_mode = 2
+texture_normal = ExtResource("4_l3asc")
+texture_pressed = ExtResource("4_l3asc")
+stretch_mode = 5
+
+[node name="HomeTabTexture" type="TextureRect" parent="RightPanel/Tabs/VBoxContainer/HomeTab" unique_id=1009144997]
+texture_filter = 2
+layout_mode = 0
+offset_left = 19.0
+offset_top = 4.0
+offset_right = 70.0
+offset_bottom = 55.0
+texture = ExtResource("8_10maq")
+expand_mode = 1
+stretch_mode = 4
+
+[node name="CatsTab" type="TextureButton" parent="RightPanel/Tabs/VBoxContainer" unique_id=417706810]
+custom_maximum_size = Vector2(90, 57)
+layout_mode = 2
+texture_normal = ExtResource("4_l3asc")
+texture_pressed = ExtResource("4_l3asc")
+stretch_mode = 5
+
+[node name="TextureRect" type="TextureRect" parent="RightPanel/Tabs/VBoxContainer/CatsTab" unique_id=237344212]
+layout_mode = 0
+offset_left = 19.0
+offset_top = 5.0
+offset_right = 70.0
+offset_bottom = 55.0
+texture = ExtResource("10_yna7j")
+expand_mode = 1
+stretch_mode = 4
+
+[node name="AddonTab" type="TextureButton" parent="RightPanel/Tabs/VBoxContainer" unique_id=1331778679]
+custom_maximum_size = Vector2(90, 57)
+layout_mode = 2
+texture_normal = ExtResource("4_l3asc")
+texture_pressed = ExtResource("4_l3asc")
+stretch_mode = 5
+
+[node name="TextureRect" type="TextureRect" parent="RightPanel/Tabs/VBoxContainer/AddonTab" unique_id=1538205013]
+layout_mode = 0
+offset_left = 19.0
+offset_top = 5.0
+offset_right = 70.0
+offset_bottom = 55.0
+texture = ExtResource("11_crqhg")
+expand_mode = 1
+stretch_mode = 4
+
+[node name="ShopTab" type="TextureButton" parent="RightPanel/Tabs/VBoxContainer" unique_id=887602442]
+custom_maximum_size = Vector2(90, 57)
+layout_mode = 2
+texture_normal = ExtResource("4_l3asc")
+texture_pressed = ExtResource("4_l3asc")
+stretch_mode = 5
+
+[node name="TextureRect" type="TextureRect" parent="RightPanel/Tabs/VBoxContainer/ShopTab" unique_id=503591076]
+layout_mode = 0
+offset_left = 20.0
+offset_top = 5.0
+offset_right = 70.0
+offset_bottom = 55.0
+texture = ExtResource("12_s24pp")
+expand_mode = 1
+stretch_mode = 4
+
+[node name="BackButton" type="TextureButton" parent="." unique_id=2112487381]
+z_index = 1
+custom_maximum_size = Vector2(45, 45)
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -55.0
+offset_top = 10.0
+offset_right = -10.0
+offset_bottom = 55.0
+grow_horizontal = 0
+texture_normal = ExtResource("6_4nec8")
+texture_pressed = ExtResource("6_4nec8")
+texture_hover = ExtResource("6_4nec8")
+stretch_mode = 4
+
+[connection signal="pressed" from="RightPanel/Tabs/VBoxContainer/HomeTab" to="." method="_on_tab_1_pressed"]
+[connection signal="pressed" from="RightPanel/Tabs/VBoxContainer/CatsTab" to="." method="_on_tab_2_pressed"]
+[connection signal="pressed" from="RightPanel/Tabs/VBoxContainer/AddonTab" to="." method="_on_tab_3_pressed"]
+[connection signal="pressed" from="RightPanel/Tabs/VBoxContainer/ShopTab" to="." method="_on_tab_4_pressed"]
+[connection signal="pressed" from="BackButton" to="." method="_on_back_button_pressed"]

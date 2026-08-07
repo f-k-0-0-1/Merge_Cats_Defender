@@ -1,0 +1,51 @@
+[gd_scene format=3 uid="uid://uuas6yn4r0fl"]
+
+[ext_resource type="Texture2D" uid="uid://bfnu3uj8begdl" path="res://assets/Ui/AddonScreen.png" id="1_4n6ep"]
+[ext_resource type="Texture2D" uid="uid://dgwyhyu5gu11u" path="res://assets/Ui/TitleRibbon.png" id="2_8d0q2"]
+[ext_resource type="FontFile" uid="uid://cps2emwsmltk1" path="res://fonts/Super Bouncer.ttf" id="3_v76dh"]
+
+[node name="LevelSelect" type="Control" unique_id=851681697]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="UI_BG" type="TextureRect" parent="." unique_id=1375312376]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("1_4n6ep")
+expand_mode = 1
+
+[node name="Title_Ribbon" type="TextureRect" parent="." unique_id=92367797]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -167.0
+offset_right = 168.0
+offset_bottom = 74.0
+grow_horizontal = 2
+texture = ExtResource("2_8d0q2")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="Label" type="Label" parent="." unique_id=1420134163]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -54.0
+offset_top = 17.0
+offset_right = 54.0
+offset_bottom = 40.0
+grow_horizontal = 2
+theme_override_constants/outline_size = 4
+theme_override_fonts/font = ExtResource("3_v76dh")
+theme_override_font_sizes/font_size = 20
+text = "LEVEL SELECT"

@@ -1,0 +1,87 @@
+[gd_scene format=3 uid="uid://bg5a0yvwrsx6r"]
+
+[ext_resource type="Script" uid="uid://dp3sjafwmia4b" path="res://scene/main_menu.gd" id="1_0iwki"]
+[ext_resource type="Texture2D" uid="uid://b6mlxy84y70u1" path="res://assets/Ui/LandingScreen.png" id="1_3er1b"]
+[ext_resource type="Texture2D" uid="uid://y4tk26gaeis0" path="res://assets/Ui/Logo.png" id="2_2fwvj"]
+[ext_resource type="FontFile" uid="uid://cps2emwsmltk1" path="res://fonts/Super Bouncer.ttf" id="2_hxu56"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_qbdj3"]
+bg_color = Color(1, 1, 1, 0)
+border_color = Color(0.08880115, 0.0888012, 0.08880108, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_lroka"]
+bg_color = Color(0.6, 0.6, 0.6, 0)
+
+[node name="MainMenu" type="Control" unique_id=1693634960]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_0iwki")
+
+[node name="Background" type="TextureRect" parent="." unique_id=577599419]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("1_3er1b")
+expand_mode = 1
+
+[node name="LOGO" type="TextureRect" parent="." unique_id=166892749]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -156.41492
+offset_top = -94.25
+offset_right = 156.41492
+offset_bottom = 94.25
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("2_2fwvj")
+expand_mode = 1
+stretch_mode = 4
+
+[node name="Label" type="Label" parent="." unique_id=1567036846]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -50.0
+offset_top = -72.0
+offset_right = 50.0
+offset_bottom = -49.0
+grow_horizontal = 2
+grow_vertical = 0
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 5
+theme_override_fonts/font = ExtResource("2_hxu56")
+theme_override_font_sizes/font_size = 20
+theme_override_styles/normal = SubResource("StyleBoxFlat_qbdj3")
+theme_override_styles/focus = SubResource("StyleBoxFlat_lroka")
+text = "Tap To Play"
+
+[node name="TapArea" type="TextureButton" parent="." unique_id=511264814]
+modulate = Color(1, 1, 1, 0)
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -86.0
+offset_top = -84.0
+offset_right = 84.0
+offset_bottom = -38.0
+grow_horizontal = 2
+grow_vertical = 0
+
+[connection signal="pressed" from="TapArea" to="." method="_on_tap_area_pressed"]

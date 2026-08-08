@@ -4,7 +4,7 @@ const SPLASH_SCENE := "res://scene/Splash_Screen.tscn"
 const LOADING_SCENE := "res://scene/loading_screen.tscn"
 const MENU_SCENE := "res://scene/main_menu.tscn"
 const LEVEL_SELECT := "res://scene/Level_Select.tscn"
-
+const GAMEPLAY := "res://scene/gameplay.tscn"
 
 var _target_scene : String = ""
 var _is_loading := false
@@ -17,6 +17,9 @@ func go_to_menu() -> void:
 
 func go_to_level_select() -> void:
 	change_scene(LEVEL_SELECT)
+
+func go_to_gameplay() -> void:
+	change_scene(GAMEPLAY)
 
 func load_level(scene_path : String) -> void:
 	if _is_loading:

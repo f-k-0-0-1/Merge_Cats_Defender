@@ -102,6 +102,7 @@ func _on_back_button_pressed() -> void:
 
 func _on_level_button_1_pressed() -> void:
 	select_level(1)
+	SceneManager.go_to_gameplay()
 
 func _on_level_button_2_pressed() -> void:
 	select_level(2)

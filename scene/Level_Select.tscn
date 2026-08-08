@@ -1,10 +1,10 @@
 [gd_scene format=3 uid="uid://uuas6yn4r0fl"]
 
 [ext_resource type="Texture2D" uid="uid://b0s25kajvgrj0" path="res://assets/Ui/diagonal-squares.png" id="1_l3asc"]
-[ext_resource type="Script" uid="uid://cmkclaedihkbl" path="res://scene/level_select.gd" id="1_pvstr"]
+[ext_resource type="Script" uid="uid://cmkclaedihkbl" path="res://scripts/level_select.gd" id="1_pvstr"]
 [ext_resource type="Texture2D" uid="uid://dgwyhyu5gu11u" path="res://assets/Ui/TitleRibbon.png" id="2_8d0q2"]
 [ext_resource type="Texture2D" uid="uid://5wucpqcyuowl" path="res://assets/Ui/LevelMap.png" id="3_4v0iv"]
-[ext_resource type="Script" uid="uid://r4mkiiqm7jla" path="res://scene/level_map_scroller.gd" id="3_10maq"]
+[ext_resource type="Script" uid="uid://r4mkiiqm7jla" path="res://scripts/level_map_scroller.gd" id="3_10maq"]
 [ext_resource type="FontFile" uid="uid://cps2emwsmltk1" path="res://fonts/Super Bouncer.ttf" id="3_v76dh"]
 [ext_resource type="Texture2D" uid="uid://b7s2eqokeok4e" path="res://assets/Ui/BtnTab_Active.png" id="4_l3asc"]
 [ext_resource type="Texture2D" uid="uid://b4erfhtpuqsfg" path="res://assets/Ui/GreenLevel.png" id="5_3k00b"]

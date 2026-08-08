@@ -7,9 +7,12 @@
 [ext_resource type="Script" uid="uid://r4mkiiqm7jla" path="res://scene/level_map_scroller.gd" id="3_10maq"]
 [ext_resource type="FontFile" uid="uid://cps2emwsmltk1" path="res://fonts/Super Bouncer.ttf" id="3_v76dh"]
 [ext_resource type="Texture2D" uid="uid://b7s2eqokeok4e" path="res://assets/Ui/BtnTab_Active.png" id="4_l3asc"]
+[ext_resource type="Texture2D" uid="uid://b4erfhtpuqsfg" path="res://assets/Ui/GreenLevel.png" id="5_3k00b"]
 [ext_resource type="Texture2D" uid="uid://b3yxvxx564cd0" path="res://assets/Ui/BtnTab_on.png" id="5_4nec8"]
 [ext_resource type="Texture2D" uid="uid://bhar4ulrq7787" path="res://assets/Ui/closebutton.png" id="6_4nec8"]
+[ext_resource type="Texture2D" uid="uid://crivoap8lnjor" path="res://assets/Ui/OrangeLvl.png" id="7_crqhg"]
 [ext_resource type="Texture2D" uid="uid://dpu71y3f37fh0" path="res://assets/Ui/Icon_home.png" id="8_10maq"]
+[ext_resource type="Texture2D" uid="uid://tsp8f4tkvl7f" path="res://assets/Ui/LockedLevel.png" id="8_s24pp"]
 [ext_resource type="Texture2D" uid="uid://clc2uxhey26ho" path="res://assets/Ui/Icon_Cat.png" id="10_yna7j"]
 [ext_resource type="Texture2D" uid="uid://drywyiomdsrs8" path="res://assets/Ui/Icon_Addon.png" id="11_crqhg"]
 [ext_resource type="Texture2D" uid="uid://berhuijweptbq" path="res://assets/Ui/Icon_Shop.png" id="12_s24pp"]
@@ -39,6 +42,8 @@ grow_vertical = 2
 script = ExtResource("1_pvstr")
 tab_normal = ExtResource("4_l3asc")
 tab_selected = ExtResource("5_4nec8")
+Level_Icon_normal = ExtResource("7_crqhg")
+Level_Icon_Current = ExtResource("5_3k00b")
 
 [node name="LeftTexture" type="TextureRect" parent="." unique_id=1334975862]
 layout_mode = 0
@@ -60,7 +65,6 @@ grow_vertical = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_14mdo")
 
 [node name="Panel" type="Panel" parent="RightPanel" unique_id=13306862]
-modulate = Color(1, 1, 1, 0.5803922)
 z_index = 1
 layout_mode = 1
 anchors_preset = -1
@@ -119,7 +123,188 @@ texture = ExtResource("3_4v0iv")
 expand_mode = 1
 stretch_mode = 4
 
+[node name="LevelButton1" type="TextureButton" parent="RightPanel/Panel/Content/HomePage/ScrollContainer/MapContainer" unique_id=14380049]
+custom_maximum_size = Vector2(45, 45)
+layout_mode = 0
+offset_left = 31.0
+offset_top = 61.0
+offset_right = 76.0
+offset_bottom = 106.0
+texture_normal = ExtResource("7_crqhg")
+texture_disabled = ExtResource("8_s24pp")
+stretch_mode = 5
+
+[node name="Label" type="Label" parent="RightPanel/Panel/Content/HomePage/ScrollContainer/MapContainer/LevelButton1" unique_id=1483901756]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -20.5
+offset_top = -10.5
+offset_right = 19.5
+offset_bottom = 12.5
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/outline_size = 3
+theme_override_fonts/font = ExtResource("3_v76dh")
+text = "1"
+horizontal_alignment = 1
+
+[node name="LevelButton2" type="TextureButton" parent="RightPanel/Panel/Content/HomePage/ScrollContainer/MapContainer" unique_id=1933678546]
+custom_maximum_size = Vector2(45, 45)
+layout_mode = 0
+offset_left = 40.0
+offset_top = 139.0
+offset_right = 85.0
+offset_bottom = 184.0
+texture_normal = ExtResource("7_crqhg")
+texture_disabled = ExtResource("8_s24pp")
+stretch_mode = 5
+
+[node name="Label" type="Label" parent="RightPanel/Panel/Content/HomePage/ScrollContainer/MapContainer/LevelButton2" unique_id=677747544]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -19.5
+offset_top = -10.5
+offset_right = 20.5
+offset_bottom = 12.5
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/outline_size = 3
+theme_override_fonts/font = ExtResource("3_v76dh")
+text = "2"
+horizontal_alignment = 1
+
+[node name="LevelButton3" type="TextureButton" parent="RightPanel/Panel/Content/HomePage/ScrollContainer/MapContainer" unique_id=730749700]
+custom_maximum_size = Vector2(45, 45)
+layout_mode = 0
+offset_left = 109.0
+offset_top = 145.0
+offset_right = 154.0
+offset_bottom = 190.0
+texture_normal = ExtResource("7_crqhg")
+texture_disabled = ExtResource("8_s24pp")
+stretch_mode = 5
+
+[node name="Label" type="Label" parent="RightPanel/Panel/Content/HomePage/ScrollContainer/MapContainer/LevelButton3" unique_id=796056549]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -19.5
+offset_top = -10.5
+offset_right = 20.5
+offset_bottom = 12.5
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/outline_size = 3
+theme_override_fonts/font = ExtResource("3_v76dh")
+text = "3"
+horizontal_alignment = 1
+
+[node name="LevelButton4" type="TextureButton" parent="RightPanel/Panel/Content/HomePage/ScrollContainer/MapContainer" unique_id=166646028]
+custom_maximum_size = Vector2(45, 45)
+layout_mode = 0
+offset_left = 140.0
+offset_top = 99.0
+offset_right = 185.0
+offset_bottom = 144.0
+disabled = true
+texture_normal = ExtResource("7_crqhg")
+texture_disabled = ExtResource("8_s24pp")
+stretch_mode = 5
+
+[node name="Label" type="Label" parent="RightPanel/Panel/Content/HomePage/ScrollContainer/MapContainer/LevelButton4" unique_id=1361180177]
+visible = false
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -19.5
+offset_top = -10.5
+offset_right = 20.5
+offset_bottom = 12.5
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/outline_size = 3
+theme_override_fonts/font = ExtResource("3_v76dh")
+text = "4"
+horizontal_alignment = 1
+
+[node name="LevelButton5" type="TextureButton" parent="RightPanel/Panel/Content/HomePage/ScrollContainer/MapContainer" unique_id=1141809886]
+custom_maximum_size = Vector2(45, 45)
+layout_mode = 0
+offset_left = 146.0
+offset_top = 45.0
+offset_right = 191.0
+offset_bottom = 90.0
+disabled = true
+texture_normal = ExtResource("7_crqhg")
+texture_disabled = ExtResource("8_s24pp")
+stretch_mode = 5
+
+[node name="Label" type="Label" parent="RightPanel/Panel/Content/HomePage/ScrollContainer/MapContainer/LevelButton5" unique_id=534406108]
+visible = false
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -19.5
+offset_top = -10.5
+offset_right = 20.5
+offset_bottom = 12.5
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/outline_size = 3
+theme_override_fonts/font = ExtResource("3_v76dh")
+text = "5"
+horizontal_alignment = 1
+
+[node name="LevelButton6" type="TextureButton" parent="RightPanel/Panel/Content/HomePage/ScrollContainer/MapContainer" unique_id=1989130030]
+custom_maximum_size = Vector2(45, 45)
+layout_mode = 0
+offset_left = 219.0
+offset_top = 38.0
+offset_right = 264.0
+offset_bottom = 83.0
+disabled = true
+texture_normal = ExtResource("7_crqhg")
+texture_disabled = ExtResource("8_s24pp")
+stretch_mode = 5
+
+[node name="Label" type="Label" parent="RightPanel/Panel/Content/HomePage/ScrollContainer/MapContainer/LevelButton6" unique_id=1132465947]
+visible = false
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -19.5
+offset_top = -10.5
+offset_right = 20.5
+offset_bottom = 12.5
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/outline_size = 3
+theme_override_fonts/font = ExtResource("3_v76dh")
+text = "6"
+horizontal_alignment = 1
+
 [node name="CatsPage" type="Control" parent="RightPanel/Panel/Content" unique_id=2022083643]
+visible = false
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -143,6 +328,7 @@ grow_vertical = 2
 text = "Upgrade Page Comming Soon"
 
 [node name="AddonsPage" type="Control" parent="RightPanel/Panel/Content" unique_id=1183487657]
+visible = false
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -166,6 +352,7 @@ grow_vertical = 2
 text = "Extras Page Comming Soon"
 
 [node name="ShopPage" type="Control" parent="RightPanel/Panel/Content" unique_id=1669835594]
+visible = false
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -319,6 +506,12 @@ texture_pressed = ExtResource("6_4nec8")
 texture_hover = ExtResource("6_4nec8")
 stretch_mode = 4
 
+[connection signal="pressed" from="RightPanel/Panel/Content/HomePage/ScrollContainer/MapContainer/LevelButton1" to="." method="_on_level_button_1_pressed"]
+[connection signal="pressed" from="RightPanel/Panel/Content/HomePage/ScrollContainer/MapContainer/LevelButton2" to="." method="_on_level_button_2_pressed"]
+[connection signal="pressed" from="RightPanel/Panel/Content/HomePage/ScrollContainer/MapContainer/LevelButton3" to="." method="_on_level_button_3_pressed"]
+[connection signal="pressed" from="RightPanel/Panel/Content/HomePage/ScrollContainer/MapContainer/LevelButton4" to="." method="_on_level_button_4_pressed"]
+[connection signal="pressed" from="RightPanel/Panel/Content/HomePage/ScrollContainer/MapContainer/LevelButton5" to="." method="_on_level_button_5_pressed"]
+[connection signal="pressed" from="RightPanel/Panel/Content/HomePage/ScrollContainer/MapContainer/LevelButton6" to="." method="_on_level_button_6_pressed"]
 [connection signal="pressed" from="RightPanel/Tabs/VBoxContainer/HomeTab" to="." method="_on_tab_1_pressed"]
 [connection signal="pressed" from="RightPanel/Tabs/VBoxContainer/CatsTab" to="." method="_on_tab_2_pressed"]
 [connection signal="pressed" from="RightPanel/Tabs/VBoxContainer/AddonTab" to="." method="_on_tab_3_pressed"]

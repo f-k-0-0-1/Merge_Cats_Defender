@@ -1,0 +1,17 @@
+[gd_scene format=3 uid="uid://fm2ou2bj2hla"]
+
+[ext_resource type="Texture2D" uid="uid://bnv1wk33acqif" path="res://assets/Bullets/Artboard 1.png" id="1_c8fcr"]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_14mdo"]
+radius = 5.0
+height = 34.0
+
+[node name="Projectile" type="Area2D" unique_id=1806861683]
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=610066399]
+texture = ExtResource("1_c8fcr")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=669074859]
+position = Vector2(3, 0)
+rotation = 1.5707964
+shape = SubResource("CapsuleShape2D_14mdo")

@@ -1,11 +1,21 @@
 [gd_scene format=3 uid="uid://de3lxsdgnobxs"]
 
 [ext_resource type="Script" uid="uid://udwlnrhrmhs0" path="res://scripts/cat.gd" id="1_se5fe"]
-[ext_resource type="Texture2D" uid="uid://bqjuofft4vbk3" path="res://assets/cats/cat_01.png" id="2_t8pth"]
+[ext_resource type="SpriteFrames" uid="uid://b6kr67xa30ckb" path="res://resources/cat_animations/cat_05_frames.tres" id="2_se5fe"]
 
 [node name="Cat" type="Node2D" unique_id=1478815103]
 script = ExtResource("1_se5fe")
 cat_scale = Vector2(0.7, 0.7)
 
-[node name="Sprite" type="Sprite2D" parent="." unique_id=1251710225]
-texture = ExtResource("2_t8pth")
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=1206248827]
+sprite_frames = ExtResource("2_se5fe")
+animation = &"idle"
+
+[node name="AttackPoint" type="Marker2D" parent="." unique_id=797546885]
+position = Vector2(14, 18)
+
+[node name="TargetDetector" type="Area2D" parent="." unique_id=567711013]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="TargetDetector" unique_id=854611238]
+
+[node name="ShootTimer" type="Timer" parent="." unique_id=332819989]

@@ -1,0 +1,8 @@
+[gd_resource type="Resource" script_class="CatData" format=3 uid="uid://d1ne2jqbn54td"]
+
+[ext_resource type="Script" uid="uid://cyprrbx27s1fs" path="res://scripts/cat_data.gd" id="1_ysnp1"]
+
+[resource]
+script = ExtResource("1_ysnp1")
+level = 15
+cat_name = "Cat15"

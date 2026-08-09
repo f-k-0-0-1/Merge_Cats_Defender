@@ -1,0 +1,12 @@
+[gd_resource type="Resource" script_class="CatData" format=3 uid="uid://cjktbi6dgpb7h"]
+
+[ext_resource type="Script" uid="uid://cyprrbx27s1fs" path="res://scripts/cat_data.gd" id="1_dup56"]
+[ext_resource type="PackedScene" uid="uid://fm2ou2bj2hla" path="res://scenes/projectile.tscn" id="1_ktyf6"]
+[ext_resource type="SpriteFrames" uid="uid://3tgo8hcvk0wv" path="res://resources/cat_animations/cat_04_frames.tres" id="3_kvfat"]
+
+[resource]
+script = ExtResource("1_dup56")
+level = 4
+cat_name = "Cat4"
+projectile_scene = ExtResource("1_ktyf6")
+sprite_frames = ExtResource("3_kvfat")

@@ -1,0 +1,212 @@
+[gd_scene format=3 uid="uid://c20vmv2evpe4w"]
+
+[ext_resource type="Script" uid="uid://c34tq47slykwt" path="res://scripts/gameplay.gd" id="1_din8e"]
+[ext_resource type="Texture2D" uid="uid://cffxa21wm03x7" path="res://assets/Area/Area1.png" id="2_4bh5q"]
+[ext_resource type="Script" uid="uid://10eu2oqspehk" path="res://scripts/Slot.gd" id="3_e124b"]
+[ext_resource type="Texture2D" uid="uid://dxvnl510wys2j" path="res://assets/Ui/BtnGreenAdd.png" id="4_4bh5q"]
+[ext_resource type="Texture2D" uid="uid://cdvpvlcjs0tq4" path="res://assets/Ui/BtnGreenAdd Pressed.png" id="5_101mb"]
+[ext_resource type="Texture2D" uid="uid://bqjuofft4vbk3" path="res://assets/cats/cat_01.png" id="5_e124b"]
+[ext_resource type="FontFile" uid="uid://cps2emwsmltk1" path="res://fonts/Super Bouncer.ttf" id="6_101mb"]
+[ext_resource type="Texture2D" uid="uid://bhar4ulrq7787" path="res://assets/Ui/closebutton.png" id="6_ctvyo"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_u72on"]
+size = Vector2(24, 154)
+
+[node name="Gameplay" type="Node2D" unique_id=2882415]
+script = ExtResource("1_din8e")
+
+[node name="World" type="Node2D" parent="." unique_id=1138634891]
+
+[node name="Background" type="Sprite2D" parent="World" unique_id=1038040600]
+position = Vector2(361.48087, 179.62498)
+scale = Vector2(0.67561203, 0.67561203)
+texture = ExtResource("2_4bh5q")
+
+[node name="Camera2D" type="Camera2D" parent="World" unique_id=2056764301]
+position = Vector2(361, 179)
+zoom = Vector2(1.1, 1.1)
+
+[node name="Wall" type="Area2D" parent="World" unique_id=931144560]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="World/Wall" unique_id=849825678]
+position = Vector2(231, 163)
+shape = SubResource("RectangleShape2D_u72on")
+
+[node name="MergerUI" type="CanvasLayer" parent="." unique_id=78139011]
+follow_viewport_enabled = true
+
+[node name="GridContainer" type="GridContainer" parent="MergerUI" unique_id=1387681956 groups=["cat_grid"]]
+anchors_preset = -1
+anchor_right = 0.24200001
+anchor_bottom = 1.0
+offset_left = 75.0
+offset_top = 80.0
+offset_right = -19.240005
+offset_bottom = -91.0
+grow_vertical = 2
+theme_override_constants/h_separation = 14
+theme_override_constants/v_separation = 6
+columns = 2
+
+[node name="Slot1" type="TextureRect" parent="MergerUI/GridContainer" unique_id=610088470 groups=["cat_slots"]]
+custom_minimum_size = Vector2(33, 33)
+custom_maximum_size = Vector2(33, 33)
+layout_mode = 2
+expand_mode = 1
+stretch_mode = 5
+script = ExtResource("3_e124b")
+
+[node name="Slot2" type="TextureRect" parent="MergerUI/GridContainer" unique_id=431397335 groups=["cat_slots"]]
+custom_minimum_size = Vector2(33, 33)
+custom_maximum_size = Vector2(33, 33)
+layout_mode = 2
+expand_mode = 1
+stretch_mode = 5
+script = ExtResource("3_e124b")
+slot_index = 1
+
+[node name="Slot3" type="TextureRect" parent="MergerUI/GridContainer" unique_id=2107334610 groups=["cat_slots"]]
+custom_minimum_size = Vector2(33, 33)
+custom_maximum_size = Vector2(33, 33)
+layout_mode = 2
+expand_mode = 1
+stretch_mode = 5
+script = ExtResource("3_e124b")
+slot_index = 2
+
+[node name="Slot4" type="TextureRect" parent="MergerUI/GridContainer" unique_id=999695546 groups=["cat_slots"]]
+custom_minimum_size = Vector2(33, 33)
+custom_maximum_size = Vector2(33, 33)
+layout_mode = 2
+expand_mode = 1
+stretch_mode = 5
+script = ExtResource("3_e124b")
+slot_index = 3
+
+[node name="Slot5" type="TextureRect" parent="MergerUI/GridContainer" unique_id=383795925 groups=["cat_slots"]]
+custom_minimum_size = Vector2(33, 33)
+custom_maximum_size = Vector2(33, 33)
+layout_mode = 2
+expand_mode = 1
+stretch_mode = 5
+script = ExtResource("3_e124b")
+slot_index = 4
+
+[node name="Slot6" type="TextureRect" parent="MergerUI/GridContainer" unique_id=2098108181 groups=["cat_slots"]]
+custom_minimum_size = Vector2(33, 33)
+custom_maximum_size = Vector2(33, 33)
+layout_mode = 2
+expand_mode = 1
+stretch_mode = 5
+script = ExtResource("3_e124b")
+slot_index = 5
+
+[node name="Slot7" type="TextureRect" parent="MergerUI/GridContainer" unique_id=29008102 groups=["cat_slots"]]
+custom_minimum_size = Vector2(33, 33)
+custom_maximum_size = Vector2(33, 33)
+layout_mode = 2
+expand_mode = 1
+stretch_mode = 5
+script = ExtResource("3_e124b")
+slot_index = 6
+
+[node name="Slot8" type="TextureRect" parent="MergerUI/GridContainer" unique_id=2121188259 groups=["cat_slots"]]
+custom_minimum_size = Vector2(33, 33)
+custom_maximum_size = Vector2(33, 33)
+layout_mode = 2
+expand_mode = 1
+stretch_mode = 5
+script = ExtResource("3_e124b")
+slot_index = 7
+
+[node name="Slot9" type="TextureRect" parent="MergerUI/GridContainer" unique_id=1264177881]
+custom_minimum_size = Vector2(33, 33)
+custom_maximum_size = Vector2(33, 33)
+layout_mode = 2
+expand_mode = 1
+stretch_mode = 5
+
+[node name="Slot10" type="TextureRect" parent="MergerUI/GridContainer" unique_id=1417196256 groups=["cat_slots"]]
+custom_minimum_size = Vector2(33, 33)
+custom_maximum_size = Vector2(33, 33)
+layout_mode = 2
+expand_mode = 1
+stretch_mode = 5
+script = ExtResource("3_e124b")
+slot_index = 8
+
+[node name="BuyButton" type="TextureButton" parent="." unique_id=569233086]
+custom_maximum_size = Vector2(80, 40)
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_left = 60.0
+offset_top = 288.0
+offset_right = 140.0
+offset_bottom = 328.0
+grow_vertical = 0
+texture_normal = ExtResource("4_4bh5q")
+texture_pressed = ExtResource("5_101mb")
+stretch_mode = 4
+
+[node name="TextureRect" type="TextureRect" parent="BuyButton" unique_id=1554760811]
+custom_minimum_size = Vector2(30, 30)
+custom_maximum_size = Vector2(35, 35)
+layout_mode = 1
+anchors_preset = 4
+anchor_top = 0.5
+anchor_bottom = 0.5
+offset_top = -17.5
+offset_right = 35.0
+offset_bottom = 14.0
+grow_vertical = 2
+texture = ExtResource("5_e124b")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="Label" type="Label" parent="BuyButton" unique_id=1806558335]
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -50.0
+offset_top = 6.0
+offset_right = -10.0
+offset_bottom = 18.0
+grow_horizontal = 0
+theme_override_colors/font_color = Color(1, 1, 0, 1)
+theme_override_constants/outline_size = 2
+theme_override_fonts/font = ExtResource("6_101mb")
+theme_override_font_sizes/font_size = 10
+text = "Level 1"
+
+[node name="Label2" type="Label" parent="BuyButton" unique_id=2021736032]
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -42.0
+offset_top = 19.0
+offset_right = -10.0
+offset_bottom = 31.0
+grow_horizontal = 0
+theme_override_constants/outline_size = 2
+theme_override_fonts/font = ExtResource("6_101mb")
+theme_override_font_sizes/font_size = 10
+text = "Free"
+
+[node name="BackButton" type="TextureButton" parent="." unique_id=1919535766]
+custom_maximum_size = Vector2(40, 40)
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = 666.0
+offset_top = 17.0
+offset_right = 706.0
+offset_bottom = 57.0
+grow_horizontal = 0
+texture_normal = ExtResource("6_ctvyo")
+stretch_mode = 4
+
+[connection signal="pressed" from="BuyButton" to="." method="_on_buy_button_pressed"]
+[connection signal="pressed" from="BackButton" to="." method="_on_back_button_pressed"]

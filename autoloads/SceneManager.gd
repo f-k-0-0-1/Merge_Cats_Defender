@@ -1,10 +1,10 @@
 extends Node
 
-const SPLASH_SCENE := "res://scene/Splash_Screen.tscn"
-const LOADING_SCENE := "res://scene/loading_screen.tscn"
-const MENU_SCENE := "res://scene/main_menu.tscn"
-const LEVEL_SELECT := "res://scene/Level_Select.tscn"
-const GAMEPLAY := "res://scene/gameplay.tscn"
+const SPLASH_SCENE := "res://scenes/Splash_Screen.tscn"
+const LOADING_SCENE := "res://scenes/loading_screen.tscn"
+const MENU_SCENE := "res://scenes/main_menu.tscn"
+const LEVEL_SELECT := "res://scenes/Level_Select.tscn"
+const GAMEPLAY := "res://scenes/gameplay.tscn"
 
 var _target_scene : String = ""
 var _is_loading := false

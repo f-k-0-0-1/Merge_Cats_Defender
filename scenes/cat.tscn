@@ -1,0 +1,11 @@
+[gd_scene format=3 uid="uid://de3lxsdgnobxs"]
+
+[ext_resource type="Script" uid="uid://udwlnrhrmhs0" path="res://scripts/cat.gd" id="1_se5fe"]
+[ext_resource type="Texture2D" uid="uid://bqjuofft4vbk3" path="res://assets/cats/cat_01.png" id="2_t8pth"]
+
+[node name="Cat" type="Node2D" unique_id=1478815103]
+script = ExtResource("1_se5fe")
+cat_scale = Vector2(0.7, 0.7)
+
+[node name="Sprite" type="Sprite2D" parent="." unique_id=1251710225]
+texture = ExtResource("2_t8pth")

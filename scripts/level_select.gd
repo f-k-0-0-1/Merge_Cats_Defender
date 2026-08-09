@@ -66,7 +66,7 @@ func select_level(level: int) -> void:
 
 func _on_tab_1_pressed() -> void:
 	select_tab(0)
-	title_label.text = "Level Select"
+	title_label.text = "LEVEL SELECT"
 	cats_page.visible = false
 	addons_page.visible = false
 	shop_page.visible = false

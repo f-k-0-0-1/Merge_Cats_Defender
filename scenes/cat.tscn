@@ -3,19 +3,24 @@
 [ext_resource type="Script" uid="uid://udwlnrhrmhs0" path="res://scripts/cat.gd" id="1_se5fe"]
 [ext_resource type="SpriteFrames" uid="uid://b6kr67xa30ckb" path="res://resources/cat_animations/cat_05_frames.tres" id="2_se5fe"]
 
+[sub_resource type="CircleShape2D" id="CircleShape2D_se5fe"]
+
 [node name="Cat" type="Node2D" unique_id=1478815103]
 script = ExtResource("1_se5fe")
-cat_scale = Vector2(0.7, 0.7)
+cat_scale = Vector2(0.4, 0.4)
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=1206248827]
 sprite_frames = ExtResource("2_se5fe")
-animation = &"idle"
+animation = &"shoot"
 
 [node name="AttackPoint" type="Marker2D" parent="." unique_id=797546885]
 position = Vector2(14, 18)
 
 [node name="TargetDetector" type="Area2D" parent="." unique_id=567711013]
+collision_layer = 0
+collision_mask = 4
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="TargetDetector" unique_id=854611238]
+shape = SubResource("CircleShape2D_se5fe")
 
-[node name="ShootTimer" type="Timer" parent="." unique_id=332819989]
+[node name="AttackTimer" type="Timer" parent="." unique_id=332819989]

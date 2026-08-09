@@ -1,0 +1,19 @@
+[gd_scene format=3 uid="uid://b3qei3jn1rgoi"]
+
+[ext_resource type="Script" uid="uid://di0guw520xt6d" path="res://scripts/enemy.gd" id="1_md0e3"]
+[ext_resource type="Texture2D" uid="uid://bomtwob3ihvhb" path="res://assets/Enemies/Enemy Boss 1/Idle/Enemy-Idle_00.png" id="2_4ra3w"]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_qbdj3"]
+radius = 32.0
+height = 138.0
+
+[node name="Enemy" type="CharacterBody2D" unique_id=1832993755 groups=["enemies"]]
+collision_layer = 4
+script = ExtResource("1_md0e3")
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=1682713969]
+texture = ExtResource("2_4ra3w")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1884417108]
+position = Vector2(10, 28)
+shape = SubResource("CapsuleShape2D_qbdj3")

@@ -8,5 +8,8 @@
 script = ExtResource("1_cet3g")
 level = 2
 cat_name = "Cat2"
+damage = 25.0
+attack_cooldown = 0.5
+projectile_speed = 1000.0
 projectile_scene = ExtResource("1_t4d6b")
 sprite_frames = ExtResource("3_jr1ud")

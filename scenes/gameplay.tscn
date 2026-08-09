@@ -4,10 +4,12 @@
 [ext_resource type="Texture2D" uid="uid://cffxa21wm03x7" path="res://assets/Area/Area1.png" id="2_4bh5q"]
 [ext_resource type="Script" uid="uid://10eu2oqspehk" path="res://scripts/Slot.gd" id="3_e124b"]
 [ext_resource type="Texture2D" uid="uid://dxvnl510wys2j" path="res://assets/Ui/BtnGreenAdd.png" id="4_4bh5q"]
+[ext_resource type="Script" uid="uid://22sn0oyaa6d5" path="res://scripts/combat_slot.gd" id="4_hbo4f"]
 [ext_resource type="Texture2D" uid="uid://cdvpvlcjs0tq4" path="res://assets/Ui/BtnGreenAdd Pressed.png" id="5_101mb"]
 [ext_resource type="Texture2D" uid="uid://bqjuofft4vbk3" path="res://assets/cats/cat_01.png" id="5_e124b"]
 [ext_resource type="FontFile" uid="uid://cps2emwsmltk1" path="res://fonts/Super Bouncer.ttf" id="6_101mb"]
 [ext_resource type="Texture2D" uid="uid://bhar4ulrq7787" path="res://assets/Ui/closebutton.png" id="6_ctvyo"]
+[ext_resource type="PackedScene" uid="uid://b3qei3jn1rgoi" path="res://scenes/enemy.tscn" id="9_101mb"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_u72on"]
 size = Vector2(24, 154)
@@ -26,7 +28,8 @@ texture = ExtResource("2_4bh5q")
 position = Vector2(361, 179)
 zoom = Vector2(1.1, 1.1)
 
-[node name="Wall" type="Area2D" parent="World" unique_id=931144560]
+[node name="Wall" type="StaticBody2D" parent="World" unique_id=1321832795]
+collision_mask = 0
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="World/Wall" unique_id=849825678]
 position = Vector2(231, 163)
@@ -135,6 +138,46 @@ stretch_mode = 5
 script = ExtResource("3_e124b")
 slot_index = 8
 
+[node name="CombatAreaSlots" type="GridContainer" parent="MergerUI" unique_id=721880963]
+anchors_preset = -1
+anchor_right = 0.23700002
+anchor_bottom = 1.0
+offset_left = 171.0
+offset_top = 58.0
+offset_right = 55.359985
+offset_bottom = -90.0
+theme_override_constants/v_separation = -11
+
+[node name="CombatSlot1" type="Control" parent="MergerUI/CombatAreaSlots" unique_id=1117475555]
+custom_minimum_size = Vector2(50, 50)
+custom_maximum_size = Vector2(50, 50)
+layout_mode = 2
+script = ExtResource("4_hbo4f")
+
+[node name="CombatSlot2" type="Control" parent="MergerUI/CombatAreaSlots" unique_id=351410488]
+custom_minimum_size = Vector2(50, 50)
+custom_maximum_size = Vector2(50, 50)
+layout_mode = 2
+script = ExtResource("4_hbo4f")
+
+[node name="CombatSlot3" type="Control" parent="MergerUI/CombatAreaSlots" unique_id=359147386]
+custom_minimum_size = Vector2(50, 50)
+custom_maximum_size = Vector2(50, 50)
+layout_mode = 2
+script = ExtResource("4_hbo4f")
+
+[node name="CombatSlot4" type="Control" parent="MergerUI/CombatAreaSlots" unique_id=794927980]
+custom_minimum_size = Vector2(50, 50)
+custom_maximum_size = Vector2(50, 50)
+layout_mode = 2
+script = ExtResource("4_hbo4f")
+
+[node name="CombatSlot5" type="Control" parent="MergerUI/CombatAreaSlots" unique_id=505122223]
+custom_minimum_size = Vector2(50, 50)
+custom_maximum_size = Vector2(50, 50)
+layout_mode = 2
+script = ExtResource("4_hbo4f")
+
 [node name="BuyButton" type="TextureButton" parent="." unique_id=569233086]
 custom_maximum_size = Vector2(80, 40)
 anchors_preset = 2
@@ -207,6 +250,22 @@ offset_bottom = 57.0
 grow_horizontal = 0
 texture_normal = ExtResource("6_ctvyo")
 stretch_mode = 4
+
+[node name="Enemy" parent="." unique_id=1832993755 instance=ExtResource("9_101mb")]
+position = Vector2(703, 102.999985)
+scale = Vector2(0.35, 0.35)
+
+[node name="Enemy2" parent="." unique_id=3417713 instance=ExtResource("9_101mb")]
+position = Vector2(704, 179.00002)
+scale = Vector2(0.35, 0.35)
+
+[node name="Enemy4" parent="." unique_id=1266265724 instance=ExtResource("9_101mb")]
+position = Vector2(704, 137)
+scale = Vector2(0.35, 0.35)
+
+[node name="Enemy3" parent="." unique_id=2065898279 instance=ExtResource("9_101mb")]
+position = Vector2(704.00006, 222.00002)
+scale = Vector2(0.35, 0.35)
 
 [connection signal="pressed" from="BuyButton" to="." method="_on_buy_button_pressed"]
 [connection signal="pressed" from="BackButton" to="." method="_on_back_button_pressed"]

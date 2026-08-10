@@ -1,19 +1,32 @@
 [gd_scene format=3 uid="uid://b3qei3jn1rgoi"]
 
 [ext_resource type="Script" uid="uid://di0guw520xt6d" path="res://scripts/enemy.gd" id="1_md0e3"]
-[ext_resource type="Texture2D" uid="uid://bomtwob3ihvhb" path="res://assets/Enemies/Enemy Boss 1/Idle/Enemy-Idle_00.png" id="2_4ra3w"]
+[ext_resource type="SpriteFrames" uid="uid://dxvsh6kigujc1" path="res://resources/enemy_animations/enemy_01_frames.tres" id="2_md0e3"]
 
-[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_qbdj3"]
-radius = 32.0
-height = 138.0
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_md0e3"]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_4ra3w"]
+radius = 12.0
+height = 44.0
 
 [node name="Enemy" type="CharacterBody2D" unique_id=1832993755 groups=["enemies"]]
 collision_layer = 4
 script = ExtResource("1_md0e3")
 
-[node name="Sprite2D" type="Sprite2D" parent="." unique_id=1682713969]
-texture = ExtResource("2_4ra3w")
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=1671984293]
+sprite_frames = ExtResource("2_md0e3")
+animation = &"idle"
+frame_progress = 0.48777744
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1884417108]
-position = Vector2(10, 28)
-shape = SubResource("CapsuleShape2D_qbdj3")
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1773438436]
+position = Vector2(0, 18)
+shape = SubResource("CapsuleShape2D_md0e3")
+
+[node name="WallDetector" type="Area2D" parent="." unique_id=2083387705]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="WallDetector" unique_id=377814203]
+position = Vector2(0, 18)
+rotation = 1.5707964
+shape = SubResource("CapsuleShape2D_4ra3w")
+
+[node name="AttackTimer" type="Timer" parent="." unique_id=1675855589]

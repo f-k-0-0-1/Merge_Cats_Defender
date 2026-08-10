@@ -24,12 +24,20 @@ const BUY_CAT_LEVEL: int = 1
 var slots: Array[TextureRect] = []
 
 
+var enemy_01_data: EnemyData = preload(
+	"res://data/enemies/enemy_01.tres"
+)
+
+@onready var enemy_spawner: EnemySpawner = $EnemySpawner
+
+
 # ============================================================
 # READY
 # ============================================================
 
 func _ready() -> void:
-
+	# Spawn Enemy
+	enemy_spawner.spawn_enemy(enemy_01_data)
 	# Find all slots.
 	_setup_slots()
 

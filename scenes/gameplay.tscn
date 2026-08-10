@@ -10,6 +10,8 @@
 [ext_resource type="FontFile" uid="uid://cps2emwsmltk1" path="res://fonts/Super Bouncer.ttf" id="6_101mb"]
 [ext_resource type="Texture2D" uid="uid://bhar4ulrq7787" path="res://assets/Ui/closebutton.png" id="6_ctvyo"]
 [ext_resource type="PackedScene" uid="uid://b3qei3jn1rgoi" path="res://scenes/enemy.tscn" id="9_101mb"]
+[ext_resource type="Script" uid="uid://bxejpo2w2rnv8" path="res://scripts/enemy_spawner.gd" id="10_hbo4f"]
+[ext_resource type="Resource" uid="uid://v3demrc33mue" path="res://data/enemies/enemy_03.tres" id="12_qixtg"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_u72on"]
 size = Vector2(24, 154)
@@ -251,21 +253,21 @@ grow_horizontal = 0
 texture_normal = ExtResource("6_ctvyo")
 stretch_mode = 4
 
-[node name="Enemy" parent="." unique_id=1832993755 instance=ExtResource("9_101mb")]
-position = Vector2(703, 102.999985)
-scale = Vector2(0.35, 0.35)
+[node name="EnemySpawner" type="Node2D" parent="." unique_id=2141563192 node_paths=PackedStringArray("enemy_container", "spawn_point")]
+script = ExtResource("10_hbo4f")
+enemy_scene = ExtResource("9_101mb")
+enemy_container = NodePath("../EnemyContainer")
+spawn_point = NodePath("SpawnPoint")
+enemy_data = ExtResource("12_qixtg")
 
-[node name="Enemy2" parent="." unique_id=3417713 instance=ExtResource("9_101mb")]
-position = Vector2(704, 179.00002)
-scale = Vector2(0.35, 0.35)
+[node name="SpawnPoint" type="Marker2D" parent="EnemySpawner" unique_id=642598247]
+position = Vector2(666, 180)
 
-[node name="Enemy4" parent="." unique_id=1266265724 instance=ExtResource("9_101mb")]
-position = Vector2(704, 137)
-scale = Vector2(0.35, 0.35)
+[node name="SpawnTimer" type="Timer" parent="EnemySpawner" unique_id=843648433]
+wait_time = 5.0
+autostart = true
 
-[node name="Enemy3" parent="." unique_id=2065898279 instance=ExtResource("9_101mb")]
-position = Vector2(704.00006, 222.00002)
-scale = Vector2(0.35, 0.35)
+[node name="EnemyContainer" type="Node2D" parent="." unique_id=23728596]
 
 [connection signal="pressed" from="BuyButton" to="." method="_on_buy_button_pressed"]
 [connection signal="pressed" from="BackButton" to="." method="_on_back_button_pressed"]

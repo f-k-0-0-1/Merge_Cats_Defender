@@ -1,85 +1,47 @@
-class_name CatProjectile
+class_name Projectile
 extends Area2D
 
-
-# ============================================================
-# PROJECTILE DATA
-# ============================================================
-
 var target: Node2D = null
-var damage: float = 0.0
+var damage: float = 10.0
 var speed: float = 500.0
-
-
-# ============================================================
-# INITIALIZE
-# ============================================================
+var has_hit: bool = false
 
 func setup(
-	target_node: Node2D,
-	damage_value: float,
-	speed_value: float
+	new_target: Node2D,
+	new_damage: float,
+	new_speed: float
 ) -> void:
-
-	target = target_node
-	damage = damage_value
-	speed = speed_value
-
-
-# ============================================================
-# READY
-# ============================================================
-
-func _ready() -> void:
-
-	# Detect enemies through Area2D collision.
-	body_entered.connect(_on_body_entered)
-
-
-# ============================================================
-# MOVEMENT
-# ============================================================
+	target = new_target
+	damage = new_damage
+	speed = new_speed
 
 func _physics_process(delta: float) -> void:
-
-	# Target no longer exists.
-	if not is_instance_valid(target):
-
-		queue_free()
-
+	if has_hit:
 		return
 
+	if target == null or not is_instance_valid(target):
+		queue_free()
+		return
 
-	# Direction toward target.
-	var direction: Vector2 = (
-		target.global_position - global_position
-	).normalized()
+	var direction: Vector2 = global_position.direction_to(
+		target.global_position
+	)
 
-
-	# Move projectile.
-	global_position += direction * speed * delta
-
-
-	# Rotate projectile toward target.
 	rotation = direction.angle()
 
+	global_position += direction * speed * delta
 
-# ============================================================
-# COLLISION
-# ============================================================
+	if global_position.distance_to(target.global_position) <= 20.0:
+		_hit_target()
 
-func _on_body_entered(body: Node2D) -> void:
-
-	# Ignore anything that isn't an enemy.
-	if not body.is_in_group("enemies"):
+func _hit_target() -> void:
+	if has_hit:
 		return
 
+	has_hit = true
 
-	# Apply damage.
-	if body.has_method("take_damage"):
+	if target != null and is_instance_valid(target):
+		if target.has_method("take_damage"):
+			target.take_damage(damage)
 
-		body.take_damage(damage)
-
-
-	# Destroy projectile after hitting enemy.
 	queue_free()

@@ -1,875 +1,217 @@
 class_name Cat
 extends Node2D
 
-
-# ============================================================
-# CAT DATA
-# ============================================================
-
 var level: int = 1
 var texture: Texture2D
-
 var cat_data: CatData = null
-
-
-# ============================================================
-# COMBAT STATE
-# ============================================================
 
 var combat_active: bool = false
 var current_target: Node2D = null
-var is_shooting: bool = false
-
-
-# ============================================================
-# VISUAL SETTINGS
-# ============================================================
+var is_shooting: bool = false      # animation is playing
+var is_cooldown: bool = false      # cooldown timer is running (after animation)
 
 @export var cat_scale: Vector2 = Vector2(1.0, 1.0)
 
-
-# ============================================================
-# NODE REFERENCES
-# ============================================================
-
 var animated_sprite: AnimatedSprite2D = null
+var animation_player: AnimationPlayer = null
 var attack_point: Marker2D = null
 var target_detector: Area2D = null
 var attack_timer: Timer = null
 
-
-# ============================================================
-# READY
-# ============================================================
-
 func _ready() -> void:
-
 	_find_nodes()
-
-	if animated_sprite == null:
-		return
-
-	if attack_timer == null:
-		return
-
-
-	# AttackTimer controls the delay between attacks.
-	attack_timer.one_shot = true
-
-
-	# Detect when the shoot animation finishes.
-	if not animated_sprite.animation_finished.is_connected(
-		_on_animation_finished
-	):
-
-		animated_sprite.animation_finished.connect(
-			_on_animation_finished
-	)
-
-
-# ============================================================
-# FIND REQUIRED NODES
-# ============================================================
+	if attack_timer:
+		attack_timer.one_shot = true
+		attack_timer.timeout.connect(_on_cooldown_finished)
+	if animation_player:
+		if not animation_player.animation_finished.is_connected(_on_animation_player_finished):
+			animation_player.animation_finished.connect(_on_animation_player_finished)
 
 func _find_nodes() -> void:
+	var sprites: Array[Node] = find_children("*", "AnimatedSprite2D", true, false)
+	animated_sprite = sprites[0] if sprites.size() > 0 else null
+	if not animated_sprite:
+		push_error("Cat: AnimatedSprite2D not found.")
 
-	# --------------------------------------------------------
-	# Find AnimatedSprite2D by TYPE.
-	#
-	# This works even if your node is named:
-	#
-	# Sprite
-	# CatSprite
-	# AnimatedSprite
-	# AnimatedSprite2D
-	# etc.
-	# --------------------------------------------------------
+	animation_player = find_child("AnimationPlayer", true, false) as AnimationPlayer
+	if not animation_player:
+		push_error("Cat: AnimationPlayer not found.")
 
-	var sprites: Array[Node] = find_children(
-		"*",
-		"AnimatedSprite2D",
-		true,
-		false
-	)
+	attack_point = find_child("AttackPoint", true, false) as Marker2D
+	if not attack_point:
+		push_error("Cat: AttackPoint not found.")
 
+	target_detector = find_child("TargetDetector", true, false) as Area2D
+	if not target_detector:
+		push_error("Cat: TargetDetector not found.")
 
-	if sprites.size() > 0:
+	attack_timer = find_child("AttackTimer", true, false) as Timer
+	if not attack_timer:
+		push_error("Cat: AttackTimer not found.")
 
-		animated_sprite = sprites[0] as AnimatedSprite2D
-
-
-	else:
-
-		push_error(
-			"CAT ERROR: No AnimatedSprite2D found inside cat.tscn."
-		)
-
-
-	# --------------------------------------------------------
-	# Find AttackPoint.
-	# --------------------------------------------------------
-
-	attack_point = find_child(
-		"AttackPoint",
-		true,
-		false
-	) as Marker2D
-
-
-	if attack_point == null:
-
-		push_error(
-			"CAT ERROR: AttackPoint (Marker2D) not found."
-		)
-
-
-	# --------------------------------------------------------
-	# Find TargetDetector.
-	# --------------------------------------------------------
-
-	target_detector = find_child(
-		"TargetDetector",
-		true,
-		false
-	) as Area2D
-
-
-	if target_detector == null:
-
-		push_error(
-			"CAT ERROR: TargetDetector (Area2D) not found."
-		)
-
-
-	# --------------------------------------------------------
-	# Find AttackTimer.
-	# --------------------------------------------------------
-
-	attack_timer = find_child(
-		"AttackTimer",
-		true,
-		false
-	) as Timer
-
-
-	if attack_timer == null:
-
-		push_error(
-			"CAT ERROR: AttackTimer (Timer) not found."
-		)
-
-
-# ============================================================
-# INITIALIZE CAT
-# ============================================================
-
-func init(
-	level_value: int,
-	tex: Texture2D
-) -> void:
-
-	# Make absolutely sure references exist.
-	if animated_sprite == null:
+func init(level_value: int, tex: Texture2D) -> void:
+	if not animated_sprite or not animation_player or not attack_timer:
 		_find_nodes()
-
-
-	# --------------------------------------------------------
-	# Validate required nodes.
-	# --------------------------------------------------------
-
-	if animated_sprite == null:
-
-		push_error(
-			"Cannot initialize Cat. "
-			+ "No AnimatedSprite2D exists in cat.tscn."
-		)
-
+	if not animated_sprite or not animation_player or not attack_timer:
 		return
-
-
-	if attack_timer == null:
-
-		push_error(
-			"Cannot initialize Cat. "
-			+ "AttackTimer is missing."
-		)
-
-		return
-
-
-	# --------------------------------------------------------
-	# Store basic information.
-	# --------------------------------------------------------
 
 	level = level_value
 	texture = tex
 
-
-	# --------------------------------------------------------
-	# Get CatData.
-	# --------------------------------------------------------
-
-	cat_data = CatManager.get_cat_data(
-		level
-	)
-
-
-	if cat_data == null:
-
-		push_error(
-			"CatData not found for cat level %d."
-			% level
-		)
-
+	cat_data = CatManager.get_cat_data(level)
+	if not cat_data:
+		push_error("CatData not found for cat level %d." % level)
 		return
 
-
-	# ========================================================
-	# CONFIGURE SPRITE FRAMES
-	# ========================================================
-
-	if cat_data.sprite_frames == null:
-
-		push_error(
-			"CatData for Level %d has no SpriteFrames."
-			% level
-		)
-
+	if not cat_data.sprite_frames:
+		push_error("CatData for Level %d has no SpriteFrames." % level)
 		return
 
-
-	animated_sprite.sprite_frames = (
-		cat_data.sprite_frames
-	)
-
-
-	# ========================================================
-	# CONFIGURE SCALE
-	# ========================================================
-
+	animated_sprite.sprite_frames = cat_data.sprite_frames
 	animated_sprite.scale = cat_scale
 
-
-	# ========================================================
-	# START IDLE
-	# ========================================================
-
-	if animated_sprite.sprite_frames.has_animation(
-		"idle"
-	):
-
+	# Play idle initially
+	if animated_sprite.sprite_frames.has_animation("idle"):
 		animated_sprite.play("idle")
-
 	else:
+		push_error("Cat Level %d has no idle animation." % level)
 
-		push_error(
-			"Cat Level %d has no 'idle' animation."
-			% level
-		)
-
-
-	# ========================================================
-	# CONFIGURE ATTACK TIMER
-	# ========================================================
-
-	attack_timer.wait_time = (
-		cat_data.attack_cooldown
-	)
-
-
-	# ========================================================
-	# CONFIGURE DETECTION RANGE
-	# ========================================================
-
+	attack_timer.wait_time = cat_data.attack_cooldown
 	_setup_detection_range()
 
-
-# ============================================================
-# SET COMBAT ACTIVE
-# ============================================================
-
-func set_combat_active(
-	active: bool
-) -> void:
-
+func set_combat_active(active: bool) -> void:
 	combat_active = active
-
-
-	# --------------------------------------------------------
-	# Enable / disable target detection.
-	# --------------------------------------------------------
-
-	if target_detector != null:
-
+	if target_detector:
 		target_detector.monitoring = active
-
-
-	# --------------------------------------------------------
-	# Cat removed from combat.
-	# --------------------------------------------------------
-
 	if not active:
-
 		current_target = null
-
 		is_shooting = false
-
-
-		if attack_timer != null:
-
+		is_cooldown = false
+		if attack_timer:
 			attack_timer.stop()
-
-
-		if animated_sprite != null:
-
-			if animated_sprite.sprite_frames != null:
-
-				if animated_sprite.sprite_frames.has_animation(
-					"idle"
-				):
-
-					animated_sprite.play("idle")
-
-
-# ============================================================
-# SETUP TARGET DETECTION RANGE
-# ============================================================
+		# Play idle
+		if animation_player and animation_player.has_animation("idle"):
+			animation_player.play("idle")
+		elif animated_sprite and animated_sprite.sprite_frames and animated_sprite.sprite_frames.has_animation("idle"):
+			animated_sprite.play("idle")
 
 func _setup_detection_range() -> void:
-
-	if cat_data == null:
+	if not cat_data or not target_detector:
 		return
-
-
-	if target_detector == null:
-
-		push_error(
-			"Cannot setup detection range. "
-			+ "TargetDetector is missing."
-		)
-
+	var collision: CollisionShape2D = target_detector.get_node_or_null("CollisionShape2D") as CollisionShape2D
+	if not collision:
+		push_error("TargetDetector requires a CollisionShape2D.")
 		return
-
-
-	var collision: CollisionShape2D = (
-		target_detector.get_node_or_null(
-			"CollisionShape2D"
-		) as CollisionShape2D
-	)
-
-
-	if collision == null:
-
-		push_error(
-			"TargetDetector requires "
-			+ "a CollisionShape2D."
-		)
-
-		return
-
-
-	var circle: CircleShape2D = (
-		collision.shape as CircleShape2D
-	)
-
-
-	if circle == null:
-
+	var circle = collision.shape as CircleShape2D
+	if not circle:
 		circle = CircleShape2D.new()
-
 		collision.shape = circle
-
-
 	circle.radius = cat_data.attack_range
 
-
-# ============================================================
-# COMBAT LOOP
-# ============================================================
-
-func _physics_process(
-	_delta: float
-) -> void:
-
-	# --------------------------------------------------------
-	# Cat only fights when deployed.
-	# --------------------------------------------------------
-
-	if not combat_active:
+func _physics_process(_delta: float) -> void:
+	# Do nothing if not combat ready or missing dependencies
+	if not combat_active or not cat_data or not target_detector or not attack_timer:
 		return
 
-
-	# --------------------------------------------------------
-	# Validate combat nodes.
-	# --------------------------------------------------------
-
-	if cat_data == null:
+	# If we are currently shooting or in cooldown, skip attack logic
+	if is_shooting or is_cooldown:
 		return
 
-
-	if target_detector == null:
-		return
-
-
-	if attack_timer == null:
-		return
-
-
-	if animated_sprite == null:
-		return
-
-
-	# --------------------------------------------------------
-	# Don't search for another target while shooting.
-	# --------------------------------------------------------
-
-	if is_shooting:
-		return
-
-
-	# --------------------------------------------------------
-	# Find enemy.
-	# --------------------------------------------------------
-
+	# Find target
 	current_target = _find_target()
 
-
-	# ========================================================
-	# NO TARGET
-	# ========================================================
-
-	if current_target == null:
-
-		if animated_sprite.animation != "idle":
-
-			animated_sprite.play("idle")
-
+	if not current_target:
+		# No target – play idle if not already
+		if animation_player and animation_player.has_animation("idle"):
+			if animation_player.current_animation != "idle":
+				animation_player.play("idle")
+		elif animated_sprite and animated_sprite.sprite_frames and animated_sprite.sprite_frames.has_animation("idle"):
+			if animated_sprite.animation != "idle":
+				animated_sprite.play("idle")
 		return
 
-
-	# ========================================================
-	# TARGET FOUND
-	# ========================================================
-
-	if attack_timer.is_stopped():
-
-		_start_attack()
-
-
-# ============================================================
-# FIND TARGET
-# ============================================================
+	# Target exists and timer is stopped – start attack
+	_start_attack()
 
 func _find_target() -> Node2D:
-
-	print(
-		"\n========== CAT TARGET DEBUG =========="
-	)
-
-	print(
-		"Cat Level: ",
-		level
-	)
-
-	# --------------------------------------------------------
-	# Check detector
-	# --------------------------------------------------------
-
-	if target_detector == null:
-
-		print(
-			"[ERROR] TargetDetector is NULL"
-		)
-
+	if not target_detector:
 		return null
-
-
-	print(
-		"TargetDetector monitoring: ",
-		target_detector.monitoring
-	)
-
-	print(
-		"TargetDetector monitorable: ",
-		target_detector.monitorable
-	)
-
-
-	# --------------------------------------------------------
-	# Get detected bodies
-	# --------------------------------------------------------
-
-	var bodies: Array[Node2D] = (
-		target_detector.get_overlapping_bodies()
-	)
-
-
-	print(
-		"Detected bodies: ",
-		bodies.size()
-	)
-
-
-	# --------------------------------------------------------
-	# No bodies detected
-	# --------------------------------------------------------
-
-	if bodies.is_empty():
-
-		print(
-			"[NO TARGET] TargetDetector detected "
-			+ "no physics bodies."
-		)
-
-		print(
-			"======================================"
-		)
-
-		return null
-
-
-	# --------------------------------------------------------
-	# Find closest enemy
-	# --------------------------------------------------------
-
+	var bodies: Array[Node2D] = target_detector.get_overlapping_bodies()
 	var best_target: Node2D = null
-
 	var best_distance: float = INF
-
-
-	for body: Node2D in bodies:
-
-		# ----------------------------------------------------
-		# Invalid body
-		# ----------------------------------------------------
-
+	for body in bodies:
 		if not is_instance_valid(body):
-
-			print(
-				"[SKIP] Invalid body."
-			)
-
 			continue
-
-
-		print(
-			"[DETECTED] ",
-			body.name,
-			" | Type: ",
-			body.get_class(),
-			" | Groups: ",
-			body.get_groups()
-		)
-
-
-		# ----------------------------------------------------
-		# Check enemy group
-		# ----------------------------------------------------
-
 		if not body.is_in_group("enemies"):
-
-			print(
-				"[REJECTED] ",
-				body.name,
-				" is NOT in 'enemies' group."
-			)
-
 			continue
-
-
-		print(
-			"[VALID ENEMY] ",
-			body.name
-		)
-
-
-		# ----------------------------------------------------
-		# Calculate distance
-		# ----------------------------------------------------
-
-		var distance: float = (
-			global_position.distance_to(
-				body.global_position
-			)
-		)
-
-
-		print(
-			"    Distance: ",
-			distance
-		)
-
-
-		# ----------------------------------------------------
-		# Check if closest
-		# ----------------------------------------------------
-
+		var distance: float = global_position.distance_to(body.global_position)
 		if distance < best_distance:
-
 			best_distance = distance
-
 			best_target = body
-
-
-			print(
-				"    [NEW BEST TARGET] ",
-				body.name
-			)
-
-
-	# --------------------------------------------------------
-	# Final result
-	# --------------------------------------------------------
-
-	if best_target != null:
-
-		print(
-			"[TARGET SELECTED] ",
-			best_target.name,
-			" | Distance: ",
-			best_distance
-		)
-
-	else:
-
-		print(
-			"[NO VALID ENEMY FOUND]"
-		)
-
-
-	print(
-		"======================================"
-	)
-
-
 	return best_target
 
-
-# ============================================================
-# START ATTACK
-# ============================================================
-
 func _start_attack() -> void:
-
-	if current_target == null:
-		return
-
-
-	if not is_instance_valid(
-		current_target
-	):
-
+	if not current_target or not is_instance_valid(current_target):
 		current_target = null
-
 		return
 
-
-	if animated_sprite == null:
+	if not animation_player:
 		return
 
-
-	if animated_sprite.sprite_frames == null:
-
-		push_error(
-			"Cat Level %d has no SpriteFrames."
-			% level
-		)
-
+	if not animation_player.has_animation("shoot"):
+		push_error("Cat Level %d does not have a shoot animation." % level)
+		# Fallback: fire and start cooldown immediately
+		fire_projectile()
+		is_cooldown = true
+		attack_timer.start()
 		return
 
-
-	# --------------------------------------------------------
-	# Make sure shoot animation exists.
-	# --------------------------------------------------------
-
-	if not animated_sprite.sprite_frames.has_animation(
-		"shoot"
-	):
-
-		push_error(
-			"Cat Level %d does not have "
-			+ "a 'shoot' animation."
-			% level
-		)
-
-		return
-
-
-	# --------------------------------------------------------
-	# Start shooting.
-	# --------------------------------------------------------
-
+	# Play shoot animation – this will trigger fire_projectile via animation track
 	is_shooting = true
-
-	animated_sprite.play(
-		"shoot"
-	)
-
-
-# ============================================================
-# FIRE PROJECTILE
-# ============================================================
+	animation_player.play("shoot")
 
 func fire_projectile() -> void:
-
-	# --------------------------------------------------------
-	# Validate data.
-	# --------------------------------------------------------
-
-	if cat_data == null:
+	if not cat_data or not current_target or not is_instance_valid(current_target):
+		return
+	if not attack_point:
+		push_error("Cannot fire projectile. AttackPoint is missing.")
+		return
+	if not cat_data.projectile_scene:
+		push_error("No projectile scene configured for Cat Level %d." % level)
 		return
 
-
-	if current_target == null:
+	var projectile: Node2D = cat_data.projectile_scene.instantiate() as Node2D
+	if not projectile:
+		push_error("Could not instantiate projectile.")
 		return
 
-
-	if not is_instance_valid(
-		current_target
-	):
-
-		current_target = null
-
-		return
-
-
-	# --------------------------------------------------------
-	# Validate AttackPoint.
-	# --------------------------------------------------------
-
-	if attack_point == null:
-
-		push_error(
-			"Cannot fire projectile. "
-			+ "AttackPoint is missing."
-		)
-
-		return
-
-
-	# --------------------------------------------------------
-	# Validate projectile scene.
-	# --------------------------------------------------------
-
-	if cat_data.projectile_scene == null:
-
-		push_error(
-			"No projectile scene configured "
-			+ "for Cat Level %d."
-			% level
-		)
-
-		return
-
-
-	# ========================================================
-	# CREATE PROJECTILE
-	# ========================================================
-
-	var projectile: Node2D = (
-		cat_data.projectile_scene.instantiate()
-		as Node2D
-	)
-
-
-	if projectile == null:
-
-		push_error(
-			"Could not instantiate projectile."
-		)
-
-		return
-
-
-	# --------------------------------------------------------
-	# Add to gameplay scene.
-	# --------------------------------------------------------
-
-	var current_scene: Node = (
-		get_tree().current_scene
-	)
-
-
-	if current_scene == null:
-
-		push_error(
-			"Current gameplay scene not found."
-		)
-
+	var current_scene: Node = get_tree().current_scene
+	if not current_scene:
+		push_error("Current gameplay scene not found.")
 		projectile.queue_free()
-
 		return
 
+	current_scene.add_child(projectile)
+	projectile.global_position = attack_point.global_position
 
-	current_scene.add_child(
-		projectile
-	)
-
-
-	# --------------------------------------------------------
-	# Spawn at AttackPoint.
-	# --------------------------------------------------------
-
-	projectile.global_position = (
-		attack_point.global_position
-	)
-
-
-	# --------------------------------------------------------
-	# Give projectile its data.
-	# --------------------------------------------------------
-
-	if projectile.has_method(
-		"setup"
-	):
-
-		projectile.setup(
-			current_target,
-			cat_data.damage,
-			cat_data.projectile_speed
-		)
-
+	if projectile.has_method("setup"):
+		projectile.setup(current_target, cat_data.damage, cat_data.projectile_speed)
 	else:
-
-		push_error(
-			"Projectile does not have "
-			+ "a setup() function."
-		)
-
+		push_error("Projectile does not have a setup() function.")
 		projectile.queue_free()
 
-
-# ============================================================
-# SHOOT ANIMATION FINISHED
-# ============================================================
-
-func _on_animation_finished() -> void:
-
-	if animated_sprite == null:
-		return
-
-	if animated_sprite.animation != "shoot":
-		return
-
-
-	# Fire projectile when the shooting animation finishes.
-	fire_projectile()
-
-
-	# Shooting is finished.
-	is_shooting = false
-
-
-	# Start attack cooldown.
-	if attack_timer != null:
+func _on_animation_player_finished(anim_name: StringName) -> void:
+	if anim_name == "shoot":
+		is_shooting = false
+		# Start the cooldown timer
+		is_cooldown = true
 		attack_timer.start()
-
-
-	# Return to idle.
-	if animated_sprite.sprite_frames != null:
-
-		if animated_sprite.sprite_frames.has_animation(
-			"idle"
-		):
-
+		# Play idle while cooldown is active
+		if animation_player and animation_player.has_animation("idle"):
+			animation_player.play("idle")
+		elif animated_sprite and animated_sprite.sprite_frames and animated_sprite.sprite_frames.has_animation("idle"):
 			animated_sprite.play("idle")
+
+func _on_cooldown_finished() -> void:
+	is_cooldown = false
+	# Now the cat can attack again in the next physics frame

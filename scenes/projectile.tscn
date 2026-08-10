@@ -1,7 +1,7 @@
 [gd_scene format=3 uid="uid://fm2ou2bj2hla"]
 
 [ext_resource type="Texture2D" uid="uid://bnv1wk33acqif" path="res://assets/Bullets/Artboard 1.png" id="1_c8fcr"]
-[ext_resource type="Script" uid="uid://2ic2wdiob4mt" path="res://scenes/projectile.gd" id="1_q3m7n"]
+[ext_resource type="Script" uid="uid://2ic2wdiob4mt" path="res://scripts/projectile.gd" id="1_q3m7n"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_14mdo"]
 radius = 3.3333333

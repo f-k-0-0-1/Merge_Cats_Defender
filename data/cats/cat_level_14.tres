@@ -1,8 +1,16 @@
 [gd_resource type="Resource" script_class="CatData" format=3 uid="uid://bqkorgjtw7173"]
 
+[ext_resource type="PackedScene" uid="uid://fm2ou2bj2hla" path="res://scenes/projectile.tscn" id="1_h8olj"]
 [ext_resource type="Script" uid="uid://cyprrbx27s1fs" path="res://scripts/cat_data.gd" id="1_txh6p"]
+[ext_resource type="SpriteFrames" uid="uid://0jopljdjp1gm" path="res://resources/cat_animations/cat_14_frames.tres" id="3_r0agl"]
 
 [resource]
 script = ExtResource("1_txh6p")
 level = 14
 cat_name = "Cat14"
+damage = 127.0
+attack_cooldown = 0.48
+attack_range = 480.0
+projectile_speed = 730.0
+projectile_scene = ExtResource("1_h8olj")
+sprite_frames = ExtResource("3_r0agl")

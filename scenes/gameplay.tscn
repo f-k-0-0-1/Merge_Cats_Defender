@@ -11,7 +11,7 @@
 [ext_resource type="Texture2D" uid="uid://bhar4ulrq7787" path="res://assets/Ui/closebutton.png" id="6_ctvyo"]
 [ext_resource type="PackedScene" uid="uid://b3qei3jn1rgoi" path="res://scenes/enemy.tscn" id="9_101mb"]
 [ext_resource type="Script" uid="uid://bxejpo2w2rnv8" path="res://scripts/enemy_spawner.gd" id="10_hbo4f"]
-[ext_resource type="Resource" uid="uid://v3demrc33mue" path="res://data/enemies/enemy_03.tres" id="12_qixtg"]
+[ext_resource type="Resource" uid="uid://ci5fwgvur62gr" path="res://data/enemies/enemy_01.tres" id="12_qixtg"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_u72on"]
 size = Vector2(24, 154)

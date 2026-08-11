@@ -3,18 +3,23 @@
 [ext_resource type="Script" uid="uid://c34tq47slykwt" path="res://scripts/gameplay.gd" id="1_din8e"]
 [ext_resource type="Texture2D" uid="uid://cffxa21wm03x7" path="res://assets/Area/Area1.png" id="2_4bh5q"]
 [ext_resource type="Script" uid="uid://10eu2oqspehk" path="res://scripts/Slot.gd" id="3_e124b"]
+[ext_resource type="Script" uid="uid://q77cuioxg7un" path="res://scripts/defense_wall.gd" id="3_s5y6v"]
 [ext_resource type="Texture2D" uid="uid://dxvnl510wys2j" path="res://assets/Ui/BtnGreenAdd.png" id="4_4bh5q"]
 [ext_resource type="Script" uid="uid://22sn0oyaa6d5" path="res://scripts/combat_slot.gd" id="4_hbo4f"]
+[ext_resource type="Texture2D" uid="uid://sxv757ssiq4i" path="res://assets/Ui/ProgressBarBG.png" id="4_w3w6i"]
 [ext_resource type="Texture2D" uid="uid://cdvpvlcjs0tq4" path="res://assets/Ui/BtnGreenAdd Pressed.png" id="5_101mb"]
 [ext_resource type="Texture2D" uid="uid://bqjuofft4vbk3" path="res://assets/cats/cat_01.png" id="5_e124b"]
+[ext_resource type="Texture2D" uid="uid://cb3qklebk1103" path="res://assets/Ui/ProgressBarLine.png" id="5_pv71h"]
 [ext_resource type="FontFile" uid="uid://cps2emwsmltk1" path="res://fonts/Super Bouncer.ttf" id="6_101mb"]
 [ext_resource type="Texture2D" uid="uid://bhar4ulrq7787" path="res://assets/Ui/closebutton.png" id="6_ctvyo"]
 [ext_resource type="PackedScene" uid="uid://b3qei3jn1rgoi" path="res://scenes/enemy.tscn" id="9_101mb"]
 [ext_resource type="Script" uid="uid://bxejpo2w2rnv8" path="res://scripts/enemy_spawner.gd" id="10_hbo4f"]
 [ext_resource type="Resource" uid="uid://ci5fwgvur62gr" path="res://data/enemies/enemy_01.tres" id="12_qixtg"]
+[ext_resource type="Resource" uid="uid://bwbnn2xxsatb0" path="res://data/enemies/enemy_02.tres" id="13_bhmdk"]
+[ext_resource type="Resource" uid="uid://v3demrc33mue" path="res://data/enemies/enemy_03.tres" id="14_s5y6v"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_u72on"]
-size = Vector2(24, 154)
+size = Vector2(24, 177)
 
 [node name="Gameplay" type="Node2D" unique_id=2882415]
 script = ExtResource("1_din8e")
@@ -30,12 +35,28 @@ texture = ExtResource("2_4bh5q")
 position = Vector2(361, 179)
 zoom = Vector2(1.1, 1.1)
 
-[node name="Wall" type="StaticBody2D" parent="World" unique_id=1321832795]
+[node name="DefenseWall" type="StaticBody2D" parent="World" unique_id=1321832795 groups=["defense_wall"]]
 collision_mask = 0
+script = ExtResource("3_s5y6v")
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="World/Wall" unique_id=849825678]
-position = Vector2(231, 163)
+[node name="CollisionShape2D" type="CollisionShape2D" parent="World/DefenseWall" unique_id=849825678]
+position = Vector2(231, 162.5)
 shape = SubResource("RectangleShape2D_u72on")
+
+[node name="WallHealthBar" type="TextureProgressBar" parent="World/DefenseWall" unique_id=1344361973]
+custom_minimum_size = Vector2(0, 45)
+custom_maximum_size = Vector2(-1, 45)
+propagate_maximum_size = true
+offset_left = 238.995
+offset_top = 86.0
+offset_right = 812.1505
+offset_bottom = 131.0
+rotation = 1.5707964
+scale = Vector2(0.285, 0.285)
+value = 70.0
+texture_under = ExtResource("4_w3w6i")
+texture_progress = ExtResource("5_pv71h")
+texture_progress_offset = Vector2(8, 8)
 
 [node name="MergerUI" type="CanvasLayer" parent="." unique_id=78139011]
 follow_viewport_enabled = true
@@ -253,19 +274,34 @@ grow_horizontal = 0
 texture_normal = ExtResource("6_ctvyo")
 stretch_mode = 4
 
-[node name="EnemySpawner" type="Node2D" parent="." unique_id=2141563192 node_paths=PackedStringArray("enemy_container", "spawn_point")]
+[node name="EnemySpawner" type="Node2D" parent="." unique_id=2141563192 node_paths=PackedStringArray("enemy_container", "enemy_1_spawn_point", "enemy_2_spawn_point", "enemy_3_spawn_point")]
 script = ExtResource("10_hbo4f")
 enemy_scene = ExtResource("9_101mb")
 enemy_container = NodePath("../EnemyContainer")
-spawn_point = NodePath("SpawnPoint")
-enemy_data = ExtResource("12_qixtg")
+enemy_1_data = ExtResource("12_qixtg")
+enemy_1_spawn_point = NodePath("SpawnPoint1")
+enemy_2_data = ExtResource("13_bhmdk")
+enemy_2_spawn_point = NodePath("SpawnPoint2")
+enemy_3_data = ExtResource("14_s5y6v")
+enemy_3_spawn_point = NodePath("SpawnPoint3")
 
-[node name="SpawnPoint" type="Marker2D" parent="EnemySpawner" unique_id=642598247]
-position = Vector2(666, 180)
+[node name="SpawnPoint1" type="Marker2D" parent="EnemySpawner" unique_id=642598247]
+position = Vector2(706, 225)
 
-[node name="SpawnTimer" type="Timer" parent="EnemySpawner" unique_id=843648433]
+[node name="SpawnPoint2" type="Marker2D" parent="EnemySpawner" unique_id=1329664551]
+position = Vector2(704, 163)
+
+[node name="SpawnPoint3" type="Marker2D" parent="EnemySpawner" unique_id=683722282]
+position = Vector2(704, 108)
+
+[node name="SpawnTimer1" type="Timer" parent="." unique_id=843648433]
 wait_time = 5.0
-autostart = true
+
+[node name="SpawnTimer2" type="Timer" parent="." unique_id=1847007325]
+wait_time = 5.0
+
+[node name="SpawnTimer3" type="Timer" parent="." unique_id=1432684738]
+wait_time = 5.0
 
 [node name="EnemyContainer" type="Node2D" parent="." unique_id=23728596]
 

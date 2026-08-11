@@ -224,8 +224,6 @@ _data = {
 &"shoot": SubResource("Animation_t8pth")
 }
 
-[sub_resource type="CircleShape2D" id="CircleShape2D_se5fe"]
-
 [node name="Cat" type="Node2D" unique_id=1478815103]
 script = ExtResource("1_se5fe")
 cat_scale = Vector2(0.4, 0.4)
@@ -247,12 +245,5 @@ speed_scale = 1.33
 
 [node name="AttackPoint" type="Marker2D" parent="." unique_id=797546885]
 position = Vector2(14, 8)
-
-[node name="TargetDetector" type="Area2D" parent="." unique_id=567711013]
-collision_layer = 0
-collision_mask = 4
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="TargetDetector" unique_id=854611238]
-shape = SubResource("CircleShape2D_se5fe")
 
 [node name="AttackTimer" type="Timer" parent="." unique_id=332819989]

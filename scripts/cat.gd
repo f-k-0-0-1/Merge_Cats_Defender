@@ -17,7 +17,6 @@ var animated_sprite: AnimatedSprite2D = null
 var shoot_animation: AnimatedSprite2D = null
 var animation_player: AnimationPlayer = null
 var attack_point: Marker2D = null
-var target_detector: Area2D = null
 var attack_timer: Timer = null
 
 func _ready() -> void:
@@ -25,6 +24,7 @@ func _ready() -> void:
 
 	if attack_timer:
 		attack_timer.one_shot = true
+
 		if not attack_timer.timeout.is_connected(_on_cooldown_finished):
 			attack_timer.timeout.connect(_on_cooldown_finished)
 
@@ -58,11 +58,6 @@ func _find_nodes() -> void:
 	if not attack_point:
 		push_error("Cat: AttackPoint not found.")
 
-	target_detector = find_child("TargetDetector", true, false) as Area2D
-
-	if not target_detector:
-		push_error("Cat: TargetDetector not found.")
-
 	attack_timer = find_child("AttackTimer", true, false) as Timer
 
 	if not attack_timer:
@@ -95,8 +90,6 @@ func init(level_value: int, tex: Texture2D) -> void:
 
 	attack_timer.wait_time = cat_data.attack_cooldown
 
-	_setup_detection_range()
-
 	if animated_sprite.sprite_frames.has_animation("idle"):
 		animated_sprite.play("idle")
 	else:
@@ -108,9 +101,6 @@ func init(level_value: int, tex: Texture2D) -> void:
 
 func set_combat_active(active: bool) -> void:
 	combat_active = active
-
-	if target_detector:
-		target_detector.monitoring = active
 
 	if not active:
 		current_target = null
@@ -127,30 +117,15 @@ func set_combat_active(active: bool) -> void:
 			shoot_animation.visible = false
 			shoot_animation.stop()
 
+		if visual_root:
+			visual_root.rotation = 0.0
+
 		if animated_sprite and animated_sprite.sprite_frames:
 			if animated_sprite.sprite_frames.has_animation("idle"):
 				animated_sprite.play("idle")
 
-func _setup_detection_range() -> void:
-	if not cat_data or not target_detector:
-		return
-
-	var collision: CollisionShape2D = target_detector.get_node_or_null("CollisionShape2D") as CollisionShape2D
-
-	if not collision:
-		push_error("TargetDetector requires a CollisionShape2D.")
-		return
-
-	var circle := collision.shape as CircleShape2D
-
-	if not circle:
-		circle = CircleShape2D.new()
-		collision.shape = circle
-
-	circle.radius = cat_data.attack_range
-
 func _physics_process(_delta: float) -> void:
-	if not combat_active or not cat_data or not target_detector or not attack_timer:
+	if not combat_active or not cat_data or not attack_timer:
 		return
 
 	if is_shooting or is_cooldown:
@@ -159,39 +134,39 @@ func _physics_process(_delta: float) -> void:
 	current_target = _find_target()
 
 	if not current_target:
-		if animation_player and animation_player.has_animation("idle"):
-			if animation_player.current_animation != "idle":
-				animation_player.play("idle")
-		elif animated_sprite and animated_sprite.sprite_frames:
-			if animated_sprite.sprite_frames.has_animation("idle"):
-				if animated_sprite.animation != "idle":
-					animated_sprite.play("idle")
-
+		_play_idle()
 		return
 
 	_start_attack()
 
 func _find_target() -> Node2D:
-	if not target_detector:
+	if not cat_data:
 		return null
 
-	var bodies: Array[Node2D] = target_detector.get_overlapping_bodies()
+	var enemies: Array[Node] = get_tree().get_nodes_in_group("enemies")
 
 	var best_target: Node2D = null
 	var best_distance: float = INF
 
-	for body in bodies:
-		if not is_instance_valid(body):
+	for enemy_node: Node in enemies:
+		if not is_instance_valid(enemy_node):
 			continue
 
-		if not body.is_in_group("enemies"):
+		var enemy: Node2D = enemy_node as Node2D
+
+		if enemy == null:
 			continue
 
-		var distance: float = global_position.distance_to(body.global_position)
+		var distance: float = global_position.distance_to(
+			enemy.global_position
+		)
+
+		if distance > cat_data.attack_range:
+			continue
 
 		if distance < best_distance:
 			best_distance = distance
-			best_target = body
+			best_target = enemy
 
 	return best_target
 
@@ -200,11 +175,20 @@ func _start_attack() -> void:
 		current_target = null
 		return
 
+	if not _is_target_in_range(current_target):
+		current_target = null
+		return
+
 	if not animation_player:
 		return
 
+	_rotate_toward_target()
+
 	if not animation_player.has_animation("shoot"):
-		push_error("Cat Level %d does not have a shoot animation." % level)
+		push_error(
+			"Cat Level %d does not have a shoot animation."
+			% level
+		)
 
 		fire_projectile()
 
@@ -221,28 +205,67 @@ func _start_attack() -> void:
 
 	animation_player.play("shoot")
 
+func _rotate_toward_target() -> void:
+	if not current_target or not is_instance_valid(current_target):
+		return
+
+	if not visual_root:
+		return
+
+	var direction: Vector2 = (
+		current_target.global_position - global_position
+	)
+
+	if direction.length_squared() <= 0.001:
+		return
+
+	visual_root.rotation = direction.angle()
+
 func fire_projectile() -> void:
-	if not cat_data or not current_target or not is_instance_valid(current_target):
+	if not cat_data:
+		return
+
+	if not current_target:
+		return
+
+	if not is_instance_valid(current_target):
+		current_target = null
+		return
+
+	if not _is_target_in_range(current_target):
+		current_target = null
 		return
 
 	if not attack_point:
-		push_error("Cannot fire projectile. AttackPoint is missing.")
+		push_error(
+			"Cannot fire projectile. AttackPoint is missing."
+		)
 		return
 
 	if not cat_data.projectile_scene:
-		push_error("No projectile scene configured for Cat Level %d." % level)
+		push_error(
+			"No projectile scene configured for Cat Level %d."
+			% level
+		)
 		return
 
-	var projectile: Node2D = cat_data.projectile_scene.instantiate() as Node2D
+	var projectile: Node2D = (
+		cat_data.projectile_scene.instantiate()
+		as Node2D
+	)
 
 	if not projectile:
-		push_error("Could not instantiate projectile.")
+		push_error(
+			"Could not instantiate projectile."
+		)
 		return
 
 	var current_scene: Node = get_tree().current_scene
 
 	if not current_scene:
-		push_error("Current gameplay scene not found.")
+		push_error(
+			"Current gameplay scene not found."
+		)
 		projectile.queue_free()
 		return
 
@@ -257,8 +280,33 @@ func fire_projectile() -> void:
 			cat_data.projectile_speed
 		)
 	else:
-		push_error("Projectile does not have a setup() function.")
+		push_error(
+			"Projectile does not have a setup() function."
+		)
 		projectile.queue_free()
+
+func _is_target_in_range(target: Node2D) -> bool:
+	if not is_instance_valid(target):
+		return false
+
+	if not cat_data:
+		return false
+
+	var distance: float = global_position.distance_to(
+		target.global_position
+	)
+
+	return distance <= cat_data.attack_range
+
+func _play_idle() -> void:
+	if animation_player and animation_player.has_animation("idle"):
+		if animation_player.current_animation != "idle":
+			animation_player.play("idle")
+
+	elif animated_sprite and animated_sprite.sprite_frames:
+		if animated_sprite.sprite_frames.has_animation("idle"):
+			if animated_sprite.animation != "idle":
+				animated_sprite.play("idle")
 
 func _on_animation_player_finished(anim_name: StringName) -> void:
 	if anim_name != "shoot":
@@ -271,13 +319,10 @@ func _on_animation_player_finished(anim_name: StringName) -> void:
 		shoot_animation.visible = false
 		shoot_animation.stop()
 
-	attack_timer.start()
+	if attack_timer:
+		attack_timer.start()
 
-	if animation_player and animation_player.has_animation("idle"):
-		animation_player.play("idle")
-	elif animated_sprite and animated_sprite.sprite_frames:
-		if animated_sprite.sprite_frames.has_animation("idle"):
-			animated_sprite.play("idle")
+	_play_idle()
 
 func _on_cooldown_finished() -> void:
 	is_cooldown = false

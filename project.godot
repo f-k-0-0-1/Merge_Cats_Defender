@@ -22,6 +22,7 @@ boot_splash/use_filter=false
 
 SceneManager="*uid://cexbyupo018k"
 CatManager="*uid://cutx46bq64me6"
+GameplayManager="*uid://cywybkl27mj6x"
 
 [display]
 

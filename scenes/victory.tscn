@@ -1,0 +1,86 @@
+[gd_scene format=3 uid="uid://blsja7xkkhkg5"]
+
+[ext_resource type="Script" uid="uid://d1oilhwxp5jbi" path="res://scripts/victory.gd" id="1_g6lwx"]
+[ext_resource type="Texture2D" uid="uid://c0b8iqnqgx14w" path="res://assets/Ui_compressed/WinPopUp.png" id="1_hl81x"]
+[ext_resource type="Texture2D" uid="uid://cm380qsep6g04" path="res://assets/Ui_compressed/BtnGreen.png" id="2_73dpb"]
+[ext_resource type="Texture2D" uid="uid://b7veothhhe0pp" path="res://assets/Ui_compressed/BtnGreenPressed.png" id="3_g6lwx"]
+[ext_resource type="FontFile" uid="uid://cps2emwsmltk1" path="res://fonts/Super Bouncer.ttf" id="4_73dpb"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_g6lwx"]
+bg_color = Color(0, 0, 0, 0.5882353)
+
+[node name="victory" type="CanvasLayer" unique_id=546047828]
+script = ExtResource("1_g6lwx")
+
+[node name="Control" type="Control" parent="." unique_id=945437372]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Panel" type="Panel" parent="Control" unique_id=1357093057]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_g6lwx")
+
+[node name="TextureRect" type="TextureRect" parent="Control" unique_id=1032899836]
+custom_minimum_size = Vector2(350, 200)
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -20.0
+offset_top = -20.0
+offset_right = 20.0
+offset_bottom = 20.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("1_hl81x")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="ContinueButton" type="TextureButton" parent="Control" unique_id=242279339]
+custom_maximum_size = Vector2(100, 40)
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -55.0
+offset_top = 31.0
+offset_right = 45.0
+offset_bottom = 71.0
+grow_horizontal = 2
+grow_vertical = 2
+texture_normal = ExtResource("2_73dpb")
+texture_pressed = ExtResource("3_g6lwx")
+stretch_mode = 4
+
+[node name="Label" type="Label" parent="Control/ContinueButton" unique_id=414764661]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -31.0
+offset_top = -11.0
+offset_right = 31.0
+offset_bottom = 7.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_colors/font_shadow_color = Color(0.28627452, 0.18039216, 0.13333334, 1)
+theme_override_constants/outline_size = 2
+theme_override_fonts/font = ExtResource("4_73dpb")
+text = "Continue"
+
+[connection signal="pressed" from="Control/ContinueButton" to="." method="_on_continue_button_pressed"]

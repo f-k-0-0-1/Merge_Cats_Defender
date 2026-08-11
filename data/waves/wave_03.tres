@@ -1,0 +1,14 @@
+[gd_resource type="Resource" script_class="WaveData" format=3 uid="uid://b2oymdpy0ypjp"]
+
+[ext_resource type="Script" uid="uid://c71ybbbaxh70c" path="res://scripts/EnemyData.gd" id="1_jf20q"]
+[ext_resource type="Resource" uid="uid://ci5fwgvur62gr" path="res://data/enemies/enemy_01.tres" id="2_kn2vg"]
+[ext_resource type="Script" uid="uid://cx1uwut1j6bqm" path="res://scripts/WaveData.gd" id="2_yox8n"]
+[ext_resource type="Resource" uid="uid://bwbnn2xxsatb0" path="res://data/enemies/enemy_02.tres" id="3_8dp1p"]
+[ext_resource type="Resource" uid="uid://v3demrc33mue" path="res://data/enemies/enemy_03.tres" id="4_rg340"]
+[ext_resource type="Resource" uid="uid://dqncmyj5cudcm" path="res://data/enemies/enemy_04.tres" id="5_05uhd"]
+
+[resource]
+script = ExtResource("2_yox8n")
+wave_number = 3
+enemies = Array[ExtResource("1_jf20q")]([ExtResource("2_kn2vg"), ExtResource("3_8dp1p"), ExtResource("4_rg340"), ExtResource("5_05uhd")])
+enemy_counts = Array[int]([5, 4, 3, 2])

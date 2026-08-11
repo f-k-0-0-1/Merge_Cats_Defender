@@ -6,6 +6,9 @@
 [ext_resource type="Texture2D" uid="uid://b7veothhhe0pp" path="res://assets/Ui_compressed/BtnGreenPressed.png" id="3_v3hpu"]
 [ext_resource type="FontFile" uid="uid://cps2emwsmltk1" path="res://fonts/Super Bouncer.ttf" id="4_irg28"]
 
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_g6lwx"]
+bg_color = Color(0, 0, 0, 0.5882353)
+
 [node name="GameOver" type="CanvasLayer" unique_id=583370293]
 process_mode = 2
 script = ExtResource("1_7m3ot")
@@ -25,6 +28,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_g6lwx")
 
 [node name="TextureRect" type="TextureRect" parent="Control" unique_id=440937128]
 custom_minimum_size = Vector2(400, 180)

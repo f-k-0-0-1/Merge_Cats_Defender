@@ -14,9 +14,14 @@
 [ext_resource type="Texture2D" uid="uid://cbgx350opefrb" path="res://assets/Ui/WallIcon.png" id="10_407ns"]
 [ext_resource type="Script" uid="uid://bxejpo2w2rnv8" path="res://scripts/enemy_spawner.gd" id="10_hbo4f"]
 [ext_resource type="Texture2D" uid="uid://xgm6d4o4cvs3" path="res://assets/Ui/OrangeBTNAds.png" id="10_w3w6i"]
-[ext_resource type="Resource" uid="uid://ci5fwgvur62gr" path="res://data/enemies/enemy_01.tres" id="12_qixtg"]
-[ext_resource type="Resource" uid="uid://bwbnn2xxsatb0" path="res://data/enemies/enemy_02.tres" id="13_bhmdk"]
-[ext_resource type="Resource" uid="uid://v3demrc33mue" path="res://data/enemies/enemy_03.tres" id="14_s5y6v"]
+[ext_resource type="Script" uid="uid://divoylm8seaf0" path="res://autoloads/WaveManager.gd" id="18_ucu43"]
+[ext_resource type="Script" uid="uid://cx1uwut1j6bqm" path="res://scripts/WaveData.gd" id="19_cuhxg"]
+[ext_resource type="Resource" uid="uid://c2mg5yyo34yrj" path="res://data/waves/wave_01.tres" id="20_vrqbj"]
+[ext_resource type="Resource" uid="uid://cncgdw5slk21x" path="res://data/waves/wave_02.tres" id="21_gm2mb"]
+[ext_resource type="Texture2D" uid="uid://gn60oxodk06c" path="res://assets/Ui/WaveBar.png" id="22_25e7j"]
+[ext_resource type="Resource" uid="uid://b2oymdpy0ypjp" path="res://data/waves/wave_03.tres" id="22_jhs7r"]
+[ext_resource type="Resource" uid="uid://befp84g8uuikk" path="res://data/waves/wave_04.tres" id="23_28f34"]
+[ext_resource type="Resource" uid="uid://dcp8dny8cxkep" path="res://data/waves/wave_05.tres" id="24_3v6uj"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_u72on"]
 size = Vector2(24, 177)
@@ -343,16 +348,10 @@ grow_horizontal = 0
 texture_normal = ExtResource("6_ctvyo")
 stretch_mode = 4
 
-[node name="EnemySpawner" type="Node2D" parent="." unique_id=2141563192 node_paths=PackedStringArray("enemy_container", "enemy_1_spawn_point", "enemy_2_spawn_point", "enemy_3_spawn_point")]
+[node name="EnemySpawner" type="Node2D" parent="." unique_id=2141563192 node_paths=PackedStringArray("enemy_container")]
 script = ExtResource("10_hbo4f")
 enemy_scene = ExtResource("9_101mb")
 enemy_container = NodePath("../EnemyContainer")
-enemy_1_data = ExtResource("12_qixtg")
-enemy_1_spawn_point = NodePath("SpawnPoint1")
-enemy_2_data = ExtResource("13_bhmdk")
-enemy_2_spawn_point = NodePath("SpawnPoint2")
-enemy_3_data = ExtResource("14_s5y6v")
-enemy_3_spawn_point = NodePath("SpawnPoint3")
 
 [node name="SpawnPoint1" type="Marker2D" parent="EnemySpawner" unique_id=642598247]
 position = Vector2(706, 225)
@@ -373,6 +372,50 @@ wait_time = 5.0
 wait_time = 5.0
 
 [node name="EnemyContainer" type="Node2D" parent="." unique_id=23728596]
+
+[node name="WaveManager" type="Node2D" parent="." unique_id=2034751653 node_paths=PackedStringArray("enemy_spawner", "enemy_container", "spawn_points")]
+script = ExtResource("18_ucu43")
+waves = Array[ExtResource("19_cuhxg")]([ExtResource("20_vrqbj"), ExtResource("21_gm2mb"), ExtResource("22_jhs7r"), ExtResource("23_28f34"), ExtResource("24_3v6uj")])
+start_delay = 5.0
+enemy_spawner = NodePath("../EnemySpawner")
+enemy_container = NodePath("../EnemyContainer")
+spawn_points = [NodePath("../EnemySpawner/SpawnPoint1"), NodePath("../EnemySpawner/SpawnPoint2"), NodePath("../EnemySpawner/SpawnPoint3")]
+
+[node name="CurrentWave" type="TextureRect" parent="." unique_id=1654185944]
+custom_minimum_size = Vector2(100, 0)
+custom_maximum_size = Vector2(100, -1)
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = 508.0
+offset_top = 15.0
+offset_right = 608.0
+offset_bottom = 55.0
+grow_horizontal = 0
+texture = ExtResource("22_25e7j")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="Label" type="Label" parent="CurrentWave" unique_id=702995878]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -18.0
+offset_top = -11.0
+offset_right = 40.0
+offset_bottom = 9.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_colors/font_shadow_color = Color(0.16862746, 0.19215687, 0.21176471, 1)
+theme_override_constants/outline_size = 2
+theme_override_fonts/font = ExtResource("6_101mb")
+theme_override_font_sizes/font_size = 12
+text = "Wave 1/5"
+horizontal_alignment = 1
+vertical_alignment = 1
 
 [connection signal="pressed" from="BuyCatButton" to="." method="_on_buy_cat_button_pressed"]
 [connection signal="pressed" from="RepairWallButton" to="." method="_on_repair_wall_button_pressed"]

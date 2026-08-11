@@ -5,7 +5,8 @@ extends Node2D
 # REFERENCES
 # ============================================================
 
-@onready var buy_button: BaseButton = $BuyButton
+@onready var buy_cat_button: TextureButton = $BuyCatButton
+@onready var defense_wall: DefenseWall = $World/DefenseWall
 
 
 # ============================================================
@@ -39,14 +40,6 @@ func _ready() -> void:
 
 	# Update Buy button.
 	_update_buy_button()
-
-	# Connect Buy button.
-	if not buy_button.pressed.is_connected(
-		_on_buy_button_pressed
-	):
-		buy_button.pressed.connect(
-			_on_buy_button_pressed
-	)
 
 
 # ============================================================
@@ -167,11 +160,49 @@ func _create_starting_cats() -> void:
 	)
 
 
+
 # ============================================================
-# BUY CAT
+# FIND EMPTY SLOT
 # ============================================================
 
-func _on_buy_button_pressed() -> void:
+func _find_empty_slot() -> TextureRect:
+
+	for slot: TextureRect in slots:
+
+		if not slot.occupied:
+			return slot
+
+	return null
+
+
+# ============================================================
+# UPDATE BUY BUTTON
+# ============================================================
+
+func _update_buy_button() -> void:
+
+	var empty_slot: TextureRect = _find_empty_slot()
+
+	if empty_slot == null:
+
+		buy_cat_button.disabled = true
+
+	else:
+
+		buy_cat_button.disabled = false
+
+
+# ============================================================
+# BACK BUTTON
+# ============================================================
+
+func _on_back_button_pressed() -> void:
+
+	SceneManager.go_to_level_select()
+
+
+
+func _on_buy_cat_button_pressed() -> void:
 
 	var empty_slot: TextureRect = _find_empty_slot()
 
@@ -215,41 +246,9 @@ func _on_buy_button_pressed() -> void:
 	_update_buy_button()
 
 
-# ============================================================
-# FIND EMPTY SLOT
-# ============================================================
+func _on_repair_wall_button_pressed() -> void:
+	if defense_wall == null:
+		push_error("DefenseWall not found.")
+		return
 
-func _find_empty_slot() -> TextureRect:
-
-	for slot: TextureRect in slots:
-
-		if not slot.occupied:
-			return slot
-
-	return null
-
-
-# ============================================================
-# UPDATE BUY BUTTON
-# ============================================================
-
-func _update_buy_button() -> void:
-
-	var empty_slot: TextureRect = _find_empty_slot()
-
-	if empty_slot == null:
-
-		buy_button.disabled = true
-
-	else:
-
-		buy_button.disabled = false
-
-
-# ============================================================
-# BACK BUTTON
-# ============================================================
-
-func _on_back_button_pressed() -> void:
-
-	SceneManager.go_to_level_select()
+	defense_wall.repair()

@@ -1,0 +1,23 @@
+[gd_scene format=3 uid="uid://3qm2f8a35ise"]
+
+[ext_resource type="Script" uid="uid://f6gun86a61pd" path="res://scripts/trap.gd" id="1_62q8x"]
+[ext_resource type="Texture2D" uid="uid://bwlulrlwieqs3" path="res://assets/Ui/AddonIcon8.png" id="1_npg1n"]
+
+[node name="Trap" type="Node2D" unique_id=437043944 groups=["traps"]]
+z_index = 1
+scale = Vector2(0.8, 0.8)
+script = ExtResource("1_62q8x")
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=158088280]
+texture = ExtResource("1_npg1n")
+
+[node name="AttackTimer" type="Timer" parent="." unique_id=755767641]
+
+[node name="HealthBar" type="ProgressBar" parent="." unique_id=423146634]
+custom_minimum_size = Vector2(20, 0)
+offset_left = -26.249998
+offset_top = -43.75
+offset_right = 27.68934
+offset_bottom = -39.75
+value = 50.0
+show_percentage = false

@@ -1,0 +1,13 @@
+[gd_resource type="Resource" script_class="TrapData" format=3 uid="uid://c3bxyljt630ef"]
+
+[ext_resource type="Texture2D" uid="uid://bwlulrlwieqs3" path="res://assets/Ui/AddonIcon8.png" id="1_vd0my"]
+[ext_resource type="Script" uid="uid://bnvxy0wflmv1l" path="res://scripts/TrapData.gd" id="2_l6sjn"]
+[ext_resource type="PackedScene" uid="uid://3qm2f8a35ise" path="res://scenes/trap.tscn" id="3_dnxrx"]
+
+[resource]
+script = ExtResource("2_l6sjn")
+trap_name = "SpikesTrap"
+icon = ExtResource("1_vd0my")
+damage = 10.0
+attack_range = 25.0
+trap_scene = ExtResource("3_dnxrx")

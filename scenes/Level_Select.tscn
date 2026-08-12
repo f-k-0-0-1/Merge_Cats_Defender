@@ -15,7 +15,9 @@
 [ext_resource type="Texture2D" uid="uid://tsp8f4tkvl7f" path="res://assets/Ui/LockedLevel.png" id="8_s24pp"]
 [ext_resource type="Texture2D" uid="uid://clc2uxhey26ho" path="res://assets/Ui/Icon_Cat.png" id="10_yna7j"]
 [ext_resource type="Texture2D" uid="uid://drywyiomdsrs8" path="res://assets/Ui/Icon_Addon.png" id="11_crqhg"]
+[ext_resource type="Texture2D" uid="uid://tmut8xndp3o4" path="res://assets/cracks/crack_01.png" id="11_uarku"]
 [ext_resource type="Texture2D" uid="uid://berhuijweptbq" path="res://assets/Ui/Icon_Shop.png" id="12_s24pp"]
+[ext_resource type="Texture2D" uid="uid://j7dmofdsje8s" path="res://assets/cracks/crack_02.png" id="12_xj5oc"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_14mdo"]
 bg_color = Color(0.4627451, 0.5019608, 0.46666667, 1)
@@ -378,6 +380,34 @@ offset_bottom = 11.5
 grow_horizontal = 2
 grow_vertical = 2
 text = "Shop Page Comming Soon"
+
+[node name="Cracks" type="TextureRect" parent="RightPanel/Panel" unique_id=488145106]
+modulate = Color(0.11372549, 0.11372549, 0.11372549, 0.5254902)
+layout_mode = 0
+offset_right = 66.0
+offset_bottom = 63.0
+texture = ExtResource("11_uarku")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="Cracks2" type="TextureRect" parent="RightPanel" unique_id=2078506889]
+modulate = Color(0, 0, 0, 0.5058824)
+layout_mode = 1
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -86.0
+offset_top = -75.0
+offset_right = -25.0
+offset_bottom = 22.055054
+grow_horizontal = 0
+grow_vertical = 0
+rotation = 1.5707964
+texture = ExtResource("12_xj5oc")
+expand_mode = 1
+stretch_mode = 5
 
 [node name="Title_Ribbon" type="TextureRect" parent="RightPanel" unique_id=92367797]
 layout_mode = 1

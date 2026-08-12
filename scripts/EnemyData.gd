@@ -13,3 +13,6 @@ extends Resource
 @export_category("Visuals")
 @export var sprite_frames: SpriteFrames
 @export var scale: Vector2 = Vector2.ONE
+
+@export_category("Trap Combat")
+@export var trap_attack_range: float = 25.0

@@ -34,6 +34,7 @@
 [ext_resource type="Resource" uid="uid://ckr1ytfvepj74" path="res://data/traps/TNT_trap.tres" id="31_67d6o"]
 [ext_resource type="Script" uid="uid://b2usgssv7btxe" path="res://scripts/wave_announcement.gd" id="32_sqtar"]
 [ext_resource type="FontFile" uid="uid://dce351dgfj144" path="res://fonts/EightBitDragon-anqx.ttf" id="32_srvxn"]
+[ext_resource type="Script" uid="uid://dd4x4gsgb7dbr" path="res://scripts/TrashBin.gd" id="35_5vu4g"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_u72on"]
 size = Vector2(24, 177)
@@ -305,6 +306,15 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 
+[node name="TrashBin" type="TextureButton" parent="MergerUI" unique_id=539989773 groups=["trash_bin"]]
+custom_minimum_size = Vector2(35, 35)
+custom_maximum_size = Vector2(35, 35)
+offset_left = 74.0
+offset_top = 240.0
+offset_right = 109.0
+offset_bottom = 275.0
+script = ExtResource("35_5vu4g")
+
 [node name="BuyCatButton" type="TextureButton" parent="." unique_id=569233086]
 custom_maximum_size = Vector2(80, 40)
 anchors_preset = 2
@@ -477,9 +487,10 @@ enemy_container = NodePath("../EnemyContainer")
 wave_announcement = NodePath("../WaveAnnouncement")
 spawn_points = [NodePath("../EnemySpawner/SpawnPoint1"), NodePath("../EnemySpawner/SpawnPoint2"), NodePath("../EnemySpawner/SpawnPoint3")]
 
-[node name="TrapManager" type="Node2D" parent="." unique_id=1140456667 node_paths=PackedStringArray("trap_slots")]
+[node name="TrapManager" type="Node2D" parent="." unique_id=1140456667 node_paths=PackedStringArray("trap_slots", "trash_bin")]
 script = ExtResource("29_3v6uj")
 trap_slots = [NodePath("../MergerUI/TrapSystem/TrapSlot_1"), NodePath("../MergerUI/TrapSystem/TrapSlot_2"), NodePath("../MergerUI/TrapSystem/TrapSlot_3")]
+trash_bin = NodePath("../MergerUI/TrashBin")
 
 [node name="CurrentWave" type="TextureRect" parent="." unique_id=1654185944]
 custom_minimum_size = Vector2(100, 0)

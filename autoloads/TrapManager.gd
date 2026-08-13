@@ -10,6 +10,10 @@ extends Node2D
 @export_category("Preview")
 @export var preview_alpha: float = 0.6
 
+@export_category("Trash Bin")
+@export var trash_bin: Control
+@export var trash_drop_margin: float = 20.0
+
 var is_dragging: bool = false
 
 var dragged_trap: TrapData = null
@@ -22,6 +26,9 @@ var drag_preview: Sprite2D = null
 func _ready() -> void:
 	add_to_group("trap_manager")
 	set_process(true)
+
+	if trash_bin != null:
+		trash_bin.mouse_filter = Control.MOUSE_FILTER_IGNORE
 
 
 # ============================================================
@@ -81,32 +88,18 @@ func start_drag_existing(
 		)
 		return
 
-	# --------------------------------------------------------
-	# Save drag information
-	# --------------------------------------------------------
-
 	dragged_existing_trap = trap
 	dragged_trap = trap.trap_data
 	source_slot = from_slot
 
 	is_dragging = true
 
-	# --------------------------------------------------------
-	# Free the source slot
-	# --------------------------------------------------------
-
+	# Remove trap from source slot.
 	source_slot.clear_trap()
 
-	# --------------------------------------------------------
-	# Disable trap combat while dragging
-	# --------------------------------------------------------
-
+	# Disable combat while dragging.
 	if trap.has_method("set_being_dragged"):
 		trap.set_being_dragged(true)
-
-	# --------------------------------------------------------
-	# Put trap above gameplay
-	# --------------------------------------------------------
 
 	trap.visible = true
 	trap.z_index = 1000
@@ -127,42 +120,32 @@ func _process(_delta: float) -> void:
 	if not is_dragging:
 		return
 
-	var mouse_position: Vector2 = (
-		get_global_mouse_position()
-	)
+	var mouse_position: Vector2 = get_global_mouse_position()
 
 	# --------------------------------------------------------
-	# Move existing trap
+	# Update Trash Bin Hover State
 	# --------------------------------------------------------
+	if trash_bin != null and trash_bin.has_method("set_hovered"):
+		trash_bin.set_hovered(_is_mouse_over_trash_bin())
 
+	# --------------------------------------------------------
+	# Existing trap follows mouse
+	# --------------------------------------------------------
 	if dragged_existing_trap != null:
-
-		if is_instance_valid(
-			dragged_existing_trap
-		):
-			dragged_existing_trap.global_position = (
-				mouse_position
-			)
+		if is_instance_valid(dragged_existing_trap):
+			dragged_existing_trap.global_position = mouse_position
 
 	# --------------------------------------------------------
-	# Move new trap preview
+	# New trap preview follows mouse
 	# --------------------------------------------------------
-
 	elif drag_preview != null:
-
-		drag_preview.global_position = (
-			mouse_position
-		)
+		drag_preview.global_position = mouse_position
 
 	# --------------------------------------------------------
-	# Detect mouse release
+	# Mouse release
 	# --------------------------------------------------------
-
-	if not Input.is_mouse_button_pressed(
-		MOUSE_BUTTON_LEFT
-	):
+	if not Input.is_mouse_button_pressed(MOUSE_BUTTON_LEFT):
 		_finish_drag()
-
 
 # ============================================================
 # CREATE DRAG PREVIEW
@@ -186,8 +169,6 @@ func _create_drag_preview(
 	drag_preview.texture = texture
 	drag_preview.scale = trap_scale
 	drag_preview.modulate.a = preview_alpha
-
-	# Always above gameplay.
 	drag_preview.z_index = 1000
 
 	add_child(
@@ -207,85 +188,106 @@ func _finish_drag() -> void:
 	if not is_dragging:
 		return
 
-	var mouse_position: Vector2 = (
-		get_global_mouse_position()
-	)
+	var mouse_position: Vector2 = get_global_mouse_position()
 
-	var target_slot: TrapSlot = (
-		_find_best_slot(mouse_position)
-	)
+	# ========================================================
+	# 1. ABSOLUTE PRIORITY: TRASH BIN CHECK
+	# ========================================================
+	if _is_mouse_over_trash_bin():
+		print("SUCCESS: Drop detected inside Trash Bin.")
+		_delete_dragged_trap()
+		return
 
-	# --------------------------------------------------------
-	# No valid target
-	# --------------------------------------------------------
+	# ========================================================
+	# 2. NORMAL SLOT CHECK
+	# ========================================================
+	var target_slot: TrapSlot = _find_best_slot(mouse_position)
 
 	if target_slot == null:
-		print(
-			"No valid trap slot."
-		)
-
+		print("No valid trap slot.")
 		_restore_existing_trap()
 		return
 
-	# --------------------------------------------------------
-	# Check distance
-	# --------------------------------------------------------
-
-	var slot_position: Vector2 = (
-		target_slot.get_world_position()
-	)
-
-	var distance: float = (
-		mouse_position.distance_to(
-			slot_position
-		)
-	)
+	var slot_position: Vector2 = target_slot.get_world_position()
+	var distance: float = mouse_position.distance_to(slot_position)
 
 	if distance > placement_distance:
-		print(
-			"Trap dropped too far from slot. Distance: ",
-			distance
-		)
-
+		print("Trap dropped too far from slot. Distance: ", distance)
 		_restore_existing_trap()
 		return
 
-	# --------------------------------------------------------
-	# Move existing trap
-	# --------------------------------------------------------
-
+	# ========================================================
+	# 3. EXISTING TRAP MOVE
+	# ========================================================
 	if dragged_existing_trap != null:
+		_move_existing_trap(target_slot)
+		return
 
-		_move_existing_trap(
-			target_slot
-		)
+	# ========================================================
+	# 4. NEW TRAP PLACEMENT
+	# ========================================================
+	if dragged_trap != null:
+		var success: bool = target_slot.place_trap(dragged_trap)
+		if success:
+			print("Trap placed in slot: ", target_slot.slot_index)
+		else:
+			print("Failed to place trap.")
 
+	_clear_drag_state()
+# ============================================================
+# TRASH BIN DETECTION
+# ============================================================
+
+func _is_mouse_over_trash_bin() -> bool:
+	if trash_bin == null:
+		return false
+
+	if not is_instance_valid(trash_bin):
+		return false
+
+	# Get global bounding rect of the trash bin control element
+	var rect: Rect2 = trash_bin.get_global_rect()
+
+	# Expand the bounding box slightly to make it easier to drop items onto it on mobile touchscreens
+	rect = rect.grow(trash_drop_margin)
+
+	# Use viewport mouse position for reliable UI canvas hit testing
+	var viewport_mouse: Vector2 = get_viewport().get_mouse_position()
+
+	var inside: bool = rect.has_point(viewport_mouse)
+
+	if inside:
+		print("TRASH BIN DETECTED AT VIEWPORT POS: ", viewport_mouse)
+
+	return inside
+
+# ============================================================
+# DELETE DRAGGED TRAP
+# ============================================================
+
+func _delete_dragged_trap() -> void:
+	# --------------------------------------------------------
+	# Existing trap from a slot
+	# --------------------------------------------------------
+	if dragged_existing_trap != null:
+		if is_instance_valid(dragged_existing_trap):
+			if trash_bin != null and trash_bin.has_method("delete_trap"):
+				trash_bin.delete_trap(dragged_existing_trap)
+			else:
+				dragged_existing_trap.queue_free()
+
+		_clear_drag_state()
 		return
 
 	# --------------------------------------------------------
-	# Place new trap
+	# New unplaced trap from shop button
 	# --------------------------------------------------------
-
 	if dragged_trap != null:
-
-		var success: bool = (
-			target_slot.place_trap(
-				dragged_trap
-			)
-		)
-
-		if success:
-			print(
-				"Trap placed in slot: ",
-				target_slot.slot_index
-			)
-		else:
-			print(
-				"Failed to place trap."
-			)
+		print("Cancelled/Deleted new unplaced trap: ", dragged_trap.trap_name)
+		_clear_drag_state()
+		return
 
 	_clear_drag_state()
-
 
 # ============================================================
 # FIND BEST SLOT
@@ -310,7 +312,6 @@ func _find_best_slot(
 		if slot == null:
 			continue
 
-		# Occupied slots cannot receive another trap.
 		if slot.occupied:
 			continue
 
@@ -357,18 +358,10 @@ func _move_existing_trap(
 		dragged_existing_trap
 	)
 
-	# --------------------------------------------------------
-	# Dropped back on original slot
-	# --------------------------------------------------------
-
+	# Same slot.
 	if target_slot == source_slot:
-
 		_restore_existing_trap()
 		return
-
-	# --------------------------------------------------------
-	# Place trap in new slot
-	# --------------------------------------------------------
 
 	var success: bool = (
 		target_slot.place_existing_trap(
@@ -424,10 +417,6 @@ func _restore_existing_trap() -> void:
 		dragged_existing_trap
 	)
 
-	# --------------------------------------------------------
-	# Put trap back into source slot
-	# --------------------------------------------------------
-
 	if source_slot != null:
 
 		var success: bool = (
@@ -437,14 +426,9 @@ func _restore_existing_trap() -> void:
 		)
 
 		if not success:
-
 			push_error(
 				"TrapManager: Failed to restore trap."
 			)
-
-	# --------------------------------------------------------
-	# Restore trap state
-	# --------------------------------------------------------
 
 	trap.visible = true
 	trap.z_index = 0
@@ -464,18 +448,19 @@ func _restore_existing_trap() -> void:
 # ============================================================
 
 func _clear_drag_state() -> void:
-
 	_remove_drag_preview()
 
-	is_dragging = false
+	if trash_bin != null and trash_bin.has_method("set_hovered"):
+		trash_bin.set_hovered(false)
 
+	is_dragging = false
 	dragged_trap = null
 	dragged_existing_trap = null
 	source_slot = null
 
 
 # ============================================================
-# REMOVE DRAG PREVIEW
+# REMOVE PREVIEW
 # ============================================================
 
 func _remove_drag_preview() -> void:

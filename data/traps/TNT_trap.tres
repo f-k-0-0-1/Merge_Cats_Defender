@@ -1,0 +1,17 @@
+[gd_resource type="Resource" script_class="TrapData" format=3 uid="uid://ckr1ytfvepj74"]
+
+[ext_resource type="Texture2D" uid="uid://txxl8w2fmftu" path="res://assets/Ui/AddonIcon6.png" id="1_dfosg"]
+[ext_resource type="Script" uid="uid://bnvxy0wflmv1l" path="res://scripts/TrapData.gd" id="2_n1fkc"]
+[ext_resource type="PackedScene" uid="uid://3qm2f8a35ise" path="res://scenes/trap.tscn" id="3_gd4ce"]
+
+[resource]
+script = ExtResource("2_n1fkc")
+trap_type = "EXPLOSIVE"
+trap_name = "TNT"
+icon = ExtResource("1_dfosg")
+max_health = 100.0
+damage = 100.0
+attack_range = 25.0
+attack_cooldown = 3.0
+trap_scene = ExtResource("3_gd4ce")
+explosion_radius = 120.0

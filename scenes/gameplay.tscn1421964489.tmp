@@ -31,9 +31,6 @@
 [ext_resource type="Texture2D" uid="uid://txxl8w2fmftu" path="res://assets/Ui/AddonIcon6.png" id="27_gm2mb"]
 [ext_resource type="Resource" uid="uid://c3bxyljt630ef" path="res://data/traps/spike_trap.tres" id="28_rqnht"]
 [ext_resource type="Script" uid="uid://bdcjqox6ft050" path="res://autoloads/TrapManager.gd" id="29_3v6uj"]
-[ext_resource type="Resource" uid="uid://ckr1ytfvepj74" path="res://data/traps/TNT_trap.tres" id="31_67d6o"]
-[ext_resource type="Script" uid="uid://b2usgssv7btxe" path="res://scripts/wave_announcement.gd" id="32_sqtar"]
-[ext_resource type="FontFile" uid="uid://dce351dgfj144" path="res://fonts/EightBitDragon-anqx.ttf" id="32_srvxn"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_u72on"]
 size = Vector2(24, 177)
@@ -82,17 +79,6 @@ theme_override_styles/fill = SubResource("StyleBoxFlat_14mdo")
 value = 70.0
 fill_mode = 1
 show_percentage = false
-
-[node name="TrapPositions" type="Node2D" parent="World" unique_id=2092586496]
-
-[node name="TrapPosition1" type="Marker2D" parent="World/TrapPositions" unique_id=557622937]
-position = Vector2(392.44254, 111.66957)
-
-[node name="TrapPosition2" type="Marker2D" parent="World/TrapPositions" unique_id=1754713405]
-position = Vector2(392.4804, 180.71329)
-
-[node name="TrapPosition3" type="Marker2D" parent="World/TrapPositions" unique_id=2043378198]
-position = Vector2(392.71707, 248.49814)
 
 [node name="MergerUI" type="CanvasLayer" parent="." unique_id=78139011]
 follow_viewport_enabled = true
@@ -246,14 +232,15 @@ script = ExtResource("4_hbo4f")
 slot_index = 4
 
 [node name="TrapSystem" type="GridContainer" parent="MergerUI" unique_id=524335683]
-z_index = -1
-anchors_preset = -1
-anchor_right = 0.56700003
-anchor_bottom = 1.0
-offset_left = 378.0
-offset_top = 105.0
-offset_right = -0.24002075
-offset_bottom = -105.0
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = 18.0
+offset_top = -75.0
+offset_right = 48.0
+offset_bottom = 75.0
 grow_horizontal = 2
 grow_vertical = 2
 theme_override_constants/v_separation = 38
@@ -261,7 +248,6 @@ theme_override_constants/v_separation = 38
 [node name="TrapSlot_1" type="Control" parent="MergerUI/TrapSystem" unique_id=1744616658]
 custom_minimum_size = Vector2(30, 30)
 layout_mode = 2
-mouse_filter = 2
 script = ExtResource("6_3v6uj")
 
 [node name="Panel" type="Panel" parent="MergerUI/TrapSystem/TrapSlot_1" unique_id=1721678137]
@@ -276,7 +262,6 @@ grow_vertical = 2
 [node name="TrapSlot_2" type="Control" parent="MergerUI/TrapSystem" unique_id=1980098287]
 custom_minimum_size = Vector2(30, 30)
 layout_mode = 2
-mouse_filter = 2
 script = ExtResource("6_3v6uj")
 slot_index = 1
 
@@ -292,7 +277,6 @@ grow_vertical = 2
 [node name="TrapSlot_3" type="Control" parent="MergerUI/TrapSystem" unique_id=1968979030]
 custom_minimum_size = Vector2(30, 30)
 layout_mode = 2
-mouse_filter = 2
 script = ExtResource("6_3v6uj")
 slot_index = 2
 
@@ -310,12 +294,11 @@ custom_maximum_size = Vector2(80, 40)
 anchors_preset = 2
 anchor_top = 1.0
 anchor_bottom = 1.0
-offset_left = 60.000004
-offset_top = 283.0
+offset_left = 60.0
+offset_top = 288.0
 offset_right = 140.0
-offset_bottom = 323.0
+offset_bottom = 328.0
 grow_vertical = 0
-scale = Vector2(1.2, 1.2)
 texture_normal = ExtResource("4_4bh5q")
 texture_pressed = ExtResource("5_101mb")
 stretch_mode = 4
@@ -372,11 +355,10 @@ anchors_preset = 2
 anchor_top = 1.0
 anchor_bottom = 1.0
 offset_left = 161.0
-offset_top = 283.0
+offset_top = 288.0
 offset_right = 241.0
-offset_bottom = 323.0
+offset_bottom = 328.0
 grow_vertical = 0
-scale = Vector2(1.2, 1.2)
 texture_normal = ExtResource("10_w3w6i")
 texture_pressed = ExtResource("10_w3w6i")
 stretch_mode = 4
@@ -466,20 +448,13 @@ wait_time = 5.0
 
 [node name="EnemyContainer" type="Node2D" parent="." unique_id=23728596]
 
-[node name="TrapContainer" type="Node2D" parent="." unique_id=2119793388]
-
-[node name="WaveManager" type="Node2D" parent="." unique_id=2034751653 node_paths=PackedStringArray("enemy_spawner", "enemy_container", "wave_announcement", "spawn_points")]
+[node name="WaveManager" type="Node2D" parent="." unique_id=2034751653 node_paths=PackedStringArray("enemy_spawner", "enemy_container", "spawn_points")]
 script = ExtResource("18_ucu43")
 waves = Array[ExtResource("19_cuhxg")]([ExtResource("20_vrqbj"), ExtResource("21_gm2mb"), ExtResource("22_jhs7r"), ExtResource("23_28f34"), ExtResource("24_3v6uj")])
 start_delay = 5.0
 enemy_spawner = NodePath("../EnemySpawner")
 enemy_container = NodePath("../EnemyContainer")
-wave_announcement = NodePath("../WaveAnnouncement")
 spawn_points = [NodePath("../EnemySpawner/SpawnPoint1"), NodePath("../EnemySpawner/SpawnPoint2"), NodePath("../EnemySpawner/SpawnPoint3")]
-
-[node name="TrapManager" type="Node2D" parent="." unique_id=1140456667 node_paths=PackedStringArray("trap_slots")]
-script = ExtResource("29_3v6uj")
-trap_slots = [NodePath("../MergerUI/TrapSystem/TrapSlot_1"), NodePath("../MergerUI/TrapSystem/TrapSlot_2"), NodePath("../MergerUI/TrapSystem/TrapSlot_3")]
 
 [node name="CurrentWave" type="TextureRect" parent="." unique_id=1654185944]
 custom_minimum_size = Vector2(100, 0)
@@ -557,8 +532,8 @@ vertical_alignment = 1
 
 [node name="SpikesTrapButton" type="TextureButton" parent="." unique_id=2140103094]
 offset_left = 480.0
-offset_top = 281.0
-offset_right = 528.0
+offset_top = 289.0
+offset_right = 520.0
 offset_bottom = 329.0
 texture_normal = ExtResource("25_vrqbj")
 ignore_texture_size = true
@@ -583,18 +558,16 @@ texture = ExtResource("26_gm2mb")
 expand_mode = 1
 stretch_mode = 5
 
-[node name="TNTButton" type="TextureButton" parent="." unique_id=1622246244]
-offset_left = 533.0
-offset_top = 281.0
-offset_right = 581.0
+[node name="TextureButton2" type="TextureButton" parent="." unique_id=1622246244]
+offset_left = 531.0
+offset_top = 289.0
+offset_right = 571.0
 offset_bottom = 329.0
 texture_normal = ExtResource("25_vrqbj")
 ignore_texture_size = true
 stretch_mode = 4
-script = ExtResource("26_28f34")
-trap_data = ExtResource("31_67d6o")
 
-[node name="TextureRect" type="TextureRect" parent="TNTButton" unique_id=747274539]
+[node name="TextureRect" type="TextureRect" parent="TextureButton2" unique_id=747274539]
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -611,40 +584,11 @@ texture = ExtResource("27_gm2mb")
 expand_mode = 1
 stretch_mode = 5
 
-[node name="WaveAnnouncement" type="Control" parent="." unique_id=1897564805]
-visible = false
-z_index = 15
-layout_mode = 3
-script = ExtResource("32_sqtar")
-intro_duration = 0.4
-hold_duration = 0.8
-outro_duration = 0.8
-label_overshoot_scale = Vector2(1, 1)
+[node name="TrapManager" type="Node2D" parent="." unique_id=1140456667 node_paths=PackedStringArray("trap_slots")]
+script = ExtResource("29_3v6uj")
+trap_slots = [NodePath("../MergerUI/TrapSystem/TrapSlot_1"), NodePath("../MergerUI/TrapSystem/TrapSlot_2"), NodePath("../MergerUI/TrapSystem/TrapSlot_3")]
 
-[node name="Panel" type="Panel" parent="WaveAnnouncement" unique_id=1087007452]
-modulate = Color(0, 0, 0, 1)
-layout_mode = 0
-offset_right = 723.0
-offset_bottom = 360.0
-
-[node name="WaveLabel" type="Label" parent="WaveAnnouncement" unique_id=518953696]
-layout_mode = 1
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = 292.0
-offset_top = 144.5
-offset_right = 390.0
-offset_bottom = 170.5
-grow_horizontal = 2
-grow_vertical = 2
-theme_override_colors/font_shadow_color = Color(0.23986983, 0.15653053, 0.121725984, 1)
-theme_override_constants/outline_size = 2
-theme_override_fonts/font = ExtResource("32_srvxn")
-theme_override_font_sizes/font_size = 25
-text = "Wave 1"
+[node name="TrapContainer" type="Node2D" parent="." unique_id=2119793388]
 
 [connection signal="pressed" from="BuyCatButton" to="." method="_on_buy_cat_button_pressed"]
 [connection signal="pressed" from="RepairWallButton" to="." method="_on_repair_wall_button_pressed"]

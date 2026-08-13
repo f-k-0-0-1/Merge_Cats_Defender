@@ -2,6 +2,94 @@
 
 [ext_resource type="Script" uid="uid://f6gun86a61pd" path="res://scripts/trap.gd" id="1_62q8x"]
 [ext_resource type="Texture2D" uid="uid://bwlulrlwieqs3" path="res://assets/Ui/AddonIcon8.png" id="1_npg1n"]
+[ext_resource type="Texture2D" uid="uid://vgfe8bjf01sn" path="res://assets/Explosion/ExplosionFx-Explossion_00.png" id="3_6yc57"]
+[ext_resource type="Texture2D" uid="uid://cfnh8detnqmbl" path="res://assets/Explosion/ExplosionFx-Explossion_01.png" id="4_0nv6f"]
+[ext_resource type="Texture2D" uid="uid://cc1onjip2tulw" path="res://assets/Explosion/ExplosionFx-Explossion_02.png" id="5_fi7nu"]
+[ext_resource type="Texture2D" uid="uid://24nrg7x2quym" path="res://assets/Explosion/ExplosionFx-Explossion_03.png" id="6_m66ir"]
+[ext_resource type="Texture2D" uid="uid://bpbe2f4nxd6pp" path="res://assets/Explosion/ExplosionFx-Explossion_04.png" id="7_8kb72"]
+[ext_resource type="Texture2D" uid="uid://cg6nputnot55w" path="res://assets/Explosion/ExplosionFx-Explossion_05.png" id="8_xuh3j"]
+[ext_resource type="Texture2D" uid="uid://mb4spqovsl4b" path="res://assets/Explosion/ExplosionFx-Explossion_06.png" id="9_x0yyp"]
+[ext_resource type="Texture2D" uid="uid://cikfafle8fo3p" path="res://assets/Explosion/ExplosionFx-Explossion_07.png" id="10_lte3x"]
+[ext_resource type="Texture2D" uid="uid://co6723hnxg221" path="res://assets/Explosion/ExplosionFx-Explossion_08.png" id="11_cfqwo"]
+[ext_resource type="Texture2D" uid="uid://bd14vlbrepetv" path="res://assets/Explosion/ExplosionFx-Explossion_09.png" id="12_xs5jl"]
+[ext_resource type="Texture2D" uid="uid://c0ktpdssuedcc" path="res://assets/Explosion/ExplosionFx-Explossion_10.png" id="13_hnbec"]
+[ext_resource type="Texture2D" uid="uid://ssv6lydtjdkf" path="res://assets/Explosion/ExplosionFx-Explossion_11.png" id="14_rxhlx"]
+[ext_resource type="Texture2D" uid="uid://cjiyjtu4h6csw" path="res://assets/Explosion/ExplosionFx-Explossion_12.png" id="15_iypha"]
+[ext_resource type="Texture2D" uid="uid://dxw00ptjke3xi" path="res://assets/Explosion/ExplosionFx-Explossion_13.png" id="16_so655"]
+[ext_resource type="Texture2D" uid="uid://bax57x7vw7s1a" path="res://assets/Explosion/ExplosionFx-Explossion_14.png" id="17_ehr5o"]
+[ext_resource type="Texture2D" uid="uid://b7gobinjm3gm" path="res://assets/Explosion/ExplosionFx-Explossion_15.png" id="18_l1ovm"]
+[ext_resource type="Texture2D" uid="uid://mdhgi1n4x4gi" path="res://assets/Explosion/ExplosionFx-Explossion_16.png" id="19_bitgl"]
+[ext_resource type="Texture2D" uid="uid://dm2fyabhg847m" path="res://assets/Explosion/ExplosionFx-Explossion_17.png" id="20_ctn77"]
+[ext_resource type="Texture2D" uid="uid://pmrk7vbv3h1l" path="res://assets/Explosion/ExplosionFx-Explossion_18.png" id="21_v6pa1"]
+[ext_resource type="Texture2D" uid="uid://62gvreh5qffi" path="res://assets/Explosion/ExplosionFx-Explossion_19.png" id="22_6kqaq"]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_qbdj3"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("3_6yc57")
+}, {
+"duration": 1.0,
+"texture": ExtResource("4_0nv6f")
+}, {
+"duration": 1.0,
+"texture": ExtResource("5_fi7nu")
+}, {
+"duration": 1.0,
+"texture": ExtResource("6_m66ir")
+}, {
+"duration": 1.0,
+"texture": ExtResource("7_8kb72")
+}, {
+"duration": 1.0,
+"texture": ExtResource("8_xuh3j")
+}, {
+"duration": 1.0,
+"texture": ExtResource("9_x0yyp")
+}, {
+"duration": 1.0,
+"texture": ExtResource("10_lte3x")
+}, {
+"duration": 1.0,
+"texture": ExtResource("11_cfqwo")
+}, {
+"duration": 1.0,
+"texture": ExtResource("12_xs5jl")
+}, {
+"duration": 1.0,
+"texture": ExtResource("13_hnbec")
+}, {
+"duration": 1.0,
+"texture": ExtResource("14_rxhlx")
+}, {
+"duration": 1.0,
+"texture": ExtResource("15_iypha")
+}, {
+"duration": 1.0,
+"texture": ExtResource("16_so655")
+}, {
+"duration": 1.0,
+"texture": ExtResource("17_ehr5o")
+}, {
+"duration": 1.0,
+"texture": ExtResource("18_l1ovm")
+}, {
+"duration": 1.0,
+"texture": ExtResource("19_bitgl")
+}, {
+"duration": 1.0,
+"texture": ExtResource("20_ctn77")
+}, {
+"duration": 1.0,
+"texture": ExtResource("21_v6pa1")
+}, {
+"duration": 1.0,
+"texture": ExtResource("22_6kqaq")
+}],
+"loop": 0,
+"name": &"explode",
+"speed": 25.0
+}]
 
 [node name="Trap" type="Node2D" unique_id=437043944 groups=["traps"]]
 z_index = 1
@@ -14,10 +102,23 @@ texture = ExtResource("1_npg1n")
 [node name="AttackTimer" type="Timer" parent="." unique_id=755767641]
 
 [node name="HealthBar" type="ProgressBar" parent="." unique_id=423146634]
-custom_minimum_size = Vector2(20, 0)
-offset_left = -26.249998
-offset_top = -43.75
-offset_right = 27.68934
-offset_bottom = -39.75
+custom_minimum_size = Vector2(10, 1)
+offset_left = -22.5
+offset_top = -30.0
+offset_right = 22.499996
+offset_bottom = -26.0
 value = 50.0
 show_percentage = false
+
+[node name="VisibilityTimer" type="Timer" parent="." unique_id=1569324370]
+one_shot = true
+
+[node name="ExplosionEffect" type="AnimatedSprite2D" parent="." unique_id=1615751372]
+visible = false
+sprite_frames = SubResource("SpriteFrames_qbdj3")
+animation = &"explode"
+frame = 19
+frame_progress = 1.0
+
+[node name="FuseTimer" type="Timer" parent="." unique_id=1351937023]
+one_shot = true

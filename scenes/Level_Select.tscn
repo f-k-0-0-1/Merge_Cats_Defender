@@ -126,12 +126,12 @@ expand_mode = 1
 stretch_mode = 4
 
 [node name="LevelButton1" type="TextureButton" parent="RightPanel/Panel/Content/HomePage/ScrollContainer/MapContainer" unique_id=14380049]
-custom_maximum_size = Vector2(45, 45)
+custom_maximum_size = Vector2(55, 55)
 layout_mode = 0
-offset_left = 31.0
-offset_top = 61.0
-offset_right = 76.0
-offset_bottom = 106.0
+offset_left = 27.0
+offset_top = 59.0
+offset_right = 82.0
+offset_bottom = 114.0
 texture_normal = ExtResource("7_crqhg")
 texture_disabled = ExtResource("8_s24pp")
 stretch_mode = 5
@@ -155,12 +155,12 @@ text = "1"
 horizontal_alignment = 1
 
 [node name="LevelButton2" type="TextureButton" parent="RightPanel/Panel/Content/HomePage/ScrollContainer/MapContainer" unique_id=1933678546]
-custom_maximum_size = Vector2(45, 45)
+custom_maximum_size = Vector2(55, 55)
 layout_mode = 0
-offset_left = 40.0
-offset_top = 139.0
-offset_right = 85.0
-offset_bottom = 184.0
+offset_left = 36.0
+offset_top = 137.0
+offset_right = 91.0
+offset_bottom = 192.0
 disabled = true
 texture_normal = ExtResource("7_crqhg")
 texture_disabled = ExtResource("8_s24pp")
@@ -186,12 +186,12 @@ text = "2"
 horizontal_alignment = 1
 
 [node name="LevelButton3" type="TextureButton" parent="RightPanel/Panel/Content/HomePage/ScrollContainer/MapContainer" unique_id=730749700]
-custom_maximum_size = Vector2(45, 45)
+custom_maximum_size = Vector2(55, 55)
 layout_mode = 0
-offset_left = 109.0
-offset_top = 145.0
-offset_right = 154.0
-offset_bottom = 190.0
+offset_left = 125.0
+offset_top = 137.0
+offset_right = 180.0
+offset_bottom = 192.0
 disabled = true
 texture_normal = ExtResource("7_crqhg")
 texture_disabled = ExtResource("8_s24pp")
@@ -217,12 +217,12 @@ text = "3"
 horizontal_alignment = 1
 
 [node name="LevelButton4" type="TextureButton" parent="RightPanel/Panel/Content/HomePage/ScrollContainer/MapContainer" unique_id=166646028]
-custom_maximum_size = Vector2(45, 45)
+custom_maximum_size = Vector2(55, 55)
 layout_mode = 0
-offset_left = 140.0
-offset_top = 99.0
-offset_right = 185.0
-offset_bottom = 144.0
+offset_left = 138.0
+offset_top = 55.0
+offset_right = 193.0
+offset_bottom = 110.0
 disabled = true
 texture_normal = ExtResource("7_crqhg")
 texture_disabled = ExtResource("8_s24pp")
@@ -248,12 +248,12 @@ text = "4"
 horizontal_alignment = 1
 
 [node name="LevelButton5" type="TextureButton" parent="RightPanel/Panel/Content/HomePage/ScrollContainer/MapContainer" unique_id=1141809886]
-custom_maximum_size = Vector2(45, 45)
+custom_maximum_size = Vector2(55, 55)
 layout_mode = 0
-offset_left = 146.0
-offset_top = 45.0
-offset_right = 191.0
-offset_bottom = 90.0
+offset_left = 215.0
+offset_top = 33.0
+offset_right = 270.0
+offset_bottom = 88.0
 disabled = true
 texture_normal = ExtResource("7_crqhg")
 texture_disabled = ExtResource("8_s24pp")
@@ -279,12 +279,12 @@ text = "5"
 horizontal_alignment = 1
 
 [node name="LevelButton6" type="TextureButton" parent="RightPanel/Panel/Content/HomePage/ScrollContainer/MapContainer" unique_id=1989130030]
-custom_maximum_size = Vector2(45, 45)
+custom_maximum_size = Vector2(55, 55)
 layout_mode = 0
-offset_left = 219.0
-offset_top = 38.0
-offset_right = 264.0
-offset_bottom = 83.0
+offset_left = 244.0
+offset_top = 108.0
+offset_right = 299.0
+offset_bottom = 163.0
 disabled = true
 texture_normal = ExtResource("7_crqhg")
 texture_disabled = ExtResource("8_s24pp")
@@ -331,7 +331,7 @@ offset_right = 20.0
 offset_bottom = 11.5
 grow_horizontal = 2
 grow_vertical = 2
-text = "Upgrade Page Comming Soon"
+text = "Upgrade Page Coming Soon"
 
 [node name="AddonsPage" type="Control" parent="RightPanel/Panel/Content" unique_id=1183487657]
 visible = false
@@ -355,7 +355,7 @@ offset_right = 20.0
 offset_bottom = 11.5
 grow_horizontal = 2
 grow_vertical = 2
-text = "Extras Page Comming Soon"
+text = "Extras Page Coming Soon"
 
 [node name="ShopPage" type="Control" parent="RightPanel/Panel/Content" unique_id=1669835594]
 visible = false
@@ -379,7 +379,7 @@ offset_right = 20.0
 offset_bottom = 11.5
 grow_horizontal = 2
 grow_vertical = 2
-text = "Shop Page Comming Soon"
+text = "Shop Page Coming Soon"
 
 [node name="Cracks" type="TextureRect" parent="RightPanel/Panel" unique_id=488145106]
 modulate = Color(0.11372549, 0.11372549, 0.11372549, 0.5254902)

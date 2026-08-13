@@ -1,6 +1,9 @@
 class_name TrapData
 extends Resource
 
+@export_category("Trap Behavior")
+@export_enum("NORMAL", "EXPLOSIVE") var trap_type: String = "NORMAL"
+
 @export_category("Basic")
 @export var trap_name: String = "Trap"
 @export var icon: Texture2D
@@ -16,3 +19,8 @@ extends Resource
 
 @export_category("Scene")
 @export var trap_scene: PackedScene
+
+@export_category("Explosion")
+@export var explosion_radius: float = 150.0
+@export var explosion_damage: float = 50.0
+@export var explosion_delay: float = 0.35

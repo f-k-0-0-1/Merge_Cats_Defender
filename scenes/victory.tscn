@@ -30,7 +30,7 @@ grow_vertical = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_g6lwx")
 
 [node name="TextureRect" type="TextureRect" parent="Control" unique_id=1032899836]
-custom_minimum_size = Vector2(350, 200)
+custom_minimum_size = Vector2(500, 250)
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -48,17 +48,17 @@ expand_mode = 1
 stretch_mode = 5
 
 [node name="ContinueButton" type="TextureButton" parent="Control" unique_id=242279339]
-custom_maximum_size = Vector2(100, 40)
+custom_maximum_size = Vector2(125, 50)
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -55.0
-offset_top = 31.0
-offset_right = 45.0
-offset_bottom = 71.0
+offset_left = -65.233
+offset_top = 48.077515
+offset_right = 59.767
+offset_bottom = 98.077515
 grow_horizontal = 2
 grow_vertical = 2
 texture_normal = ExtResource("2_73dpb")

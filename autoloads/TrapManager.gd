@@ -25,62 +25,6 @@ func _ready() -> void:
 
 
 # ============================================================
-# INPUT
-# ============================================================
-
-func _input(event: InputEvent) -> void:
-	if is_dragging:
-		if event is InputEventMouseButton:
-			if event.button_index == MOUSE_BUTTON_LEFT:
-				if not event.pressed:
-					_finish_drag()
-					get_viewport().set_input_as_handled()
-
-		elif event is InputEventScreenTouch:
-			if not event.pressed:
-				_finish_drag()
-				get_viewport().set_input_as_handled()
-
-		return
-
-	# --------------------------------------------------------
-	# Mouse press
-	# --------------------------------------------------------
-
-	if event is InputEventMouseButton:
-		if event.button_index != MOUSE_BUTTON_LEFT:
-			return
-
-		if not event.pressed:
-			return
-
-		var trap: Trap = _get_trap_at_mouse()
-
-		if trap != null:
-			start_drag_existing(trap)
-			get_viewport().set_input_as_handled()
-
-		return
-
-	# --------------------------------------------------------
-	# Touch press
-	# --------------------------------------------------------
-
-	if event is InputEventScreenTouch:
-		if not event.pressed:
-			return
-
-		var touch_position: Vector2 = event.position
-		var trap: Trap = _get_trap_at_world_position(
-			_screen_to_world(touch_position)
-		)
-
-		if trap != null:
-			start_drag_existing(trap)
-			get_viewport().set_input_as_handled()
-
-
-# ============================================================
 # START NEW TRAP DRAG
 # ============================================================
 
@@ -112,14 +56,23 @@ func start_drag(data: TrapData) -> void:
 # START EXISTING TRAP DRAG
 # ============================================================
 
-func start_drag_existing(trap: Trap) -> void:
+func start_drag_existing(
+	trap: Trap,
+	from_slot: TrapSlot
+) -> void:
 	if trap == null:
+		return
+
+	if from_slot == null:
+		return
+
+	if is_dragging:
 		return
 
 	if not is_instance_valid(trap):
 		return
 
-	if is_dragging:
+	if not is_instance_valid(from_slot):
 		return
 
 	if trap.trap_data == null:
@@ -128,42 +81,31 @@ func start_drag_existing(trap: Trap) -> void:
 		)
 		return
 
-	var found_slot: TrapSlot = _find_slot_for_trap(
-		trap
-	)
-
-	if found_slot == null:
-		push_error(
-			"TrapManager: Could not find source slot for trap."
-		)
-		return
-
 	# --------------------------------------------------------
-	# Save drag state
+	# Save drag information
 	# --------------------------------------------------------
 
 	dragged_existing_trap = trap
 	dragged_trap = trap.trap_data
-	source_slot = found_slot
+	source_slot = from_slot
 
 	is_dragging = true
 
 	# --------------------------------------------------------
-	# Clear source slot.
-	#
-	# This makes its Panel visible.
+	# Free the source slot
 	# --------------------------------------------------------
 
 	source_slot.clear_trap()
 
 	# --------------------------------------------------------
-	# Disable trap combat while moving.
+	# Disable trap combat while dragging
 	# --------------------------------------------------------
 
-	trap.set_being_dragged(true)
+	if trap.has_method("set_being_dragged"):
+		trap.set_being_dragged(true)
 
 	# --------------------------------------------------------
-	# Put trap above gameplay.
+	# Put trap above gameplay
 	# --------------------------------------------------------
 
 	trap.visible = true
@@ -190,10 +132,11 @@ func _process(_delta: float) -> void:
 	)
 
 	# --------------------------------------------------------
-	# Existing trap follows mouse.
+	# Move existing trap
 	# --------------------------------------------------------
 
 	if dragged_existing_trap != null:
+
 		if is_instance_valid(
 			dragged_existing_trap
 		):
@@ -202,203 +145,34 @@ func _process(_delta: float) -> void:
 			)
 
 	# --------------------------------------------------------
-	# New trap preview follows mouse.
+	# Move new trap preview
 	# --------------------------------------------------------
 
 	elif drag_preview != null:
+
 		drag_preview.global_position = (
 			mouse_position
 		)
 
+	# --------------------------------------------------------
+	# Detect mouse release
+	# --------------------------------------------------------
 
-# ============================================================
-# GET TRAP AT MOUSE
-# ============================================================
-
-func _get_trap_at_mouse() -> Trap:
-	return _get_trap_at_world_position(
-		get_global_mouse_position()
-	)
-
-
-# ============================================================
-# GET TRAP AT WORLD POSITION
-# ============================================================
-
-func _get_trap_at_world_position(
-	world_position: Vector2
-) -> Trap:
-
-	var traps: Array[Node] = get_tree().get_nodes_in_group(
-		"traps"
-	)
-
-	var best_trap: Trap = null
-	var best_distance: float = INF
-
-	# ========================================================
-	# FIRST: CHECK THE SLOT THAT CONTAINS THE TRAP
-	#
-	# This is more reliable than checking the Sprite2D.
-	# ========================================================
-
-	for node: Control in trap_slots:
-		if not is_instance_valid(node):
-			continue
-
-		var slot := node as TrapSlot
-
-		if slot == null:
-			continue
-
-		if not slot.occupied:
-			continue
-
-		if slot.placed_trap == null:
-			continue
-
-		if not is_instance_valid(
-			slot.placed_trap
-		):
-			continue
-
-		var trap: Trap = slot.placed_trap
-
-		if trap.is_destroyed:
-			continue
-
-		if trap.is_being_dragged:
-			continue
-
-		var slot_center: Vector2 = (
-			slot.get_world_position()
-		)
-
-		# Use a generous interaction radius around the slot.
-		var distance: float = (
-			world_position.distance_to(
-				slot_center
-			)
-		)
-
-		var interaction_radius: float = (
-			min(slot.size.x, slot.size.y) * 0.5
-		)
-
-		interaction_radius = max(
-			interaction_radius,
-			60.0
-		)
-
-		if distance <= interaction_radius:
-			return trap
-
-
-	# ========================================================
-	# SECOND: CHECK ACTUAL SPRITE
-	# ========================================================
-
-	for node: Node in traps:
-		if not is_instance_valid(node):
-			continue
-
-		var trap := node as Trap
-
-		if trap == null:
-			continue
-
-		if trap.is_destroyed:
-			continue
-
-		if trap.is_being_dragged:
-			continue
-
-		if not trap.visible:
-			continue
-
-		if trap.sprite == null:
-			continue
-
-		if trap.sprite.texture == null:
-			continue
-
-		var local_position: Vector2 = (
-			trap.sprite.to_local(
-				world_position
-			)
-		)
-
-		if trap.sprite.get_rect().has_point(
-			local_position
-		):
-			var distance: float = (
-				world_position.distance_to(
-					trap.global_position
-				)
-			)
-
-			if distance < best_distance:
-				best_distance = distance
-				best_trap = trap
-
-
-	# ========================================================
-	# THIRD: DISTANCE FALLBACK
-	# ========================================================
-
-	if best_trap == null:
-		for node: Node in traps:
-			if not is_instance_valid(node):
-				continue
-
-			var trap := node as Trap
-
-			if trap == null:
-				continue
-
-			if trap.is_destroyed:
-				continue
-
-			if trap.is_being_dragged:
-				continue
-
-			var distance: float = (
-				world_position.distance_to(
-					trap.global_position
-				)
-			)
-
-			if distance <= 80.0:
-				if distance < best_distance:
-					best_distance = distance
-					best_trap = trap
-
-	return best_trap
+	if not Input.is_mouse_button_pressed(
+		MOUSE_BUTTON_LEFT
+	):
+		_finish_drag()
 
 
 # ============================================================
-# SCREEN TO WORLD
-# ============================================================
-
-func _screen_to_world(
-	screen_position: Vector2
-) -> Vector2:
-
-	var canvas_transform: Transform2D = (
-		get_viewport().get_canvas_transform()
-	)
-
-	return canvas_transform.affine_inverse() * screen_position
-
-
-# ============================================================
-# CREATE PREVIEW
+# CREATE DRAG PREVIEW
 # ============================================================
 
 func _create_drag_preview(
 	texture: Texture2D,
 	trap_scale: Vector2
 ) -> void:
+
 	_remove_drag_preview()
 
 	if texture == null:
@@ -412,6 +186,8 @@ func _create_drag_preview(
 	drag_preview.texture = texture
 	drag_preview.scale = trap_scale
 	drag_preview.modulate.a = preview_alpha
+
+	# Always above gameplay.
 	drag_preview.z_index = 1000
 
 	add_child(
@@ -435,22 +211,106 @@ func _finish_drag() -> void:
 		get_global_mouse_position()
 	)
 
+	var target_slot: TrapSlot = (
+		_find_best_slot(mouse_position)
+	)
+
+	# --------------------------------------------------------
+	# No valid target
+	# --------------------------------------------------------
+
+	if target_slot == null:
+		print(
+			"No valid trap slot."
+		)
+
+		_restore_existing_trap()
+		return
+
+	# --------------------------------------------------------
+	# Check distance
+	# --------------------------------------------------------
+
+	var slot_position: Vector2 = (
+		target_slot.get_world_position()
+	)
+
+	var distance: float = (
+		mouse_position.distance_to(
+			slot_position
+		)
+	)
+
+	if distance > placement_distance:
+		print(
+			"Trap dropped too far from slot. Distance: ",
+			distance
+		)
+
+		_restore_existing_trap()
+		return
+
+	# --------------------------------------------------------
+	# Move existing trap
+	# --------------------------------------------------------
+
+	if dragged_existing_trap != null:
+
+		_move_existing_trap(
+			target_slot
+		)
+
+		return
+
+	# --------------------------------------------------------
+	# Place new trap
+	# --------------------------------------------------------
+
+	if dragged_trap != null:
+
+		var success: bool = (
+			target_slot.place_trap(
+				dragged_trap
+			)
+		)
+
+		if success:
+			print(
+				"Trap placed in slot: ",
+				target_slot.slot_index
+			)
+		else:
+			print(
+				"Failed to place trap."
+			)
+
+	_clear_drag_state()
+
+
+# ============================================================
+# FIND BEST SLOT
+# ============================================================
+
+func _find_best_slot(
+	mouse_position: Vector2
+) -> TrapSlot:
+
 	var best_slot: TrapSlot = null
 	var best_distance: float = INF
 
-	# --------------------------------------------------------
-	# Find closest empty slot.
-	# --------------------------------------------------------
-
 	for node: Control in trap_slots:
+
 		if not is_instance_valid(node):
 			continue
 
-		var slot := node as TrapSlot
+		var slot: TrapSlot = (
+			node as TrapSlot
+		)
 
 		if slot == null:
 			continue
 
+		# Occupied slots cannot receive another trap.
 		if slot.occupied:
 			continue
 
@@ -468,66 +328,7 @@ func _finish_drag() -> void:
 			best_distance = distance
 			best_slot = slot
 
-
-	# --------------------------------------------------------
-	# No slot.
-	# --------------------------------------------------------
-
-	if best_slot == null:
-		print(
-			"No available trap slot."
-		)
-
-		_cancel_drag()
-		return
-
-
-	# --------------------------------------------------------
-	# Too far.
-	# --------------------------------------------------------
-
-	if best_distance > placement_distance:
-		print(
-			"Trap dropped too far from slot. Distance: ",
-			best_distance
-		)
-
-		_cancel_drag()
-		return
-
-
-	# ========================================================
-	# EXISTING TRAP
-	# ========================================================
-
-	if dragged_existing_trap != null:
-		_move_existing_trap(
-			best_slot
-		)
-
-		return
-
-
-	# ========================================================
-	# NEW TRAP
-	# ========================================================
-
-	if dragged_trap != null:
-		var success: bool = best_slot.place_trap(
-			dragged_trap
-		)
-
-		if success:
-			print(
-				"Trap placed in slot: ",
-				best_slot.slot_index
-			)
-		else:
-			print(
-				"Failed to place trap."
-			)
-
-	_cancel_drag()
+	return best_slot
 
 
 # ============================================================
@@ -539,33 +340,34 @@ func _move_existing_trap(
 ) -> void:
 
 	if dragged_existing_trap == null:
-		_cancel_drag()
+		_clear_drag_state()
 		return
 
 	if not is_instance_valid(
 		dragged_existing_trap
 	):
-		_cancel_drag()
+		_clear_drag_state()
 		return
 
 	if source_slot == null:
-		_cancel_drag()
-		return
-
-	var trap: Trap = dragged_existing_trap
-
-
-	# --------------------------------------------------------
-	# Same slot.
-	# --------------------------------------------------------
-
-	if target_slot == source_slot:
 		_restore_existing_trap()
 		return
 
+	var trap: Trap = (
+		dragged_existing_trap
+	)
 
 	# --------------------------------------------------------
-	# Place into new slot.
+	# Dropped back on original slot
+	# --------------------------------------------------------
+
+	if target_slot == source_slot:
+
+		_restore_existing_trap()
+		return
+
+	# --------------------------------------------------------
+	# Place trap in new slot
 	# --------------------------------------------------------
 
 	var success: bool = (
@@ -575,9 +377,12 @@ func _move_existing_trap(
 	)
 
 	if success:
+
 		trap.visible = true
 		trap.z_index = 0
-		trap.set_being_dragged(false)
+
+		if trap.has_method("set_being_dragged"):
+			trap.set_being_dragged(false)
 
 		print(
 			"Moved trap: ",
@@ -590,41 +395,13 @@ func _move_existing_trap(
 
 		_clear_drag_state()
 
-		return
+	else:
 
+		print(
+			"Failed to move trap. Restoring source slot."
+		)
 
-	# --------------------------------------------------------
-	# Failed.
-	# --------------------------------------------------------
-
-	print(
-		"Failed to move trap. Restoring source slot."
-	)
-
-	_restore_existing_trap()
-
-
-# ============================================================
-# FIND SOURCE SLOT
-# ============================================================
-
-func _find_slot_for_trap(
-	trap: Trap
-) -> TrapSlot:
-
-	for node: Control in trap_slots:
-		if not is_instance_valid(node):
-			continue
-
-		var slot := node as TrapSlot
-
-		if slot == null:
-			continue
-
-		if slot.placed_trap == trap:
-			return slot
-
-	return null
+		_restore_existing_trap()
 
 
 # ============================================================
@@ -632,6 +409,7 @@ func _find_slot_for_trap(
 # ============================================================
 
 func _restore_existing_trap() -> void:
+
 	if dragged_existing_trap == null:
 		_clear_drag_state()
 		return
@@ -642,9 +420,16 @@ func _restore_existing_trap() -> void:
 		_clear_drag_state()
 		return
 
-	var trap: Trap = dragged_existing_trap
+	var trap: Trap = (
+		dragged_existing_trap
+	)
+
+	# --------------------------------------------------------
+	# Put trap back into source slot
+	# --------------------------------------------------------
 
 	if source_slot != null:
+
 		var success: bool = (
 			source_slot.place_existing_trap(
 				trap
@@ -652,13 +437,20 @@ func _restore_existing_trap() -> void:
 		)
 
 		if not success:
+
 			push_error(
 				"TrapManager: Failed to restore trap."
 			)
 
+	# --------------------------------------------------------
+	# Restore trap state
+	# --------------------------------------------------------
+
 	trap.visible = true
 	trap.z_index = 0
-	trap.set_being_dragged(false)
+
+	if trap.has_method("set_being_dragged"):
+		trap.set_being_dragged(false)
 
 	print(
 		"Trap returned to original slot."
@@ -668,40 +460,26 @@ func _restore_existing_trap() -> void:
 
 
 # ============================================================
-# CANCEL DRAG
-# ============================================================
-
-func _cancel_drag() -> void:
-	if dragged_existing_trap != null:
-		_restore_existing_trap()
-		return
-
-	_remove_drag_preview()
-
-	is_dragging = false
-	dragged_trap = null
-	dragged_existing_trap = null
-	source_slot = null
-
-
-# ============================================================
-# CLEAR STATE
+# CLEAR DRAG STATE
 # ============================================================
 
 func _clear_drag_state() -> void:
+
 	_remove_drag_preview()
 
 	is_dragging = false
+
 	dragged_trap = null
 	dragged_existing_trap = null
 	source_slot = null
 
 
 # ============================================================
-# REMOVE PREVIEW
+# REMOVE DRAG PREVIEW
 # ============================================================
 
 func _remove_drag_preview() -> void:
+
 	if drag_preview == null:
 		return
 

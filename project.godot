@@ -13,16 +13,22 @@ config_version=5
 config/name="Merge Cats Defender"
 run/main_scene="uid://hnl8dychaa7l"
 config/features=PackedStringArray("4.7", "GL Compatibility")
+run/max_fps=90
 boot_splash/bg_color=Color(0, 0, 0, 1)
 boot_splash/show_image=false
 boot_splash/stretch_mode=0
 boot_splash/use_filter=false
+
+[audio]
+
+buses/default_bus_layout="uid://bikyfwi3ca25g"
 
 [autoload]
 
 SceneManager="*uid://cexbyupo018k"
 CatManager="*uid://cutx46bq64me6"
 GameplayManager="*uid://cywybkl27mj6x"
+FpsManager="*uid://dgs7uhxrq8hb5"
 
 [display]
 

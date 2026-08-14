@@ -182,12 +182,12 @@ stretch_mode = 5
 script = ExtResource("3_e124b")
 slot_index = 7
 
-[node name="Slot9" type="TextureRect" parent="MergerUI/GridContainer" unique_id=1264177881]
+[node name="Slot9" type="TextureButton" parent="MergerUI/GridContainer" unique_id=1663555801]
 custom_minimum_size = Vector2(33, 33)
 custom_maximum_size = Vector2(33, 33)
 layout_mode = 2
-expand_mode = 1
 stretch_mode = 5
+script = ExtResource("35_5vu4g")
 
 [node name="Slot10" type="TextureRect" parent="MergerUI/GridContainer" unique_id=1417196256 groups=["cat_slots"]]
 custom_minimum_size = Vector2(33, 33)

@@ -11,13 +11,13 @@ extends Control
 @onready var home_page: Control = $RightPanel/Panel/Content/HomePage
 @onready var cats_page: Control = $RightPanel/Panel/Content/CatsPage
 @onready var addons_page: Control = $RightPanel/Panel/Content/AddonsPage
-@onready var shop_page: Control = $RightPanel/Panel/Content/ShopPage
+@onready var settings_page: Control = $RightPanel/Panel/Content/SettingsPage
 
 @onready var tabs: Array[TextureButton] = [
 $RightPanel/Tabs/VBoxContainer/HomeTab,
 $RightPanel/Tabs/VBoxContainer/CatsTab,
 $RightPanel/Tabs/VBoxContainer/AddonTab,
-$RightPanel/Tabs/VBoxContainer/ShopTab
+$RightPanel/Tabs/VBoxContainer/SettingsTab
 ]
 
 @onready var level_button_1: TextureButton = $RightPanel/Panel/Content/HomePage/ScrollContainer/MapContainer/LevelButton1
@@ -44,7 +44,7 @@ func _ready() -> void:
 	select_level(1)
 	cats_page.visible = false
 	addons_page.visible = false
-	shop_page.visible = false
+	settings_page.visible = false
 
 func select_tab(index: int) -> void:
 	current_tab = index
@@ -69,7 +69,7 @@ func _on_tab_1_pressed() -> void:
 	title_label.text = "LEVEL SELECT"
 	cats_page.visible = false
 	addons_page.visible = false
-	shop_page.visible = false
+	settings_page.visible = false
 	home_page.visible = true
 
 func _on_tab_2_pressed() -> void:
@@ -77,7 +77,7 @@ func _on_tab_2_pressed() -> void:
 	title_label.text = "UPGRADES"
 	home_page.visible = false
 	addons_page.visible = false
-	shop_page.visible = false
+	settings_page.visible = false
 	cats_page.visible = true
 
 func _on_tab_3_pressed() -> void:
@@ -85,16 +85,16 @@ func _on_tab_3_pressed() -> void:
 	title_label.text = "EXTRAS"
 	home_page.visible = false
 	cats_page.visible = false
-	shop_page.visible = false
+	settings_page.visible = false
 	addons_page.visible = true
 
 func _on_tab_4_pressed() -> void:
 	select_tab(3)
-	title_label.text = "SHOP"
+	title_label.text = "SETTINGS"
 	home_page.visible = false
 	cats_page.visible = false
 	addons_page.visible = false
-	shop_page.visible = true
+	settings_page.visible = true
 
 func _on_back_button_pressed() -> void:
 	SceneManager.go_to_menu()

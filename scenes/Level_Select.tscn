@@ -14,10 +14,20 @@
 [ext_resource type="Texture2D" uid="uid://dpu71y3f37fh0" path="res://assets/Ui/Icon_home.png" id="8_10maq"]
 [ext_resource type="Texture2D" uid="uid://tsp8f4tkvl7f" path="res://assets/Ui/LockedLevel.png" id="8_s24pp"]
 [ext_resource type="Texture2D" uid="uid://clc2uxhey26ho" path="res://assets/Ui/Icon_Cat.png" id="10_yna7j"]
+[ext_resource type="Script" uid="uid://vnqdul66muk" path="res://scripts/SettingsPage.gd" id="11_3c22x"]
 [ext_resource type="Texture2D" uid="uid://drywyiomdsrs8" path="res://assets/Ui/Icon_Addon.png" id="11_crqhg"]
 [ext_resource type="Texture2D" uid="uid://tmut8xndp3o4" path="res://assets/cracks/crack_01.png" id="11_uarku"]
-[ext_resource type="Texture2D" uid="uid://berhuijweptbq" path="res://assets/Ui/Icon_Shop.png" id="12_s24pp"]
+[ext_resource type="Texture2D" uid="uid://3mpeyvkc1d8m" path="res://assets/Ui/master_music_icon.png" id="11_xj5oc"]
+[ext_resource type="Texture2D" uid="uid://c3k1qo4rm1l7n" path="res://assets/Ui/music_icon.png" id="12_px5ah"]
 [ext_resource type="Texture2D" uid="uid://j7dmofdsje8s" path="res://assets/cracks/crack_02.png" id="12_xj5oc"]
+[ext_resource type="Texture2D" uid="uid://dxjfmflub2o7j" path="res://assets/Ui/sfx_icon.png" id="13_3c22x"]
+[ext_resource type="Script" uid="uid://tvt2syaat6cr" path="res://scripts/SettingsScroll.gd" id="14_ga33h"]
+[ext_resource type="Texture2D" uid="uid://bdp31ib5fs8us" path="res://assets/Ui/Damage_icon.png" id="14_kq3sa"]
+[ext_resource type="Texture2D" uid="uid://cxbgbbbn6xhbs" path="res://assets/Ui/ButtonOn.png" id="15_ga33h"]
+[ext_resource type="Texture2D" uid="uid://bpsy5p5qkubyt" path="res://assets/Ui/ButtonOff.png" id="16_q51m8"]
+[ext_resource type="Texture2D" uid="uid://bp5idm61lons8" path="res://assets/Ui/vibration_icon.png" id="17_ijc3q"]
+[ext_resource type="Texture2D" uid="uid://b4abl0s81wrc3" path="res://assets/Ui/SettingBtn.png" id="17_uarku"]
+[ext_resource type="Texture2D" uid="uid://chvgttlu2ejbd" path="res://assets/Ui/FPS_icon.png" id="18_mmura"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_14mdo"]
 bg_color = Color(0.4627451, 0.5019608, 0.46666667, 1)
@@ -68,20 +78,22 @@ theme_override_styles/panel = SubResource("StyleBoxFlat_14mdo")
 
 [node name="Panel" type="Panel" parent="RightPanel" unique_id=13306862]
 z_index = 1
+custom_maximum_size = Vector2(400, -1)
 layout_mode = 1
 anchors_preset = -1
-anchor_top = 0.5
-anchor_right = 1.0
-anchor_bottom = 0.5
-offset_left = 120.0
-offset_top = -89.0
-offset_right = -79.0
-offset_bottom = 133.0
-grow_horizontal = 0
+anchor_left = 0.53400004
+anchor_right = 0.53400004
+offset_left = -198.26404
+offset_top = 91.0
+offset_right = 198.73596
+offset_bottom = 313.0
+grow_horizontal = 2
 grow_vertical = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_qbdj3")
 
 [node name="Content" type="Control" parent="RightPanel/Panel" unique_id=64408451]
+z_index = 1
+clip_contents = true
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -317,6 +329,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+mouse_filter = 1
 
 [node name="Label" type="Label" parent="RightPanel/Panel/Content/CatsPage" unique_id=1691334299]
 layout_mode = 1
@@ -341,6 +354,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+mouse_filter = 1
 
 [node name="Label" type="Label" parent="RightPanel/Panel/Content/AddonsPage" unique_id=2131484158]
 layout_mode = 1
@@ -357,7 +371,7 @@ grow_horizontal = 2
 grow_vertical = 2
 text = "Extras Page Coming Soon"
 
-[node name="ShopPage" type="Control" parent="RightPanel/Panel/Content" unique_id=1669835594]
+[node name="SettingsPage" type="Control" parent="RightPanel/Panel/Content" unique_id=1669835594]
 visible = false
 layout_mode = 1
 anchors_preset = 15
@@ -365,21 +379,458 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+mouse_filter = 1
+script = ExtResource("11_3c22x")
+on_texture = ExtResource("15_ga33h")
+off_texture = ExtResource("16_q51m8")
 
-[node name="Label" type="Label" parent="RightPanel/Panel/Content/ShopPage" unique_id=276919656]
+[node name="ScrollContainer" type="ScrollContainer" parent="RightPanel/Panel/Content/SettingsPage" unique_id=1706464984]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 11.0
+offset_top = 8.0
+offset_right = -7.0
+offset_bottom = -8.0
+grow_horizontal = 2
+grow_vertical = 2
+horizontal_scroll_mode = 0
+vertical_scroll_mode = 3
+script = ExtResource("14_ga33h")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="RightPanel/Panel/Content/SettingsPage/ScrollContainer" unique_id=1877998182]
+layout_mode = 2
+
+[node name="Panel1" type="Panel" parent="RightPanel/Panel/Content/SettingsPage/ScrollContainer/VBoxContainer" unique_id=2141396854]
+custom_minimum_size = Vector2(375, 45)
+custom_maximum_size = Vector2(375, 45)
+layout_mode = 2
+mouse_filter = 1
+
+[node name="TextureRect" type="TextureRect" parent="RightPanel/Panel/Content/SettingsPage/ScrollContainer/VBoxContainer/Panel1" unique_id=491991701]
+layout_mode = 1
+anchors_preset = 4
+anchor_top = 0.5
+anchor_bottom = 0.5
+offset_top = -20.0
+offset_right = 40.0
+offset_bottom = 20.0
+grow_vertical = 2
+texture = ExtResource("11_xj5oc")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="HSlider" type="HSlider" parent="RightPanel/Panel/Content/SettingsPage/ScrollContainer/VBoxContainer/Panel1" unique_id=258051773]
+layout_mode = 1
+anchors_preset = 4
+anchor_top = 0.5
+anchor_bottom = 0.5
+offset_left = 110.0
+offset_top = -8.0
+offset_right = 302.0
+offset_bottom = 8.0
+grow_vertical = 2
+focus_behavior_recursive = 1
+value = 100.0
+
+[node name="Label" type="Label" parent="RightPanel/Panel/Content/SettingsPage/ScrollContainer/VBoxContainer/Panel1" unique_id=788934544]
+layout_mode = 1
+anchors_preset = 4
+anchor_top = 0.5
+anchor_bottom = 0.5
+offset_left = 34.0
+offset_top = -4.5
+offset_right = 93.0
+offset_bottom = 6.5
+grow_vertical = 2
+theme_override_constants/outline_size = 3
+theme_override_fonts/font = ExtResource("3_v76dh")
+theme_override_font_sizes/font_size = 10
+text = "Master Volume"
+
+[node name="vol_percent" type="Label" parent="RightPanel/Panel/Content/SettingsPage/ScrollContainer/VBoxContainer/Panel1" unique_id=2100224128]
+layout_mode = 1
+anchors_preset = 6
+anchor_left = 1.0
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_left = -55.0
+offset_top = -7.5
+offset_right = -15.0
+offset_bottom = 10.5
+grow_horizontal = 0
+grow_vertical = 2
+theme_override_constants/outline_size = 3
+theme_override_fonts/font = ExtResource("3_v76dh")
+text = "100%"
+
+[node name="Panel2" type="Panel" parent="RightPanel/Panel/Content/SettingsPage/ScrollContainer/VBoxContainer" unique_id=1263029779]
+custom_minimum_size = Vector2(375, 45)
+custom_maximum_size = Vector2(375, 45)
+layout_mode = 2
+
+[node name="TextureRect" type="TextureRect" parent="RightPanel/Panel/Content/SettingsPage/ScrollContainer/VBoxContainer/Panel2" unique_id=764770600]
+layout_mode = 1
+anchors_preset = 4
+anchor_top = 0.5
+anchor_bottom = 0.5
+offset_top = -20.0
+offset_right = 40.0
+offset_bottom = 20.0
+grow_vertical = 2
+texture = ExtResource("12_px5ah")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="HSlider" type="HSlider" parent="RightPanel/Panel/Content/SettingsPage/ScrollContainer/VBoxContainer/Panel2" unique_id=109839896]
+layout_mode = 1
+anchors_preset = 4
+anchor_top = 0.5
+anchor_bottom = 0.5
+offset_left = 110.0
+offset_top = -8.0
+offset_right = 302.0
+offset_bottom = 8.0
+grow_vertical = 2
+focus_behavior_recursive = 1
+value = 100.0
+
+[node name="Label" type="Label" parent="RightPanel/Panel/Content/SettingsPage/ScrollContainer/VBoxContainer/Panel2" unique_id=1310835609]
+layout_mode = 1
+anchors_preset = 4
+anchor_top = 0.5
+anchor_bottom = 0.5
+offset_left = 42.0
+offset_top = -5.0
+offset_right = 101.0
+offset_bottom = 7.0
+grow_vertical = 2
+theme_override_constants/outline_size = 3
+theme_override_fonts/font = ExtResource("3_v76dh")
+theme_override_font_sizes/font_size = 10
+text = "Music Volume"
+
+[node name="vol_percent" type="Label" parent="RightPanel/Panel/Content/SettingsPage/ScrollContainer/VBoxContainer/Panel2" unique_id=149491439]
+layout_mode = 1
+anchors_preset = 6
+anchor_left = 1.0
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_left = -55.0
+offset_top = -7.5
+offset_right = -15.0
+offset_bottom = 10.5
+grow_horizontal = 0
+grow_vertical = 2
+theme_override_constants/outline_size = 3
+theme_override_fonts/font = ExtResource("3_v76dh")
+text = "100%"
+
+[node name="Panel3" type="Panel" parent="RightPanel/Panel/Content/SettingsPage/ScrollContainer/VBoxContainer" unique_id=1586667451]
+custom_minimum_size = Vector2(375, 45)
+custom_maximum_size = Vector2(375, 45)
+layout_mode = 2
+mouse_filter = 1
+
+[node name="TextureRect" type="TextureRect" parent="RightPanel/Panel/Content/SettingsPage/ScrollContainer/VBoxContainer/Panel3" unique_id=348613315]
+layout_mode = 1
+anchors_preset = 4
+anchor_top = 0.5
+anchor_bottom = 0.5
+offset_top = -20.0
+offset_right = 40.0
+offset_bottom = 20.0
+grow_vertical = 2
+texture = ExtResource("13_3c22x")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="HSlider" type="HSlider" parent="RightPanel/Panel/Content/SettingsPage/ScrollContainer/VBoxContainer/Panel3" unique_id=110070476]
+layout_mode = 1
+anchors_preset = 4
+anchor_top = 0.5
+anchor_bottom = 0.5
+offset_left = 110.0
+offset_top = -8.0
+offset_right = 302.0
+offset_bottom = 8.0
+grow_vertical = 2
+focus_behavior_recursive = 1
+value = 100.0
+
+[node name="Label" type="Label" parent="RightPanel/Panel/Content/SettingsPage/ScrollContainer/VBoxContainer/Panel3" unique_id=411518282]
+layout_mode = 1
+anchors_preset = 4
+anchor_top = 0.5
+anchor_bottom = 0.5
+offset_left = 44.0
+offset_top = -5.0
+offset_right = 103.0
+offset_bottom = 7.0
+grow_vertical = 2
+theme_override_constants/outline_size = 3
+theme_override_fonts/font = ExtResource("3_v76dh")
+theme_override_font_sizes/font_size = 10
+text = "SFX Volume"
+
+[node name="vol_percent" type="Label" parent="RightPanel/Panel/Content/SettingsPage/ScrollContainer/VBoxContainer/Panel3" unique_id=1640200233]
+layout_mode = 1
+anchors_preset = 6
+anchor_left = 1.0
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_left = -55.0
+offset_top = -7.5
+offset_right = -15.0
+offset_bottom = 10.5
+grow_horizontal = 0
+grow_vertical = 2
+theme_override_constants/outline_size = 3
+theme_override_fonts/font = ExtResource("3_v76dh")
+text = "100%"
+
+[node name="Panel4" type="Panel" parent="RightPanel/Panel/Content/SettingsPage/ScrollContainer/VBoxContainer" unique_id=1202276802]
+custom_minimum_size = Vector2(375, 45)
+custom_maximum_size = Vector2(375, 45)
+layout_mode = 2
+mouse_filter = 1
+
+[node name="TextureRect" type="TextureRect" parent="RightPanel/Panel/Content/SettingsPage/ScrollContainer/VBoxContainer/Panel4" unique_id=1915795964]
+layout_mode = 1
+anchors_preset = 4
+anchor_top = 0.5
+anchor_bottom = 0.5
+offset_left = 3.0
+offset_top = -21.0
+offset_right = 43.0
+offset_bottom = 19.0
+grow_vertical = 2
+texture = ExtResource("14_kq3sa")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="Label" type="Label" parent="RightPanel/Panel/Content/SettingsPage/ScrollContainer/VBoxContainer/Panel4" unique_id=43889309]
+layout_mode = 1
+anchors_preset = 4
+anchor_top = 0.5
+anchor_bottom = 0.5
+offset_left = 54.0
+offset_top = -8.0
+offset_right = 175.0
+offset_bottom = 10.0
+grow_vertical = 2
+theme_override_constants/outline_size = 3
+theme_override_fonts/font = ExtResource("3_v76dh")
+theme_override_font_sizes/font_size = 16
+text = "Damage Numbers"
+
+[node name="ColorRect" type="ColorRect" parent="RightPanel/Panel/Content/SettingsPage/ScrollContainer/VBoxContainer/Panel4" unique_id=904609515]
+layout_mode = 1
+anchors_preset = 6
+anchor_left = 1.0
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_left = -60.0
+offset_top = -4.5
+offset_right = -29.0
+offset_bottom = 5.5
+grow_horizontal = 0
+grow_vertical = 2
+
+[node name="TextureButton" type="TextureButton" parent="RightPanel/Panel/Content/SettingsPage/ScrollContainer/VBoxContainer/Panel4" unique_id=739215774]
+layout_mode = 1
+anchors_preset = 6
+anchor_left = 1.0
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_left = -64.0
+offset_top = -20.0
+offset_right = -24.0
+offset_bottom = 20.0
+grow_horizontal = 0
+grow_vertical = 2
+texture_normal = ExtResource("15_ga33h")
+texture_disabled = ExtResource("16_q51m8")
+ignore_texture_size = true
+stretch_mode = 5
+
+[node name="Panel5" type="Panel" parent="RightPanel/Panel/Content/SettingsPage/ScrollContainer/VBoxContainer" unique_id=1766333805]
+custom_minimum_size = Vector2(375, 45)
+custom_maximum_size = Vector2(375, 45)
+layout_mode = 2
+mouse_filter = 1
+
+[node name="TextureRect" type="TextureRect" parent="RightPanel/Panel/Content/SettingsPage/ScrollContainer/VBoxContainer/Panel5" unique_id=293946640]
+layout_mode = 1
+anchors_preset = 4
+anchor_top = 0.5
+anchor_bottom = 0.5
+offset_left = 3.0
+offset_top = -21.0
+offset_right = 43.0
+offset_bottom = 19.0
+grow_vertical = 2
+texture = ExtResource("17_ijc3q")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="Label" type="Label" parent="RightPanel/Panel/Content/SettingsPage/ScrollContainer/VBoxContainer/Panel5" unique_id=1252030804]
+layout_mode = 1
+anchors_preset = 4
+anchor_top = 0.5
+anchor_bottom = 0.5
+offset_left = 54.0
+offset_top = -8.0
+offset_right = 175.0
+offset_bottom = 10.0
+grow_vertical = 2
+theme_override_constants/outline_size = 3
+theme_override_fonts/font = ExtResource("3_v76dh")
+theme_override_font_sizes/font_size = 16
+text = "Vibration"
+
+[node name="ColorRect" type="ColorRect" parent="RightPanel/Panel/Content/SettingsPage/ScrollContainer/VBoxContainer/Panel5" unique_id=1210136769]
+layout_mode = 1
+anchors_preset = 6
+anchor_left = 1.0
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_left = -60.0
+offset_top = -4.5
+offset_right = -29.0
+offset_bottom = 5.5
+grow_horizontal = 0
+grow_vertical = 2
+
+[node name="TextureButton" type="TextureButton" parent="RightPanel/Panel/Content/SettingsPage/ScrollContainer/VBoxContainer/Panel5" unique_id=114386360]
+layout_mode = 1
+anchors_preset = 6
+anchor_left = 1.0
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_left = -64.0
+offset_top = -20.0
+offset_right = -24.0
+offset_bottom = 20.0
+grow_horizontal = 0
+grow_vertical = 2
+texture_normal = ExtResource("15_ga33h")
+texture_disabled = ExtResource("16_q51m8")
+ignore_texture_size = true
+stretch_mode = 5
+
+[node name="Panel6" type="Panel" parent="RightPanel/Panel/Content/SettingsPage/ScrollContainer/VBoxContainer" unique_id=51157460]
+custom_minimum_size = Vector2(375, 45)
+custom_maximum_size = Vector2(375, 45)
+layout_mode = 2
+mouse_filter = 1
+
+[node name="TextureRect" type="TextureRect" parent="RightPanel/Panel/Content/SettingsPage/ScrollContainer/VBoxContainer/Panel6" unique_id=1978586447]
+layout_mode = 1
+anchors_preset = 4
+anchor_top = 0.5
+anchor_bottom = 0.5
+offset_left = 3.0
+offset_top = -21.0
+offset_right = 43.0
+offset_bottom = 19.0
+grow_vertical = 2
+texture = ExtResource("18_mmura")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="Label" type="Label" parent="RightPanel/Panel/Content/SettingsPage/ScrollContainer/VBoxContainer/Panel6" unique_id=1672300154]
+layout_mode = 1
+anchors_preset = 4
+anchor_top = 0.5
+anchor_bottom = 0.5
+offset_left = 54.0
+offset_top = -8.0
+offset_right = 175.0
+offset_bottom = 10.0
+grow_vertical = 2
+theme_override_constants/outline_size = 3
+theme_override_fonts/font = ExtResource("3_v76dh")
+theme_override_font_sizes/font_size = 16
+text = "FPS Overlay"
+
+[node name="ColorRect" type="ColorRect" parent="RightPanel/Panel/Content/SettingsPage/ScrollContainer/VBoxContainer/Panel6" unique_id=355317457]
+layout_mode = 1
+anchors_preset = 6
+anchor_left = 1.0
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_left = -60.0
+offset_top = -4.5
+offset_right = -29.0
+offset_bottom = 5.5
+grow_horizontal = 0
+grow_vertical = 2
+
+[node name="TextureButton" type="TextureButton" parent="RightPanel/Panel/Content/SettingsPage/ScrollContainer/VBoxContainer/Panel6" unique_id=1111491499]
+layout_mode = 1
+anchors_preset = 6
+anchor_left = 1.0
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_left = -64.0
+offset_top = -20.0
+offset_right = -24.0
+offset_bottom = 20.0
+grow_horizontal = 0
+grow_vertical = 2
+texture_normal = ExtResource("15_ga33h")
+texture_disabled = ExtResource("16_q51m8")
+ignore_texture_size = true
+stretch_mode = 5
+
+[node name="Panel7" type="Panel" parent="RightPanel/Panel/Content/SettingsPage/ScrollContainer/VBoxContainer" unique_id=716191582]
+custom_minimum_size = Vector2(375, 45)
+custom_maximum_size = Vector2(375, 45)
+layout_mode = 2
+mouse_filter = 1
+
+[node name="Label" type="Label" parent="RightPanel/Panel/Content/SettingsPage/ScrollContainer/VBoxContainer/Panel7" unique_id=1384425257]
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -20.0
-offset_top = -11.5
-offset_right = 20.0
-offset_bottom = 11.5
+offset_left = -60.5
+offset_top = -9.0
+offset_right = 60.5
+offset_bottom = 9.0
 grow_horizontal = 2
 grow_vertical = 2
-text = "Shop Page Coming Soon"
+theme_override_constants/outline_size = 3
+theme_override_fonts/font = ExtResource("3_v76dh")
+theme_override_font_sizes/font_size = 16
+text = "Restore Defaults"
+
+[node name="TextureButton" type="TextureButton" parent="RightPanel/Panel/Content/SettingsPage/ScrollContainer/VBoxContainer/Panel7" unique_id=918621533]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -83.5
+offset_top = -20.0
+offset_right = 79.5
+offset_bottom = 20.0
+grow_horizontal = 2
+grow_vertical = 2
 
 [node name="Cracks" type="TextureRect" parent="RightPanel/Panel" unique_id=488145106]
 modulate = Color(0.11372549, 0.11372549, 0.11372549, 0.5254902)
@@ -463,11 +914,18 @@ stretch_mode = 5
 
 [node name="HomeTabTexture" type="TextureRect" parent="RightPanel/Tabs/VBoxContainer/HomeTab" unique_id=1009144997]
 texture_filter = 2
-layout_mode = 0
-offset_left = 19.0
-offset_top = 4.0
-offset_right = 70.0
-offset_bottom = 55.0
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -25.5
+offset_top = -25.5
+offset_right = 25.5
+offset_bottom = 25.5
+grow_horizontal = 2
+grow_vertical = 2
 texture = ExtResource("8_10maq")
 expand_mode = 1
 stretch_mode = 4
@@ -480,11 +938,18 @@ texture_pressed = ExtResource("4_l3asc")
 stretch_mode = 5
 
 [node name="TextureRect" type="TextureRect" parent="RightPanel/Tabs/VBoxContainer/CatsTab" unique_id=237344212]
-layout_mode = 0
-offset_left = 19.0
-offset_top = 5.0
-offset_right = 70.0
-offset_bottom = 55.0
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -25.5
+offset_top = -25.0
+offset_right = 25.5
+offset_bottom = 25.0
+grow_horizontal = 2
+grow_vertical = 2
 texture = ExtResource("10_yna7j")
 expand_mode = 1
 stretch_mode = 4
@@ -497,29 +962,45 @@ texture_pressed = ExtResource("4_l3asc")
 stretch_mode = 5
 
 [node name="TextureRect" type="TextureRect" parent="RightPanel/Tabs/VBoxContainer/AddonTab" unique_id=1538205013]
-layout_mode = 0
-offset_left = 19.0
-offset_top = 5.0
-offset_right = 70.0
-offset_bottom = 55.0
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -25.5
+offset_top = -25.0
+offset_right = 25.5
+offset_bottom = 25.0
+grow_horizontal = 2
+grow_vertical = 2
 texture = ExtResource("11_crqhg")
 expand_mode = 1
 stretch_mode = 4
 
-[node name="ShopTab" type="TextureButton" parent="RightPanel/Tabs/VBoxContainer" unique_id=887602442]
+[node name="SettingsTab" type="TextureButton" parent="RightPanel/Tabs/VBoxContainer" unique_id=887602442]
 custom_maximum_size = Vector2(90, 57)
 layout_mode = 2
 texture_normal = ExtResource("4_l3asc")
 texture_pressed = ExtResource("4_l3asc")
 stretch_mode = 5
 
-[node name="TextureRect" type="TextureRect" parent="RightPanel/Tabs/VBoxContainer/ShopTab" unique_id=503591076]
-layout_mode = 0
-offset_left = 20.0
-offset_top = 5.0
-offset_right = 70.0
-offset_bottom = 55.0
-texture = ExtResource("12_s24pp")
+[node name="TextureRect" type="TextureRect" parent="RightPanel/Tabs/VBoxContainer/SettingsTab" unique_id=503591076]
+custom_minimum_size = Vector2(33, 33)
+custom_maximum_size = Vector2(35, 35)
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -20.0
+offset_top = -20.0
+offset_right = 20.0
+offset_bottom = 20.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("17_uarku")
 expand_mode = 1
 stretch_mode = 4
 
@@ -549,5 +1030,5 @@ stretch_mode = 4
 [connection signal="pressed" from="RightPanel/Tabs/VBoxContainer/HomeTab" to="." method="_on_tab_1_pressed"]
 [connection signal="pressed" from="RightPanel/Tabs/VBoxContainer/CatsTab" to="." method="_on_tab_2_pressed"]
 [connection signal="pressed" from="RightPanel/Tabs/VBoxContainer/AddonTab" to="." method="_on_tab_3_pressed"]
-[connection signal="pressed" from="RightPanel/Tabs/VBoxContainer/ShopTab" to="." method="_on_tab_4_pressed"]
+[connection signal="pressed" from="RightPanel/Tabs/VBoxContainer/SettingsTab" to="." method="_on_tab_4_pressed"]
 [connection signal="pressed" from="BackButton" to="." method="_on_back_button_pressed"]

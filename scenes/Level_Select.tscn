@@ -78,15 +78,16 @@ theme_override_styles/panel = SubResource("StyleBoxFlat_14mdo")
 
 [node name="Panel" type="Panel" parent="RightPanel" unique_id=13306862]
 z_index = 1
-custom_maximum_size = Vector2(400, -1)
+custom_minimum_size = Vector2(450, 250)
+custom_maximum_size = Vector2(450, 250)
 layout_mode = 1
 anchors_preset = -1
 anchor_left = 0.53400004
 anchor_right = 0.53400004
-offset_left = -198.26404
-offset_top = 91.0
-offset_right = 198.73596
-offset_bottom = 313.0
+offset_left = -247.76404
+offset_top = 77.0
+offset_right = 202.23596
+offset_bottom = 327.0
 grow_horizontal = 2
 grow_vertical = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_qbdj3")
@@ -124,26 +125,27 @@ scroll_horizontal_by_default = true
 script = ExtResource("3_10maq")
 
 [node name="MapContainer" type="Control" parent="RightPanel/Panel/Content/HomePage/ScrollContainer" unique_id=231586377]
-custom_minimum_size = Vector2(2200, 220)
+custom_minimum_size = Vector2(3200, 220)
 layout_mode = 2
 mouse_filter = 1
 
 [node name="MapImage" type="TextureRect" parent="RightPanel/Panel/Content/HomePage/ScrollContainer/MapContainer" unique_id=1782852922]
 custom_minimum_size = Vector2(2500, 200)
 layout_mode = 0
-offset_right = 2500.0
-offset_bottom = 220.0
+offset_top = -33.0
+offset_right = 3477.2727
+offset_bottom = 273.0
 texture = ExtResource("3_4v0iv")
 expand_mode = 1
 stretch_mode = 4
 
 [node name="LevelButton1" type="TextureButton" parent="RightPanel/Panel/Content/HomePage/ScrollContainer/MapContainer" unique_id=14380049]
-custom_maximum_size = Vector2(55, 55)
+custom_maximum_size = Vector2(65, 65)
 layout_mode = 0
-offset_left = 27.0
+offset_left = 40.5
 offset_top = 59.0
-offset_right = 82.0
-offset_bottom = 114.0
+offset_right = 105.5
+offset_bottom = 124.0
 texture_normal = ExtResource("7_crqhg")
 texture_disabled = ExtResource("8_s24pp")
 stretch_mode = 5
@@ -167,12 +169,12 @@ text = "1"
 horizontal_alignment = 1
 
 [node name="LevelButton2" type="TextureButton" parent="RightPanel/Panel/Content/HomePage/ScrollContainer/MapContainer" unique_id=1933678546]
-custom_maximum_size = Vector2(55, 55)
+custom_maximum_size = Vector2(65, 65)
 layout_mode = 0
-offset_left = 36.0
-offset_top = 137.0
-offset_right = 91.0
-offset_bottom = 192.0
+offset_left = 56.5
+offset_top = 164.0
+offset_right = 111.5
+offset_bottom = 219.0
 disabled = true
 texture_normal = ExtResource("7_crqhg")
 texture_disabled = ExtResource("8_s24pp")
@@ -198,12 +200,12 @@ text = "2"
 horizontal_alignment = 1
 
 [node name="LevelButton3" type="TextureButton" parent="RightPanel/Panel/Content/HomePage/ScrollContainer/MapContainer" unique_id=730749700]
-custom_maximum_size = Vector2(55, 55)
+custom_maximum_size = Vector2(65, 65)
 layout_mode = 0
-offset_left = 125.0
-offset_top = 137.0
-offset_right = 180.0
-offset_bottom = 192.0
+offset_left = 194.5
+offset_top = 146.0
+offset_right = 249.5
+offset_bottom = 201.0
 disabled = true
 texture_normal = ExtResource("7_crqhg")
 texture_disabled = ExtResource("8_s24pp")
@@ -260,12 +262,12 @@ text = "4"
 horizontal_alignment = 1
 
 [node name="LevelButton5" type="TextureButton" parent="RightPanel/Panel/Content/HomePage/ScrollContainer/MapContainer" unique_id=1141809886]
-custom_maximum_size = Vector2(55, 55)
+custom_maximum_size = Vector2(65, 65)
 layout_mode = 0
-offset_left = 215.0
-offset_top = 33.0
-offset_right = 270.0
-offset_bottom = 88.0
+offset_left = 346.5
+offset_top = 42.0
+offset_right = 401.5
+offset_bottom = 97.0
 disabled = true
 texture_normal = ExtResource("7_crqhg")
 texture_disabled = ExtResource("8_s24pp")
@@ -291,12 +293,12 @@ text = "5"
 horizontal_alignment = 1
 
 [node name="LevelButton6" type="TextureButton" parent="RightPanel/Panel/Content/HomePage/ScrollContainer/MapContainer" unique_id=1989130030]
-custom_maximum_size = Vector2(55, 55)
+custom_maximum_size = Vector2(65, 65)
 layout_mode = 0
-offset_left = 244.0
-offset_top = 108.0
-offset_right = 299.0
-offset_bottom = 163.0
+offset_left = 225.5
+offset_top = 22.0
+offset_right = 280.5
+offset_bottom = 77.0
 disabled = true
 texture_normal = ExtResource("7_crqhg")
 texture_disabled = ExtResource("8_s24pp")
@@ -391,7 +393,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 offset_left = 11.0
 offset_top = 8.0
-offset_right = -7.0
+offset_right = -9.5
 offset_bottom = -8.0
 grow_horizontal = 2
 grow_vertical = 2
@@ -403,8 +405,8 @@ script = ExtResource("14_ga33h")
 layout_mode = 2
 
 [node name="Panel1" type="Panel" parent="RightPanel/Panel/Content/SettingsPage/ScrollContainer/VBoxContainer" unique_id=2141396854]
-custom_minimum_size = Vector2(375, 45)
-custom_maximum_size = Vector2(375, 45)
+custom_minimum_size = Vector2(425, 45)
+custom_maximum_size = Vector2(425, 45)
 layout_mode = 2
 mouse_filter = 1
 
@@ -426,9 +428,9 @@ layout_mode = 1
 anchors_preset = 4
 anchor_top = 0.5
 anchor_bottom = 0.5
-offset_left = 110.0
+offset_left = 116.5
 offset_top = -8.0
-offset_right = 302.0
+offset_right = 348.5
 offset_bottom = 8.0
 grow_vertical = 2
 focus_behavior_recursive = 1
@@ -467,8 +469,8 @@ theme_override_fonts/font = ExtResource("3_v76dh")
 text = "100%"
 
 [node name="Panel2" type="Panel" parent="RightPanel/Panel/Content/SettingsPage/ScrollContainer/VBoxContainer" unique_id=1263029779]
-custom_minimum_size = Vector2(375, 45)
-custom_maximum_size = Vector2(375, 45)
+custom_minimum_size = Vector2(425, 45)
+custom_maximum_size = Vector2(425, 45)
 layout_mode = 2
 
 [node name="TextureRect" type="TextureRect" parent="RightPanel/Panel/Content/SettingsPage/ScrollContainer/VBoxContainer/Panel2" unique_id=764770600]
@@ -489,10 +491,10 @@ layout_mode = 1
 anchors_preset = 4
 anchor_top = 0.5
 anchor_bottom = 0.5
-offset_left = 110.0
-offset_top = -8.0
-offset_right = 302.0
-offset_bottom = 8.0
+offset_left = 116.5
+offset_top = -7.5
+offset_right = 348.5
+offset_bottom = 8.5
 grow_vertical = 2
 focus_behavior_recursive = 1
 value = 100.0
@@ -530,8 +532,8 @@ theme_override_fonts/font = ExtResource("3_v76dh")
 text = "100%"
 
 [node name="Panel3" type="Panel" parent="RightPanel/Panel/Content/SettingsPage/ScrollContainer/VBoxContainer" unique_id=1586667451]
-custom_minimum_size = Vector2(375, 45)
-custom_maximum_size = Vector2(375, 45)
+custom_minimum_size = Vector2(425, 45)
+custom_maximum_size = Vector2(425, 45)
 layout_mode = 2
 mouse_filter = 1
 
@@ -553,9 +555,9 @@ layout_mode = 1
 anchors_preset = 4
 anchor_top = 0.5
 anchor_bottom = 0.5
-offset_left = 110.0
+offset_left = 116.5
 offset_top = -8.0
-offset_right = 302.0
+offset_right = 348.5
 offset_bottom = 8.0
 grow_vertical = 2
 focus_behavior_recursive = 1
@@ -594,8 +596,8 @@ theme_override_fonts/font = ExtResource("3_v76dh")
 text = "100%"
 
 [node name="Panel4" type="Panel" parent="RightPanel/Panel/Content/SettingsPage/ScrollContainer/VBoxContainer" unique_id=1202276802]
-custom_minimum_size = Vector2(375, 45)
-custom_maximum_size = Vector2(375, 45)
+custom_minimum_size = Vector2(425, 45)
+custom_maximum_size = Vector2(425, 45)
 layout_mode = 2
 mouse_filter = 1
 
@@ -661,8 +663,8 @@ ignore_texture_size = true
 stretch_mode = 5
 
 [node name="Panel5" type="Panel" parent="RightPanel/Panel/Content/SettingsPage/ScrollContainer/VBoxContainer" unique_id=1766333805]
-custom_minimum_size = Vector2(375, 45)
-custom_maximum_size = Vector2(375, 45)
+custom_minimum_size = Vector2(425, 45)
+custom_maximum_size = Vector2(425, 45)
 layout_mode = 2
 mouse_filter = 1
 
@@ -728,8 +730,8 @@ ignore_texture_size = true
 stretch_mode = 5
 
 [node name="Panel6" type="Panel" parent="RightPanel/Panel/Content/SettingsPage/ScrollContainer/VBoxContainer" unique_id=51157460]
-custom_minimum_size = Vector2(375, 45)
-custom_maximum_size = Vector2(375, 45)
+custom_minimum_size = Vector2(425, 45)
+custom_maximum_size = Vector2(425, 45)
 layout_mode = 2
 mouse_filter = 1
 
@@ -795,8 +797,8 @@ ignore_texture_size = true
 stretch_mode = 5
 
 [node name="Panel7" type="Panel" parent="RightPanel/Panel/Content/SettingsPage/ScrollContainer/VBoxContainer" unique_id=716191582]
-custom_minimum_size = Vector2(375, 45)
-custom_maximum_size = Vector2(375, 45)
+custom_minimum_size = Vector2(425, 45)
+custom_maximum_size = Vector2(425, 45)
 layout_mode = 2
 mouse_filter = 1
 

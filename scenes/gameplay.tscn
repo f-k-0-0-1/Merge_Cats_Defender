@@ -699,7 +699,7 @@ anchor_right = 0.5
 anchor_bottom = 0.5
 offset_left = -375.575
 offset_top = -167.89902
-offset_right = 376.425
+offset_right = 220.42497
 offset_bottom = 217.10098
 grow_horizontal = 2
 grow_vertical = 2
@@ -1274,10 +1274,11 @@ text = "Got It"
 [node name="SkipButton" type="Button" parent="TutorialUI" unique_id=1208019850]
 z_index = 5
 layout_mode = 0
-offset_left = 566.0
-offset_top = 240.0
+offset_left = 584.0
+offset_top = 239.0
 offset_right = 671.0
-offset_bottom = 271.0
+offset_bottom = 265.0
+theme_override_font_sizes/font_size = 13
 text = "Skip Tutorial"
 
 [connection signal="pressed" from="BuyCatButton" to="." method="_on_buy_cat_button_pressed"]

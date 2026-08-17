@@ -24,6 +24,10 @@ enum WaveState {
 @export_category("Spawn Points")
 @export var spawn_points: Array[Marker2D] = []
 
+@export_category("Tutorial")
+@export var wait_for_tutorial: bool = true
+
+var tutorial_locked: bool = true
 var current_wave: int = 0
 var current_state: WaveState = WaveState.WAITING
 
@@ -38,44 +42,58 @@ var start_timer: Timer
 func _ready() -> void:
 	_create_timers()
 
+	if not wait_for_tutorial:
+		tutorial_locked = false
+
 	if enemy_spawner == null:
-		push_error(
-			"WaveManager: EnemySpawner is not assigned."
-		)
+		push_error("WaveManager: EnemySpawner is not assigned.")
 		return
 
 	if enemy_container == null:
-		push_error(
-			"WaveManager: EnemyContainer is not assigned."
-		)
+		push_error("WaveManager: EnemyContainer is not assigned.")
 		return
 
 	if waves.is_empty():
-		push_error(
-			"WaveManager: No WaveData resources assigned."
-		)
+		push_error("WaveManager: No WaveData resources assigned.")
 		return
 
 	if spawn_points.is_empty():
-		push_error(
-			"WaveManager: No spawn points assigned."
-		)
+		push_error("WaveManager: No spawn points assigned.")
 		return
 
 	if wave_announcement == null:
-		push_warning(
-			"WaveManager: WaveAnnouncement is not assigned."
-		)
+		push_warning("WaveManager: WaveAnnouncement is not assigned.")
 
-	start_timer.wait_time = max(
-		start_delay,
-		0.01
-	)
+	start_timer.wait_time = max(start_delay, 0.01)
 
-	start_timer.start()
+	if tutorial_locked:
+		print("WaveManager: Waiting for tutorial to finish.")
+	else:
+		start_timer.start()
 
 	print("Wave Manager ready.")
 	print("Total waves: ", waves.size())
+
+
+# ============================================================
+# TUTORIAL
+# ============================================================
+
+func set_tutorial_locked(value: bool) -> void:
+	tutorial_locked = value
+
+	if tutorial_locked:
+		start_timer.stop()
+		current_state = WaveState.WAITING
+		print("WaveManager: Tutorial lock enabled.")
+		return
+
+	print("WaveManager: Tutorial finished.")
+
+	if current_wave == 0 and current_state == WaveState.WAITING:
+		start_timer.wait_time = max(start_delay, 0.01)
+		start_timer.start()
+		print("WaveManager: Wave 1 will start in ", start_delay, " seconds.")
 
 
 # ============================================================
@@ -95,17 +113,9 @@ func _create_timers() -> void:
 	start_timer.one_shot = true
 	add_child(start_timer)
 
-	spawn_timer.timeout.connect(
-		_on_spawn_timer_timeout
-	)
-
-	intermission_timer.timeout.connect(
-		_on_intermission_finished
-	)
-
-	start_timer.timeout.connect(
-		_on_start_delay_finished
-	)
+	spawn_timer.timeout.connect(_on_spawn_timer_timeout)
+	intermission_timer.timeout.connect(_on_intermission_finished)
+	start_timer.timeout.connect(_on_start_delay_finished)
 
 
 # ============================================================
@@ -114,6 +124,9 @@ func _create_timers() -> void:
 
 func _on_start_delay_finished() -> void:
 	if GameplayManager.is_game_over:
+		return
+
+	if tutorial_locked:
 		return
 
 	start_wave()
@@ -127,13 +140,21 @@ func start_wave() -> void:
 	if GameplayManager.is_game_over:
 		return
 
+	if tutorial_locked:
+		print("WaveManager: Wave start blocked by tutorial.")
+		return
+
 	if current_wave >= waves.size():
 		_finish_all_waves()
 		return
 
 	current_wave += 1
+	current_state = WaveState.SPAWNING
+	current_enemy_index = 0
+	current_enemy_spawned = 0
+
 	wave_changed.emit(current_wave)
-	
+
 	var wave: WaveData = waves[current_wave - 1]
 
 	if wave == null:
@@ -143,24 +164,14 @@ func start_wave() -> void:
 		)
 		return
 
-	current_enemy_index = 0
-	current_enemy_spawned = 0
-	current_state = WaveState.SPAWNING
-
 	print(
 		"========== WAVE ",
 		current_wave,
 		" START =========="
 	)
 
-	# --------------------------------------------------------
-	# Wave announcement
-	# --------------------------------------------------------
-
 	if wave_announcement != null:
-		wave_announcement.show_wave(
-			current_wave
-		)
+		wave_announcement.show_wave(current_wave)
 
 	_start_current_enemy_type()
 
@@ -171,6 +182,9 @@ func start_wave() -> void:
 
 func _start_current_enemy_type() -> void:
 	if GameplayManager.is_game_over:
+		return
+
+	if tutorial_locked:
 		return
 
 	if current_wave <= 0:
@@ -194,29 +208,21 @@ func _start_current_enemy_type() -> void:
 				current_enemy_index
 			]
 		)
-
 		_finish_spawning()
 		return
 
-	var enemy_data: EnemyData = (
-		wave.enemies[current_enemy_index]
-	)
-
-	var enemy_count: int = (
-		wave.enemy_counts[current_enemy_index]
-	)
+	var enemy_data: EnemyData = wave.enemies[current_enemy_index]
+	var enemy_count: int = wave.enemy_counts[current_enemy_index]
 
 	if enemy_data == null:
 		current_enemy_index += 1
 		current_enemy_spawned = 0
-
 		_start_current_enemy_type()
 		return
 
 	if enemy_count <= 0:
 		current_enemy_index += 1
 		current_enemy_spawned = 0
-
 		_start_current_enemy_type()
 		return
 
@@ -242,6 +248,9 @@ func _spawn_next_enemy() -> void:
 	if GameplayManager.is_game_over:
 		return
 
+	if tutorial_locked:
+		return
+
 	if current_state != WaveState.SPAWNING:
 		return
 
@@ -259,28 +268,14 @@ func _spawn_next_enemy() -> void:
 		_finish_spawning()
 		return
 
-	var enemy_data: EnemyData = (
-		wave.enemies[current_enemy_index]
-	)
-
-	var enemy_count: int = (
-		wave.enemy_counts[current_enemy_index]
-	)
-
-	# --------------------------------------------------------
-	# Current enemy type finished
-	# --------------------------------------------------------
+	var enemy_data: EnemyData = wave.enemies[current_enemy_index]
+	var enemy_count: int = wave.enemy_counts[current_enemy_index]
 
 	if current_enemy_spawned >= enemy_count:
 		current_enemy_index += 1
 		current_enemy_spawned = 0
-
 		_start_current_enemy_type()
 		return
-
-	# --------------------------------------------------------
-	# Get spawn point
-	# --------------------------------------------------------
 
 	var spawn_point: Marker2D = _get_spawn_point()
 
@@ -289,15 +284,9 @@ func _spawn_next_enemy() -> void:
 			"WaveManager: No valid spawn point available."
 		)
 
-		# Try again shortly instead of getting stuck.
 		spawn_timer.wait_time = 0.1
 		spawn_timer.start()
-
 		return
-
-	# --------------------------------------------------------
-	# Spawn enemy
-	# --------------------------------------------------------
 
 	var enemy: Enemy = enemy_spawner.spawn_enemy(
 		enemy_data,
@@ -312,7 +301,6 @@ func _spawn_next_enemy() -> void:
 
 		spawn_timer.wait_time = 0.1
 		spawn_timer.start()
-
 		return
 
 	current_enemy_spawned += 1
@@ -330,13 +318,7 @@ func _spawn_next_enemy() -> void:
 		spawn_point.name
 	)
 
-	# --------------------------------------------------------
-	# Spawn interval
-	# --------------------------------------------------------
-
-	var spawn_interval: float = (
-		wave.spawn_interval
-	)
+	var spawn_interval: float = wave.spawn_interval
 
 	if spawn_interval <= 0.0:
 		spawn_interval = 0.1
@@ -351,6 +333,9 @@ func _spawn_next_enemy() -> void:
 
 func _on_spawn_timer_timeout() -> void:
 	if GameplayManager.is_game_over:
+		return
+
+	if tutorial_locked:
 		return
 
 	_spawn_next_enemy()
@@ -415,17 +400,9 @@ func _wave_completed() -> void:
 		" COMPLETE =========="
 	)
 
-	# --------------------------------------------------------
-	# All waves completed
-	# --------------------------------------------------------
-
 	if current_wave >= waves.size():
 		_finish_all_waves()
 		return
-
-	# --------------------------------------------------------
-	# Start intermission
-	# --------------------------------------------------------
 
 	var delay: float = delay_between_waves
 
@@ -450,6 +427,9 @@ func _on_intermission_finished() -> void:
 	if GameplayManager.is_game_over:
 		return
 
+	if tutorial_locked:
+		return
+
 	start_wave()
 
 
@@ -467,7 +447,6 @@ func _finish_all_waves() -> void:
 	intermission_timer.stop()
 	start_timer.stop()
 
-	# Hide announcement if it is still visible.
 	if wave_announcement != null:
 		wave_announcement.hide_announcement()
 

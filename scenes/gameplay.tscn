@@ -35,6 +35,13 @@
 [ext_resource type="Script" uid="uid://b2usgssv7btxe" path="res://scripts/wave_announcement.gd" id="32_sqtar"]
 [ext_resource type="FontFile" uid="uid://dce351dgfj144" path="res://fonts/EightBitDragon-anqx.ttf" id="32_srvxn"]
 [ext_resource type="Script" uid="uid://dd4x4gsgb7dbr" path="res://scripts/TrashBin.gd" id="35_5vu4g"]
+[ext_resource type="Script" uid="uid://mmynqauq78tj" path="res://scripts/tutorial_ui.gd" id="37_37dvx"]
+[ext_resource type="Texture2D" uid="uid://ficxlkerweax" path="res://assets/Ui_compressed/Arrow.png" id="37_s1tv7"]
+[ext_resource type="Texture2D" uid="uid://cb518b2s8i13j" path="res://assets/Ui_compressed/Arrow1.png" id="38_p5dy6"]
+[ext_resource type="Script" uid="uid://crcumsj13e0m5" path="res://scripts/large_arrow.gd" id="38_slt2r"]
+[ext_resource type="Script" uid="uid://b6qrg5fnoubot" path="res://scripts/arrow.gd" id="39_o7tkd"]
+[ext_resource type="Texture2D" uid="uid://dpcnqm3ok8gp7" path="res://assets/Ui_compressed/ArrowMerging.png" id="40_o7tkd"]
+[ext_resource type="Script" uid="uid://bqh15jlupnoj4" path="res://scripts/merge_arrow.gd" id="41_81iov"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_u72on"]
 size = Vector2(24, 177)
@@ -259,7 +266,7 @@ grow_horizontal = 2
 grow_vertical = 2
 theme_override_constants/v_separation = 38
 
-[node name="TrapSlot_1" type="Control" parent="MergerUI/TrapSystem" unique_id=1744616658]
+[node name="TrapSlot_1" type="Control" parent="MergerUI/TrapSystem" unique_id=1744616658 groups=["trap_slots"]]
 custom_minimum_size = Vector2(30, 30)
 layout_mode = 2
 mouse_filter = 2
@@ -274,7 +281,7 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="TrapSlot_2" type="Control" parent="MergerUI/TrapSystem" unique_id=1980098287]
+[node name="TrapSlot_2" type="Control" parent="MergerUI/TrapSystem" unique_id=1980098287 groups=["trap_slots"]]
 custom_minimum_size = Vector2(30, 30)
 layout_mode = 2
 mouse_filter = 2
@@ -290,7 +297,7 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="TrapSlot_3" type="Control" parent="MergerUI/TrapSystem" unique_id=1968979030]
+[node name="TrapSlot_3" type="Control" parent="MergerUI/TrapSystem" unique_id=1968979030 groups=["trap_slots"]]
 custom_minimum_size = Vector2(30, 30)
 layout_mode = 2
 mouse_filter = 2
@@ -481,7 +488,6 @@ wait_time = 5.0
 [node name="WaveManager" type="Node2D" parent="." unique_id=2034751653 node_paths=PackedStringArray("enemy_spawner", "enemy_container", "wave_announcement", "spawn_points")]
 script = ExtResource("18_ucu43")
 waves = Array[ExtResource("19_cuhxg")]([ExtResource("20_vrqbj"), ExtResource("21_gm2mb"), ExtResource("22_jhs7r"), ExtResource("23_28f34"), ExtResource("24_3v6uj")])
-start_delay = 5.0
 enemy_spawner = NodePath("../EnemySpawner")
 enemy_container = NodePath("../EnemyContainer")
 wave_announcement = NodePath("../WaveAnnouncement")
@@ -626,6 +632,7 @@ stretch_mode = 5
 visible = false
 z_index = 15
 layout_mode = 3
+anchors_preset = 0
 script = ExtResource("32_sqtar")
 intro_duration = 0.4
 hold_duration = 0.8
@@ -656,6 +663,622 @@ theme_override_constants/outline_size = 2
 theme_override_fonts/font = ExtResource("32_srvxn")
 theme_override_font_sizes/font_size = 25
 text = "Wave 1"
+
+[node name="TutorialUI" type="Control" parent="." unique_id=1273485958 node_paths=PackedStringArray("cat_target_slot", "trap_target_slot")]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("37_37dvx")
+cat_target_slot = NodePath("../MergerUI/CombatAreaSlots/CombatSlot3")
+trap_target_slot = NodePath("../MergerUI/TrapSystem/TrapSlot_2")
+
+[node name="Step1" type="Control" parent="TutorialUI" unique_id=98143584]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = 272.15
+offset_top = 103.79802
+offset_right = 449.0
+offset_bottom = 210.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Panel" type="Panel" parent="TutorialUI/Step1" unique_id=1381075900]
+modulate = Color(1, 1, 1, 0)
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -375.575
+offset_top = -167.89902
+offset_right = 376.425
+offset_bottom = 217.10098
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="MessageBox" type="Panel" parent="TutorialUI/Step1" unique_id=341111835]
+layout_mode = 0
+offset_right = 177.0126
+offset_bottom = 105.67456
+
+[node name="Title" type="Label" parent="TutorialUI/Step1/MessageBox" unique_id=1435177529]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -16.506302
+offset_top = 5.0
+offset_right = 16.493698
+offset_bottom = 23.0
+grow_horizontal = 2
+theme_override_font_sizes/font_size = 13
+text = "DEFEND YOUR CASTLE"
+
+[node name="Text" type="Label" parent="TutorialUI/Step1/MessageBox" unique_id=787600215]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -70.0
+offset_top = -24.0
+offset_right = 70.0
+offset_bottom = 24.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/line_spacing = -6
+theme_override_font_sizes/font_size = 14
+text = "Place Cats and Traps
+to Stop the 
+Incoming Enemies"
+
+[node name="Button" type="Button" parent="TutorialUI/Step1/MessageBox" unique_id=1398207001]
+custom_minimum_size = Vector2(0, 20)
+custom_maximum_size = Vector2(-1, 20)
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -26.0
+offset_top = -31.0
+offset_right = 26.0
+grow_horizontal = 2
+grow_vertical = 0
+text = "Got It"
+
+[node name="LargeArrow" type="TextureRect" parent="TutorialUI/Step1" unique_id=1553511794]
+layout_mode = 0
+offset_left = -214.15
+offset_top = 73.20198
+offset_right = -148.15
+offset_bottom = 139.20198
+rotation = -1.0471976
+texture = ExtResource("37_s1tv7")
+expand_mode = 1
+stretch_mode = 4
+script = ExtResource("38_slt2r")
+move_distance = 12.0
+
+[node name="LargeArrow1" type="TextureRect" parent="TutorialUI/Step1" unique_id=1335176270]
+layout_mode = 0
+offset_left = 288.85
+offset_top = 146.20198
+offset_right = 354.85
+offset_bottom = 212.20198
+rotation = 2.0943952
+texture = ExtResource("37_s1tv7")
+expand_mode = 1
+stretch_mode = 4
+script = ExtResource("38_slt2r")
+
+[node name="Step2" type="Control" parent="TutorialUI" unique_id=1843530286]
+visible = false
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = 272.15
+offset_top = 121.79802
+offset_right = 449.0
+offset_bottom = 208.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="MessageBox" type="Panel" parent="TutorialUI/Step2" unique_id=2071016300]
+layout_mode = 0
+offset_right = 177.0126
+offset_bottom = 87.0
+
+[node name="Title" type="Label" parent="TutorialUI/Step2/MessageBox" unique_id=1862337941]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -16.506302
+offset_top = 5.0
+offset_right = 16.493698
+offset_bottom = 23.0
+grow_horizontal = 2
+theme_override_font_sizes/font_size = 13
+text = "PLACE A CAT"
+
+[node name="Text" type="Label" parent="TutorialUI/Step2/MessageBox" unique_id=1417623686]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -70.0
+offset_top = -17.0
+offset_right = 70.0
+offset_bottom = 17.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/line_spacing = -6
+theme_override_font_sizes/font_size = 14
+text = "Drag a cat into an
+empty defence slot"
+
+[node name="Button" type="Button" parent="TutorialUI/Step2/MessageBox" unique_id=970426386]
+visible = false
+custom_minimum_size = Vector2(0, 20)
+custom_maximum_size = Vector2(-1, 20)
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -26.0
+offset_top = -31.0
+offset_right = 26.0
+grow_horizontal = 2
+grow_vertical = 0
+text = "Got It"
+
+[node name="Panel" type="Panel" parent="TutorialUI/Step2" unique_id=1608976955]
+layout_mode = 0
+offset_left = -94.149994
+offset_top = 32.20198
+offset_right = -61.149994
+offset_bottom = 57.20198
+
+[node name="arrow" type="TextureRect" parent="TutorialUI/Step2" unique_id=684828682]
+layout_mode = 0
+offset_left = -192.15
+offset_top = -55.79802
+offset_right = -172.50668
+offset_bottom = -36.1547
+rotation = -1.5707964
+texture = ExtResource("38_p5dy6")
+expand_mode = 1
+script = ExtResource("39_o7tkd")
+
+[node name="arrow2" type="TextureRect" parent="TutorialUI/Step2" unique_id=44562733]
+layout_mode = 0
+offset_left = -87.149994
+offset_top = 29.20198
+offset_right = -67.50668
+offset_bottom = 48.8453
+rotation = -1.5707964
+texture = ExtResource("38_p5dy6")
+expand_mode = 1
+script = ExtResource("39_o7tkd")
+
+[node name="Step3" type="Control" parent="TutorialUI" unique_id=578772209]
+visible = false
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = 272.15
+offset_top = 120.79802
+offset_right = 449.0
+offset_bottom = 207.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="MessageBox" type="Panel" parent="TutorialUI/Step3" unique_id=1208294548]
+layout_mode = 0
+offset_left = 200.0
+offset_right = 377.0126
+offset_bottom = 87.0
+
+[node name="Title" type="Label" parent="TutorialUI/Step3/MessageBox" unique_id=1909935247]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -16.506302
+offset_top = 5.0
+offset_right = 16.493698
+offset_bottom = 23.0
+grow_horizontal = 2
+theme_override_font_sizes/font_size = 13
+text = "PLACE A TRAP"
+
+[node name="Text" type="Label" parent="TutorialUI/Step3/MessageBox" unique_id=755371470]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -70.0
+offset_top = -17.0
+offset_right = 70.0
+offset_bottom = 17.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/line_spacing = -6
+theme_override_font_sizes/font_size = 14
+text = "Drag a trap into an
+empty trap slot."
+
+[node name="Button" type="Button" parent="TutorialUI/Step3/MessageBox" unique_id=957396909]
+visible = false
+custom_minimum_size = Vector2(0, 20)
+custom_maximum_size = Vector2(-1, 20)
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -26.0
+offset_top = -31.0
+offset_right = 26.0
+grow_horizontal = 2
+grow_vertical = 0
+text = "Got It"
+
+[node name="arrow3" type="TextureRect" parent="TutorialUI/Step3" unique_id=319562175]
+layout_mode = 0
+offset_left = 109.85004
+offset_top = 37.20198
+offset_right = 129.49335
+offset_bottom = 56.8453
+rotation = -1.5707964
+texture = ExtResource("38_p5dy6")
+expand_mode = 1
+script = ExtResource("39_o7tkd")
+
+[node name="arrow4" type="TextureRect" parent="TutorialUI/Step3" unique_id=199406187]
+layout_mode = 0
+offset_left = 274.85
+offset_top = 154.20198
+offset_right = 294.49332
+offset_bottom = 173.8453
+rotation = -1.5707964
+texture = ExtResource("38_p5dy6")
+expand_mode = 1
+script = ExtResource("39_o7tkd")
+
+[node name="Step4" type="Control" parent="TutorialUI" unique_id=1220380062]
+visible = false
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = 272.15
+offset_top = 120.79802
+offset_right = 449.0
+offset_bottom = 207.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="MessageBox" type="Panel" parent="TutorialUI/Step4" unique_id=1407834062]
+layout_mode = 0
+offset_left = 199.0
+offset_right = 376.0126
+offset_bottom = 87.0
+
+[node name="Title" type="Label" parent="TutorialUI/Step4/MessageBox" unique_id=1258715998]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -16.506302
+offset_top = 5.0
+offset_right = 16.493698
+offset_bottom = 23.0
+grow_horizontal = 2
+theme_override_font_sizes/font_size = 13
+text = " YOUR DEFENDERS"
+
+[node name="Text" type="Label" parent="TutorialUI/Step4/MessageBox" unique_id=1425170477]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -70.0
+offset_top = -17.0
+offset_right = 70.0
+offset_bottom = 17.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/line_spacing = -6
+theme_override_font_sizes/font_size = 14
+text = "Cats automatically
+attack enemies within
+their range."
+
+[node name="Button" type="Button" parent="TutorialUI/Step4/MessageBox" unique_id=589595061]
+custom_minimum_size = Vector2(0, 20)
+custom_maximum_size = Vector2(-1, 20)
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -26.0
+offset_top = -31.0
+offset_right = 26.0
+grow_horizontal = 2
+grow_vertical = 0
+text = "Got It"
+
+[node name="Step5" type="Control" parent="TutorialUI" unique_id=552892745]
+visible = false
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = 272.15
+offset_top = 120.79802
+offset_right = 449.0
+offset_bottom = 207.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="MessageBox" type="Panel" parent="TutorialUI/Step5" unique_id=451454364]
+layout_mode = 0
+offset_left = 199.0
+offset_top = -12.798019
+offset_right = 376.0126
+offset_bottom = 87.0
+
+[node name="Title" type="Label" parent="TutorialUI/Step5/MessageBox" unique_id=1690121723]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -16.506302
+offset_top = 5.0
+offset_right = 16.493698
+offset_bottom = 23.0
+grow_horizontal = 2
+theme_override_font_sizes/font_size = 13
+text = "BUY CATS"
+
+[node name="Text" type="Label" parent="TutorialUI/Step5/MessageBox" unique_id=327182403]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -70.0
+offset_top = -17.0
+offset_right = 70.0
+offset_bottom = 17.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/line_spacing = -6
+theme_override_font_sizes/font_size = 14
+text = "Buy cats for free
+as this game is
+Under Development"
+
+[node name="Button" type="Button" parent="TutorialUI/Step5/MessageBox" unique_id=874078591]
+custom_minimum_size = Vector2(0, 20)
+custom_maximum_size = Vector2(-1, 20)
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -26.0
+offset_top = -31.0
+offset_right = 26.0
+grow_horizontal = 2
+grow_vertical = 0
+text = "Got It"
+
+[node name="arrow5" type="TextureRect" parent="TutorialUI/Step5" unique_id=1209666374]
+layout_mode = 0
+offset_left = -182.15
+offset_top = 158.20198
+offset_right = -162.50668
+offset_bottom = 177.8453
+rotation = -1.5707964
+texture = ExtResource("38_p5dy6")
+expand_mode = 1
+script = ExtResource("39_o7tkd")
+
+[node name="Step6" type="Control" parent="TutorialUI" unique_id=777923510]
+visible = false
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = 272.15
+offset_top = 120.79802
+offset_right = 449.0
+offset_bottom = 207.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="MessageBox" type="Panel" parent="TutorialUI/Step6" unique_id=685914750]
+layout_mode = 0
+offset_left = 199.0
+offset_right = 376.0126
+offset_bottom = 87.0
+
+[node name="Title" type="Label" parent="TutorialUI/Step6/MessageBox" unique_id=1388156752]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -16.506302
+offset_top = 5.0
+offset_right = 16.493698
+offset_bottom = 23.0
+grow_horizontal = 2
+theme_override_font_sizes/font_size = 13
+text = "MERGE CATS"
+
+[node name="Text" type="Label" parent="TutorialUI/Step6/MessageBox" unique_id=202456662]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -70.0
+offset_top = -17.0
+offset_right = 70.0
+offset_bottom = 17.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/line_spacing = -6
+theme_override_font_sizes/font_size = 14
+text = "Merging Cats will
+upgrade their level"
+
+[node name="Button" type="Button" parent="TutorialUI/Step6/MessageBox" unique_id=1358933338]
+custom_minimum_size = Vector2(0, 20)
+custom_maximum_size = Vector2(-1, 20)
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -26.0
+offset_top = -31.0
+offset_right = 26.0
+grow_horizontal = 2
+grow_vertical = 0
+text = "Got It"
+
+[node name="MergeArrow" type="TextureRect" parent="TutorialUI/Step6" unique_id=1346574733]
+modulate = Color(0, 0, 0, 1)
+layout_mode = 0
+offset_left = -169.15
+offset_top = -62.79802
+offset_right = -146.15
+offset_bottom = -34.79802
+texture = ExtResource("40_o7tkd")
+expand_mode = 1
+stretch_mode = 5
+script = ExtResource("41_81iov")
+pulse_amount = 0.0
+pulse_time = 0.0
+
+[node name="Step7" type="Control" parent="TutorialUI" unique_id=332307930]
+visible = false
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = 272.15
+offset_top = 120.79802
+offset_right = 449.0
+offset_bottom = 207.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="MessageBox" type="Panel" parent="TutorialUI/Step7" unique_id=2040264334]
+layout_mode = 0
+offset_left = 199.0
+offset_right = 376.0126
+offset_bottom = 87.0
+
+[node name="Title" type="Label" parent="TutorialUI/Step7/MessageBox" unique_id=1887280117]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -16.506302
+offset_top = 5.0
+offset_right = 16.493698
+offset_bottom = 23.0
+grow_horizontal = 2
+theme_override_font_sizes/font_size = 13
+text = " SURVIVE WAVE 1 "
+
+[node name="Text" type="Label" parent="TutorialUI/Step7/MessageBox" unique_id=443200628]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -70.0
+offset_top = -17.0
+offset_right = 70.0
+offset_bottom = 17.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/line_spacing = -6
+theme_override_font_sizes/font_size = 14
+text = "Defeat all enemies
+before they reach
+your wall."
+
+[node name="Button" type="Button" parent="TutorialUI/Step7/MessageBox" unique_id=1605288530]
+custom_minimum_size = Vector2(0, 20)
+custom_maximum_size = Vector2(-1, 20)
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -26.0
+offset_top = -31.0
+offset_right = 26.0
+grow_horizontal = 2
+grow_vertical = 0
+text = "Got It"
+
+[node name="SkipButton" type="Button" parent="TutorialUI" unique_id=1208019850]
+z_index = 5
+layout_mode = 0
+offset_left = 566.0
+offset_top = 240.0
+offset_right = 671.0
+offset_bottom = 271.0
+text = "Skip Tutorial"
 
 [connection signal="pressed" from="BuyCatButton" to="." method="_on_buy_cat_button_pressed"]
 [connection signal="pressed" from="RepairWallButton" to="." method="_on_repair_wall_button_pressed"]

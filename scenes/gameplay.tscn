@@ -4,13 +4,18 @@
 [ext_resource type="Texture2D" uid="uid://cffxa21wm03x7" path="res://assets/Area/Area1.png" id="2_4bh5q"]
 [ext_resource type="Script" uid="uid://10eu2oqspehk" path="res://scripts/Slot.gd" id="3_e124b"]
 [ext_resource type="Script" uid="uid://q77cuioxg7un" path="res://scripts/defense_wall.gd" id="3_s5y6v"]
+[ext_resource type="Script" uid="uid://bema4tqs0bmjt" path="res://scripts/RandomBackground.gd" id="3_yjd84"]
 [ext_resource type="Texture2D" uid="uid://dxvnl510wys2j" path="res://assets/Ui/BtnGreenAdd.png" id="4_4bh5q"]
 [ext_resource type="Script" uid="uid://22sn0oyaa6d5" path="res://scripts/combat_slot.gd" id="4_hbo4f"]
+[ext_resource type="Texture2D" uid="uid://dnws1huwx21ro" path="res://assets/Area/Area2.png" id="4_rynmh"]
 [ext_resource type="Texture2D" uid="uid://cdvpvlcjs0tq4" path="res://assets/Ui/BtnGreenAdd Pressed.png" id="5_101mb"]
 [ext_resource type="Texture2D" uid="uid://bqjuofft4vbk3" path="res://assets/cats/cat_01.png" id="5_e124b"]
+[ext_resource type="Texture2D" uid="uid://bmve2gql73nnr" path="res://assets/Area/Area3.png" id="5_fykia"]
 [ext_resource type="Script" uid="uid://breqwih767q1n" path="res://scripts/TrapSlot.gd" id="6_3v6uj"]
+[ext_resource type="Texture2D" uid="uid://bdu52b6tjek5q" path="res://assets/Area/Area4.png" id="6_7yuvj"]
 [ext_resource type="FontFile" uid="uid://cps2emwsmltk1" path="res://fonts/Super Bouncer.ttf" id="6_101mb"]
 [ext_resource type="Texture2D" uid="uid://bhar4ulrq7787" path="res://assets/Ui/closebutton.png" id="6_ctvyo"]
+[ext_resource type="Texture2D" uid="uid://cb8ca5lb5a485" path="res://assets/Area/Area5.png" id="7_h2nsf"]
 [ext_resource type="PackedScene" uid="uid://b3qei3jn1rgoi" path="res://scenes/enemy.tscn" id="9_101mb"]
 [ext_resource type="Texture2D" uid="uid://cbgx350opefrb" path="res://assets/Ui/WallIcon.png" id="10_407ns"]
 [ext_resource type="Script" uid="uid://bxejpo2w2rnv8" path="res://scripts/enemy_spawner.gd" id="10_hbo4f"]
@@ -65,6 +70,8 @@ script = ExtResource("1_din8e")
 position = Vector2(361.48087, 179.62498)
 scale = Vector2(0.67561203, 0.67561203)
 texture = ExtResource("2_4bh5q")
+script = ExtResource("3_yjd84")
+backgrounds = Array[Texture2D]([ExtResource("2_4bh5q"), ExtResource("4_rynmh"), ExtResource("5_fykia"), ExtResource("6_7yuvj"), ExtResource("7_h2nsf")])
 
 [node name="Camera2D" type="Camera2D" parent="World" unique_id=2056764301]
 position = Vector2(361, 179)

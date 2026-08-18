@@ -1,30 +1,91 @@
 extends Node2D
 
+
 @onready var buy_cat_button: TextureButton = $BuyCatButton
 @onready var defense_wall: DefenseWall = $World/DefenseWall
 @onready var wave_manager: WaveManager = $WaveManager
 @onready var current_wave_label: Label = $CurrentWave/Label
 @onready var tutorial_ui: TutorialUI = $TutorialUI
+@onready var buy_cat_level_label: Label = $BuyCatButton/LevelLabel
 
-const STARTING_CATS: int = 2
-const STARTING_CAT_LEVEL: int = 1
-const BUY_CAT_LEVEL: int = 1
 
+var level_data: LevelData
 var slots: Array[TextureRect] = []
 
 
 func _ready() -> void:
+	_load_level_data()
+
+	if level_data == null:
+		return
+
+	_apply_level_data()
+
 	_setup_slots()
 	_create_starting_cats()
 	_connect_slot_signals()
 	_update_buy_button()
+	_update_buy_cat_level_label()
 	_setup_wave_manager()
-	_setup_tutorial()
 
+	if level_data.tutorial_enabled:
+		_setup_tutorial()
+	else:
+		_skip_tutorial()
+
+
+# ============================================================
+# LEVEL DATA
+# ============================================================
+
+func _load_level_data() -> void:
+	level_data = GameplayManager.selected_level
+
+	if level_data == null:
+		push_error(
+			"Gameplay: No LevelData selected."
+		)
+
+
+func _apply_level_data() -> void:
+	_apply_wall_settings()
+	_apply_wave_settings()
+
+
+func _apply_wall_settings() -> void:
+	if defense_wall == null:
+		push_error(
+			"Gameplay: DefenseWall not found."
+		)
+		return
+
+	defense_wall.configure(
+		level_data.wall_max_health,
+		level_data.wall_repair_amount
+	)
+
+
+func _apply_wave_settings() -> void:
+	if wave_manager == null:
+		push_error(
+			"Gameplay: WaveManager not found."
+		)
+		return
+
+	wave_manager.configure_waves(
+		level_data.waves
+	)
+
+
+# ============================================================
+# WAVE MANAGER
+# ============================================================
 
 func _setup_wave_manager() -> void:
 	if wave_manager == null:
-		push_error("Gameplay: WaveManager not found.")
+		push_error(
+			"Gameplay: WaveManager not found."
+		)
 		return
 
 	wave_manager.set_tutorial_locked(true)
@@ -41,10 +102,18 @@ func _setup_wave_manager() -> void:
 	)
 
 
+# ============================================================
+# TUTORIAL
+# ============================================================
+
 func _setup_tutorial() -> void:
 	if tutorial_ui == null:
-		push_error("Gameplay: TutorialUI not found.")
+		push_error(
+			"Gameplay: TutorialUI not found."
+		)
 		return
+
+	tutorial_ui.visible = true
 
 	if not tutorial_ui.tutorial_finished.is_connected(
 		_on_tutorial_finished
@@ -58,10 +127,29 @@ func _on_tutorial_finished() -> void:
 	if wave_manager == null:
 		return
 
-	print("Tutorial finished. Unlocking WaveManager.")
+	print(
+		"Tutorial finished. Unlocking WaveManager."
+	)
 
 	wave_manager.set_tutorial_locked(false)
 
+
+func _skip_tutorial() -> void:
+	if tutorial_ui != null:
+		tutorial_ui.visible = false
+
+	if wave_manager != null:
+		wave_manager.set_tutorial_locked(false)
+
+	print(
+		"Tutorial disabled for ",
+		level_data.level_name
+	)
+
+
+# ============================================================
+# CAT SLOTS
+# ============================================================
 
 func _setup_slots() -> void:
 	slots.clear()
@@ -76,7 +164,11 @@ func _setup_slots() -> void:
 
 	slots.sort_custom(_sort_slots)
 
-	print("Found ", slots.size(), " cat slots.")
+	print(
+		"Found ",
+		slots.size(),
+		" cat slots."
+	)
 
 
 func _sort_slots(
@@ -102,28 +194,33 @@ func _on_slot_updated(
 	_update_buy_button()
 
 
+# ============================================================
+# STARTING CATS
+# ============================================================
+
 func _create_starting_cats() -> void:
 	var texture: Texture2D = CatManager.textures.get(
-		STARTING_CAT_LEVEL
+		level_data.starting_cat_level
 	)
 
 	if texture == null:
 		push_error(
-			"Level 1 cat texture not found."
+			"Starting cat texture not found for level: "
+			+ str(level_data.starting_cat_level)
 		)
 		return
 
 	var created_cats: int = 0
 
 	for slot: TextureRect in slots:
-		if created_cats >= STARTING_CATS:
+		if created_cats >= level_data.starting_cats:
 			break
 
 		if slot.occupied:
 			continue
 
 		var success: bool = slot.place_cat(
-			STARTING_CAT_LEVEL,
+			level_data.starting_cat_level,
 			texture
 		)
 
@@ -137,6 +234,10 @@ func _create_starting_cats() -> void:
 	)
 
 
+# ============================================================
+# BUY CAT
+# ============================================================
+
 func _find_empty_slot() -> TextureRect:
 	for slot: TextureRect in slots:
 		if not slot.occupied:
@@ -146,12 +247,12 @@ func _find_empty_slot() -> TextureRect:
 
 
 func _update_buy_button() -> void:
+	if buy_cat_button == null:
+		return
+
 	var empty_slot: TextureRect = _find_empty_slot()
 
-	if empty_slot == null:
-		buy_cat_button.disabled = true
-	else:
-		buy_cat_button.disabled = false
+	buy_cat_button.disabled = empty_slot == null
 
 
 func _on_buy_cat_button_pressed() -> void:
@@ -161,21 +262,23 @@ func _on_buy_cat_button_pressed() -> void:
 		print(
 			"Cannot buy cat: all slots are full."
 		)
+
 		_update_buy_button()
 		return
 
 	var texture: Texture2D = CatManager.textures.get(
-		BUY_CAT_LEVEL
+		level_data.buy_cat_level
 	)
 
 	if texture == null:
 		push_error(
-			"Level 1 cat texture not found."
+			"Buy cat texture not found for level: "
+			+ str(level_data.buy_cat_level)
 		)
 		return
 
 	var success: bool = empty_slot.place_cat(
-		BUY_CAT_LEVEL,
+		level_data.buy_cat_level,
 		texture
 	)
 
@@ -183,17 +286,22 @@ func _on_buy_cat_button_pressed() -> void:
 		return
 
 	print(
-		"Bought Level 1 cat → ",
+		"Bought Level ",
+		level_data.buy_cat_level,
+		" cat → ",
 		empty_slot.name
 	)
 
 	_update_buy_button()
 
-	# Complete Step 5 after one successful purchase.
 	if tutorial_ui != null:
 		if tutorial_ui.is_buy_cat_step():
 			tutorial_ui.complete_buy_cat()
 
+
+# ============================================================
+# DEFENSE WALL
+# ============================================================
 
 func _on_repair_wall_button_pressed() -> void:
 	if defense_wall == null:
@@ -204,6 +312,10 @@ func _on_repair_wall_button_pressed() -> void:
 
 	defense_wall.repair()
 
+
+# ============================================================
+# WAVE DISPLAY
+# ============================================================
 
 func _on_wave_changed(
 	wave_number: int
@@ -219,12 +331,32 @@ func _update_wave_label(
 	if current_wave_label == null:
 		return
 
+	if level_data == null:
+		return
+
 	current_wave_label.text = (
 		"Wave "
 		+ str(wave_number)
-		+ "/5"
+		+ "/"
+		+ str(level_data.waves.size())
 	)
 
+
+func _update_buy_cat_level_label() -> void:
+	if buy_cat_level_label == null:
+		return
+
+	if level_data == null:
+		return
+
+	buy_cat_level_label.text = (
+		"Level "
+		+ str(level_data.buy_cat_level)
+	)
+
+# ============================================================
+# BACK
+# ============================================================
 
 func _on_back_button_pressed() -> void:
 	SceneManager.go_to_level_select()

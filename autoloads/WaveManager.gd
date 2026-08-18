@@ -1,7 +1,9 @@
 class_name WaveManager
 extends Node2D
 
+
 signal wave_changed(wave_number: int)
+
 
 enum WaveState {
 	WAITING,
@@ -11,23 +13,30 @@ enum WaveState {
 	FINISHED
 }
 
+
 @export_category("Wave Settings")
 @export var waves: Array[WaveData] = []
 @export var start_delay: float = 2.0
 @export var delay_between_waves: float = 3.0
+
 
 @export_category("References")
 @export var enemy_spawner: EnemySpawner
 @export var enemy_container: Node2D
 @export var wave_announcement: WaveAnnouncement
 
+
 @export_category("Spawn Points")
 @export var spawn_points: Array[Marker2D] = []
+
 
 @export_category("Tutorial")
 @export var wait_for_tutorial: bool = true
 
+
 var tutorial_locked: bool = true
+var is_configured: bool = false
+
 var current_wave: int = 0
 var current_state: WaveState = WaveState.WAITING
 
@@ -39,6 +48,10 @@ var intermission_timer: Timer
 var start_timer: Timer
 
 
+# ============================================================
+# READY
+# ============================================================
+
 func _ready() -> void:
 	_create_timers()
 
@@ -46,33 +59,56 @@ func _ready() -> void:
 		tutorial_locked = false
 
 	if enemy_spawner == null:
-		push_error("WaveManager: EnemySpawner is not assigned.")
+		push_error(
+			"WaveManager: EnemySpawner is not assigned."
+		)
 		return
 
 	if enemy_container == null:
-		push_error("WaveManager: EnemyContainer is not assigned.")
-		return
-
-	if waves.is_empty():
-		push_error("WaveManager: No WaveData resources assigned.")
+		push_error(
+			"WaveManager: EnemyContainer is not assigned."
+		)
 		return
 
 	if spawn_points.is_empty():
-		push_error("WaveManager: No spawn points assigned.")
+		push_error(
+			"WaveManager: No spawn points assigned."
+		)
 		return
 
 	if wave_announcement == null:
-		push_warning("WaveManager: WaveAnnouncement is not assigned.")
-
-	start_timer.wait_time = max(start_delay, 0.01)
-
-	if tutorial_locked:
-		print("WaveManager: Waiting for tutorial to finish.")
-	else:
-		start_timer.start()
+		push_warning(
+			"WaveManager: WaveAnnouncement is not assigned."
+		)
 
 	print("Wave Manager ready.")
-	print("Total waves: ", waves.size())
+
+	if tutorial_locked:
+		print(
+			"WaveManager: Waiting for tutorial to finish."
+		)
+
+
+# ============================================================
+# CONFIGURATION
+# ============================================================
+
+func configure_waves(
+	level_waves: Array[WaveData]
+) -> void:
+	waves = level_waves
+	is_configured = true
+
+	print(
+		"WaveManager configured with ",
+		waves.size(),
+		" waves."
+	)
+
+	if waves.is_empty():
+		push_error(
+			"WaveManager: No WaveData resources provided."
+		)
 
 
 # ============================================================
@@ -85,15 +121,57 @@ func set_tutorial_locked(value: bool) -> void:
 	if tutorial_locked:
 		start_timer.stop()
 		current_state = WaveState.WAITING
-		print("WaveManager: Tutorial lock enabled.")
+
+		print(
+			"WaveManager: Tutorial lock enabled."
+		)
+
 		return
 
-	print("WaveManager: Tutorial finished.")
+	print(
+		"WaveManager: Tutorial finished."
+	)
 
-	if current_wave == 0 and current_state == WaveState.WAITING:
-		start_timer.wait_time = max(start_delay, 0.01)
-		start_timer.start()
-		print("WaveManager: Wave 1 will start in ", start_delay, " seconds.")
+	_try_start_wave_sequence()
+
+
+func _try_start_wave_sequence() -> void:
+	if GameplayManager.is_game_over:
+		return
+
+	if tutorial_locked:
+		return
+
+	if not is_configured:
+		print(
+			"WaveManager: Waiting for level configuration."
+		)
+		return
+
+	if waves.is_empty():
+		push_error(
+			"WaveManager: Cannot start. No waves configured."
+		)
+		return
+
+	if current_wave != 0:
+		return
+
+	if current_state != WaveState.WAITING:
+		return
+
+	start_timer.wait_time = max(
+		start_delay,
+		0.01
+	)
+
+	start_timer.start()
+
+	print(
+		"WaveManager: Wave 1 will start in ",
+		start_delay,
+		" seconds."
+	)
 
 
 # ============================================================
@@ -113,9 +191,17 @@ func _create_timers() -> void:
 	start_timer.one_shot = true
 	add_child(start_timer)
 
-	spawn_timer.timeout.connect(_on_spawn_timer_timeout)
-	intermission_timer.timeout.connect(_on_intermission_finished)
-	start_timer.timeout.connect(_on_start_delay_finished)
+	spawn_timer.timeout.connect(
+		_on_spawn_timer_timeout
+	)
+
+	intermission_timer.timeout.connect(
+		_on_intermission_finished
+	)
+
+	start_timer.timeout.connect(
+		_on_start_delay_finished
+	)
 
 
 # ============================================================
@@ -127,6 +213,9 @@ func _on_start_delay_finished() -> void:
 		return
 
 	if tutorial_locked:
+		return
+
+	if not is_configured:
 		return
 
 	start_wave()
@@ -141,7 +230,21 @@ func start_wave() -> void:
 		return
 
 	if tutorial_locked:
-		print("WaveManager: Wave start blocked by tutorial.")
+		print(
+			"WaveManager: Wave start blocked by tutorial."
+		)
+		return
+
+	if not is_configured:
+		push_error(
+			"WaveManager: Cannot start wave before configuration."
+		)
+		return
+
+	if waves.is_empty():
+		push_error(
+			"WaveManager: Cannot start wave. No waves configured."
+		)
 		return
 
 	if current_wave >= waves.size():
@@ -150,6 +253,7 @@ func start_wave() -> void:
 
 	current_wave += 1
 	current_state = WaveState.SPAWNING
+
 	current_enemy_index = 0
 	current_enemy_spawned = 0
 
@@ -162,6 +266,8 @@ func start_wave() -> void:
 			"WaveManager: Wave %d is null."
 			% current_wave
 		)
+
+		_finish_spawning()
 		return
 
 	print(
@@ -171,7 +277,9 @@ func start_wave() -> void:
 	)
 
 	if wave_announcement != null:
-		wave_announcement.show_wave(current_wave)
+		wave_announcement.show_wave(
+			current_wave
+		)
 
 	_start_current_enemy_type()
 
@@ -188,6 +296,10 @@ func _start_current_enemy_type() -> void:
 		return
 
 	if current_wave <= 0:
+		return
+
+	if current_wave > waves.size():
+		_finish_all_waves()
 		return
 
 	var wave: WaveData = waves[current_wave - 1]
@@ -208,21 +320,29 @@ func _start_current_enemy_type() -> void:
 				current_enemy_index
 			]
 		)
+
 		_finish_spawning()
 		return
 
-	var enemy_data: EnemyData = wave.enemies[current_enemy_index]
-	var enemy_count: int = wave.enemy_counts[current_enemy_index]
+	var enemy_data: EnemyData = (
+		wave.enemies[current_enemy_index]
+	)
+
+	var enemy_count: int = (
+		wave.enemy_counts[current_enemy_index]
+	)
 
 	if enemy_data == null:
 		current_enemy_index += 1
 		current_enemy_spawned = 0
+
 		_start_current_enemy_type()
 		return
 
 	if enemy_count <= 0:
 		current_enemy_index += 1
 		current_enemy_spawned = 0
+
 		_start_current_enemy_type()
 		return
 
@@ -254,6 +374,13 @@ func _spawn_next_enemy() -> void:
 	if current_state != WaveState.SPAWNING:
 		return
 
+	if current_wave <= 0:
+		return
+
+	if current_wave > waves.size():
+		_finish_all_waves()
+		return
+
 	var wave: WaveData = waves[current_wave - 1]
 
 	if wave == null:
@@ -268,12 +395,25 @@ func _spawn_next_enemy() -> void:
 		_finish_spawning()
 		return
 
-	var enemy_data: EnemyData = wave.enemies[current_enemy_index]
-	var enemy_count: int = wave.enemy_counts[current_enemy_index]
+	var enemy_data: EnemyData = (
+		wave.enemies[current_enemy_index]
+	)
+
+	var enemy_count: int = (
+		wave.enemy_counts[current_enemy_index]
+	)
+
+	if enemy_data == null:
+		current_enemy_index += 1
+		current_enemy_spawned = 0
+
+		_start_current_enemy_type()
+		return
 
 	if current_enemy_spawned >= enemy_count:
 		current_enemy_index += 1
 		current_enemy_spawned = 0
+
 		_start_current_enemy_type()
 		return
 
@@ -286,6 +426,7 @@ func _spawn_next_enemy() -> void:
 
 		spawn_timer.wait_time = 0.1
 		spawn_timer.start()
+
 		return
 
 	var enemy: Enemy = enemy_spawner.spawn_enemy(
@@ -301,6 +442,7 @@ func _spawn_next_enemy() -> void:
 
 		spawn_timer.wait_time = 0.1
 		spawn_timer.start()
+
 		return
 
 	current_enemy_spawned += 1

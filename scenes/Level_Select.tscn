@@ -175,13 +175,11 @@ offset_left = 56.5
 offset_top = 164.0
 offset_right = 111.5
 offset_bottom = 219.0
-disabled = true
 texture_normal = ExtResource("7_crqhg")
 texture_disabled = ExtResource("8_s24pp")
 stretch_mode = 5
 
 [node name="Label" type="Label" parent="RightPanel/Panel/Content/HomePage/ScrollContainer/MapContainer/LevelButton2" unique_id=677747544]
-visible = false
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -206,13 +204,11 @@ offset_left = 194.5
 offset_top = 146.0
 offset_right = 249.5
 offset_bottom = 201.0
-disabled = true
 texture_normal = ExtResource("7_crqhg")
 texture_disabled = ExtResource("8_s24pp")
 stretch_mode = 5
 
 [node name="Label" type="Label" parent="RightPanel/Panel/Content/HomePage/ScrollContainer/MapContainer/LevelButton3" unique_id=796056549]
-visible = false
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5

@@ -359,7 +359,7 @@ texture = ExtResource("5_e124b")
 expand_mode = 1
 stretch_mode = 5
 
-[node name="Label" type="Label" parent="BuyCatButton" unique_id=1806558335]
+[node name="LevelLabel" type="Label" parent="BuyCatButton" unique_id=1806558335]
 layout_mode = 1
 anchors_preset = 1
 anchor_left = 1.0
@@ -375,7 +375,7 @@ theme_override_fonts/font = ExtResource("6_101mb")
 theme_override_font_sizes/font_size = 9
 text = "Level 1"
 
-[node name="Label2" type="Label" parent="BuyCatButton" unique_id=2021736032]
+[node name="PriceLabel" type="Label" parent="BuyCatButton" unique_id=2021736032]
 layout_mode = 1
 anchors_preset = 1
 anchor_left = 1.0
@@ -437,7 +437,7 @@ theme_override_fonts/font = ExtResource("6_101mb")
 theme_override_font_sizes/font_size = 8
 text = "Repair Wall"
 
-[node name="Label2" type="Label" parent="RepairWallButton" unique_id=742896816]
+[node name="PriceLabel" type="Label" parent="RepairWallButton" unique_id=742896816]
 layout_mode = 1
 anchors_preset = 1
 anchor_left = 1.0
@@ -697,6 +697,7 @@ grow_horizontal = 2
 grow_vertical = 2
 
 [node name="Panel" type="Panel" parent="TutorialUI/Step1" unique_id=1381075900]
+visible = false
 modulate = Color(1, 1, 1, 0)
 layout_mode = 1
 anchors_preset = 8

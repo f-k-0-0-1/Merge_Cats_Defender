@@ -2,6 +2,7 @@ extends Node
 
 var is_game_over: bool = false
 var is_victory: bool = false
+var selected_level: LevelData = null
 
 const GAME_OVER_SCENE: PackedScene = preload("res://scenes/game_over.tscn")
 const VICTORY_SCENE: PackedScene = preload("res://scenes/victory.tscn")

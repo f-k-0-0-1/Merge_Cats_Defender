@@ -36,6 +36,18 @@ extends Control
 	$RightPanel/Panel/Content/HomePage/ScrollContainer/MapContainer/LevelButton6
 ]
 
+const LEVEL_1_DATA: LevelData = preload(
+	"res://data/levels/level_1_data.tres"
+)
+
+const LEVEL_2_DATA: LevelData = preload(
+	"res://data/levels/level_2_data.tres"
+)
+
+const LEVEL_3_DATA: LevelData = preload(
+	"res://data/levels/level_3_data.tres"
+)
+
 var current_tab: int = 0
 var current_level: int = 1
 
@@ -126,16 +138,35 @@ func _on_level_button_1_pressed() -> void:
 		return
 
 	select_level(1)
+
+	GameplayManager.selected_level = LEVEL_1_DATA
+
 	_start_loading()
 	SceneManager.go_to_gameplay()
 
 
 func _on_level_button_2_pressed() -> void:
+	if SceneManager._is_loading:
+		return
+
 	select_level(2)
+
+	GameplayManager.selected_level = LEVEL_2_DATA
+
+	_start_loading()
+	SceneManager.go_to_gameplay()
 
 
 func _on_level_button_3_pressed() -> void:
+	if SceneManager._is_loading:
+		return
+
 	select_level(3)
+
+	GameplayManager.selected_level = LEVEL_3_DATA
+
+	_start_loading()
+	SceneManager.go_to_gameplay()
 
 
 func _on_level_button_4_pressed() -> void:

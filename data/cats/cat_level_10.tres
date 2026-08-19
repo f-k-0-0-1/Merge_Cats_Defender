@@ -6,6 +6,7 @@
 
 [resource]
 script = ExtResource("1_8jpsr")
+theme_id = 1
 level = 10
 cat_name = "Cat10"
 damage = 73.0

@@ -116,26 +116,26 @@ follow_viewport_enabled = true
 anchors_preset = -1
 anchor_right = 0.24200001
 anchor_bottom = 1.0
-offset_left = 75.0
-offset_top = 80.0
-offset_right = -19.240005
-offset_bottom = -91.0
+offset_left = 78.0
+offset_top = 78.0
+offset_right = -22.240005
+offset_bottom = -96.0
 grow_vertical = 2
-theme_override_constants/h_separation = 14
-theme_override_constants/v_separation = 6
+theme_override_constants/h_separation = 18
+theme_override_constants/v_separation = 11
 columns = 2
 
 [node name="Slot1" type="TextureRect" parent="MergerUI/GridContainer" unique_id=610088470 groups=["cat_slots"]]
-custom_minimum_size = Vector2(33, 33)
-custom_maximum_size = Vector2(33, 33)
+custom_minimum_size = Vector2(28, 28)
+custom_maximum_size = Vector2(28, 28)
 layout_mode = 2
 expand_mode = 1
 stretch_mode = 5
 script = ExtResource("3_e124b")
 
 [node name="Slot2" type="TextureRect" parent="MergerUI/GridContainer" unique_id=431397335 groups=["cat_slots"]]
-custom_minimum_size = Vector2(33, 33)
-custom_maximum_size = Vector2(33, 33)
+custom_minimum_size = Vector2(28, 28)
+custom_maximum_size = Vector2(28, 28)
 layout_mode = 2
 expand_mode = 1
 stretch_mode = 5
@@ -143,8 +143,8 @@ script = ExtResource("3_e124b")
 slot_index = 1
 
 [node name="Slot3" type="TextureRect" parent="MergerUI/GridContainer" unique_id=2107334610 groups=["cat_slots"]]
-custom_minimum_size = Vector2(33, 33)
-custom_maximum_size = Vector2(33, 33)
+custom_minimum_size = Vector2(28, 28)
+custom_maximum_size = Vector2(28, 28)
 layout_mode = 2
 expand_mode = 1
 stretch_mode = 5
@@ -152,8 +152,8 @@ script = ExtResource("3_e124b")
 slot_index = 2
 
 [node name="Slot4" type="TextureRect" parent="MergerUI/GridContainer" unique_id=999695546 groups=["cat_slots"]]
-custom_minimum_size = Vector2(33, 33)
-custom_maximum_size = Vector2(33, 33)
+custom_minimum_size = Vector2(28, 28)
+custom_maximum_size = Vector2(28, 28)
 layout_mode = 2
 expand_mode = 1
 stretch_mode = 5
@@ -161,8 +161,8 @@ script = ExtResource("3_e124b")
 slot_index = 3
 
 [node name="Slot5" type="TextureRect" parent="MergerUI/GridContainer" unique_id=383795925 groups=["cat_slots"]]
-custom_minimum_size = Vector2(33, 33)
-custom_maximum_size = Vector2(33, 33)
+custom_minimum_size = Vector2(28, 28)
+custom_maximum_size = Vector2(28, 28)
 layout_mode = 2
 expand_mode = 1
 stretch_mode = 5
@@ -170,8 +170,8 @@ script = ExtResource("3_e124b")
 slot_index = 4
 
 [node name="Slot6" type="TextureRect" parent="MergerUI/GridContainer" unique_id=2098108181 groups=["cat_slots"]]
-custom_minimum_size = Vector2(33, 33)
-custom_maximum_size = Vector2(33, 33)
+custom_minimum_size = Vector2(28, 28)
+custom_maximum_size = Vector2(28, 28)
 layout_mode = 2
 expand_mode = 1
 stretch_mode = 5
@@ -179,8 +179,8 @@ script = ExtResource("3_e124b")
 slot_index = 5
 
 [node name="Slot7" type="TextureRect" parent="MergerUI/GridContainer" unique_id=29008102 groups=["cat_slots"]]
-custom_minimum_size = Vector2(33, 33)
-custom_maximum_size = Vector2(33, 33)
+custom_minimum_size = Vector2(28, 28)
+custom_maximum_size = Vector2(28, 28)
 layout_mode = 2
 expand_mode = 1
 stretch_mode = 5
@@ -188,8 +188,8 @@ script = ExtResource("3_e124b")
 slot_index = 6
 
 [node name="Slot8" type="TextureRect" parent="MergerUI/GridContainer" unique_id=2121188259 groups=["cat_slots"]]
-custom_minimum_size = Vector2(33, 33)
-custom_maximum_size = Vector2(33, 33)
+custom_minimum_size = Vector2(28, 28)
+custom_maximum_size = Vector2(28, 28)
 layout_mode = 2
 expand_mode = 1
 stretch_mode = 5
@@ -197,15 +197,15 @@ script = ExtResource("3_e124b")
 slot_index = 7
 
 [node name="Slot9" type="TextureButton" parent="MergerUI/GridContainer" unique_id=1663555801]
-custom_minimum_size = Vector2(33, 33)
-custom_maximum_size = Vector2(33, 33)
+custom_minimum_size = Vector2(28, 28)
+custom_maximum_size = Vector2(28, 28)
 layout_mode = 2
 stretch_mode = 5
 script = ExtResource("35_5vu4g")
 
 [node name="Slot10" type="TextureRect" parent="MergerUI/GridContainer" unique_id=1417196256 groups=["cat_slots"]]
-custom_minimum_size = Vector2(33, 33)
-custom_maximum_size = Vector2(33, 33)
+custom_minimum_size = Vector2(28, 28)
+custom_maximum_size = Vector2(28, 28)
 layout_mode = 2
 expand_mode = 1
 stretch_mode = 5
@@ -672,6 +672,7 @@ theme_override_font_sizes/font_size = 25
 text = "Wave 1"
 
 [node name="TutorialUI" type="Control" parent="." unique_id=1273485958 node_paths=PackedStringArray("cat_target_slot", "trap_target_slot")]
+visible = false
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0

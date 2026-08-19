@@ -14,4 +14,4 @@ level_id = 3
 level_name = "Level 3"
 waves = Array[ExtResource("2_4f6kq")]([ExtResource("3_bj70n"), ExtResource("4_8x8fd"), ExtResource("5_gjig8"), ExtResource("6_uuqis"), ExtResource("7_f8ya7")])
 starting_cat_level = 2
-buy_cat_level = 2
+buy_cat_level = 8

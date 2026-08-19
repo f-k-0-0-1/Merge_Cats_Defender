@@ -6,6 +6,7 @@
 
 [resource]
 script = ExtResource("1_wt1a6")
+theme_id = 1
 level = 8
 cat_name = "Cat8"
 damage = 52.0

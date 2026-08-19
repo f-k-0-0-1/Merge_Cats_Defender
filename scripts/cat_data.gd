@@ -1,6 +1,10 @@
 class_name CatData
 extends Resource
 
+@export_category("Theme")
+@export_enum("Theme 1", "Theme 2", "Theme 3")
+var theme_id: int = 0
+
 @export_category("Identity")
 
 @export var level: int = 1

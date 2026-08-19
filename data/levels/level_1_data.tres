@@ -2,11 +2,11 @@
 
 [ext_resource type="Script" uid="uid://4m66mtmwukmq" path="res://scripts/LevelData.gd" id="1_jcjm2"]
 [ext_resource type="Script" uid="uid://cx1uwut1j6bqm" path="res://scripts/WaveData.gd" id="2_1pv3a"]
-[ext_resource type="Resource" uid="uid://c2mg5yyo34yrj" path="res://data/waves/wave_01.tres" id="3_rodlo"]
-[ext_resource type="Resource" uid="uid://cncgdw5slk21x" path="res://data/waves/wave_02.tres" id="4_jrn7y"]
-[ext_resource type="Resource" uid="uid://b2oymdpy0ypjp" path="res://data/waves/wave_03.tres" id="5_yxid1"]
-[ext_resource type="Resource" uid="uid://befp84g8uuikk" path="res://data/waves/wave_04.tres" id="6_wv4t7"]
-[ext_resource type="Resource" uid="uid://dcp8dny8cxkep" path="res://data/waves/wave_05.tres" id="7_wfp12"]
+[ext_resource type="Resource" uid="uid://c2mg5yyo34yrj" path="res://data/waves/level_1/wave_01.tres" id="3_rodlo"]
+[ext_resource type="Resource" uid="uid://cncgdw5slk21x" path="res://data/waves/level_1/wave_02.tres" id="4_jrn7y"]
+[ext_resource type="Resource" uid="uid://b2oymdpy0ypjp" path="res://data/waves/level_1/wave_03.tres" id="5_yxid1"]
+[ext_resource type="Resource" uid="uid://befp84g8uuikk" path="res://data/waves/level_1/wave_04.tres" id="6_wv4t7"]
+[ext_resource type="Resource" uid="uid://dcp8dny8cxkep" path="res://data/waves/level_1/wave_05.tres" id="7_wfp12"]
 
 [resource]
 script = ExtResource("1_jcjm2")

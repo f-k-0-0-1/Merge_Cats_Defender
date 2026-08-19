@@ -8,9 +8,9 @@
 script = ExtResource("1_dup56")
 level = 4
 cat_name = "Cat4"
-damage = 22.0
-attack_cooldown = 0.88
+damage = 17.0
+attack_cooldown = 0.97
 attack_range = 330.0
-projectile_speed = 545.0
+projectile_speed = 530.0
 projectile_scene = ExtResource("1_ktyf6")
 sprite_frames = ExtResource("3_kvfat")

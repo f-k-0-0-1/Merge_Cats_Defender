@@ -1,0 +1,18 @@
+[gd_resource type="Resource" script_class="WaveData" format=3 uid="uid://bq22bd4c85aw3"]
+
+[ext_resource type="Script" uid="uid://c71ybbbaxh70c" path="res://scripts/EnemyData.gd" id="1_1kbd3"]
+[ext_resource type="Resource" uid="uid://ci5fwgvur62gr" path="res://data/enemies/enemy_01.tres" id="2_njwfq"]
+[ext_resource type="Resource" uid="uid://bwbnn2xxsatb0" path="res://data/enemies/enemy_02.tres" id="3_qff5x"]
+[ext_resource type="Resource" uid="uid://v3demrc33mue" path="res://data/enemies/enemy_03.tres" id="4_4vc5j"]
+[ext_resource type="Resource" uid="uid://dqncmyj5cudcm" path="res://data/enemies/enemy_04.tres" id="5_f34ub"]
+[ext_resource type="Resource" uid="uid://dmtmykgaxcwi1" path="res://data/enemies/enemy_05.tres" id="6_otja2"]
+[ext_resource type="Resource" uid="uid://bumyo8nih21td" path="res://data/enemies/enemy_06.tres" id="7_oypml"]
+[ext_resource type="Resource" uid="uid://d0sxdxuyxohj2" path="res://data/enemies/enemy_07.tres" id="8_qy25l"]
+[ext_resource type="Resource" uid="uid://bcdor3yt82e0i" path="res://data/enemies/enemy_08.tres" id="9_rabuy"]
+[ext_resource type="Script" uid="uid://cx1uwut1j6bqm" path="res://scripts/WaveData.gd" id="10_pi8l4"]
+
+[resource]
+script = ExtResource("10_pi8l4")
+wave_number = 5
+enemies = Array[ExtResource("1_1kbd3")]([ExtResource("2_njwfq"), ExtResource("3_qff5x"), ExtResource("4_4vc5j"), ExtResource("5_f34ub"), ExtResource("6_otja2"), ExtResource("7_oypml"), ExtResource("8_qy25l"), ExtResource("9_rabuy")])
+enemy_counts = Array[int]([10, 7, 5, 4, 3, 2, 2, 2])

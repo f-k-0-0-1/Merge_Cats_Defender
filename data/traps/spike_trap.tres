@@ -8,6 +8,7 @@
 script = ExtResource("2_l6sjn")
 trap_name = "SpikesTrap"
 icon = ExtResource("1_vd0my")
-damage = 10.0
+damage = 15.0
 attack_range = 25.0
+attack_cooldown = 1.5
 trap_scene = ExtResource("3_dnxrx")

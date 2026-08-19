@@ -6,4 +6,7 @@
 [resource]
 script = ExtResource("1_p3w3o")
 enemy_name = "Enemy4"
+max_health = 60.0
+move_speed = 32.0
+attack_cooldown = 1.4
 sprite_frames = ExtResource("2_rmor0")

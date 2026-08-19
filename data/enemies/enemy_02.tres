@@ -6,5 +6,8 @@
 [resource]
 script = ExtResource("1_gxmvk")
 enemy_name = "Enemy2"
-max_health = 20.0
+max_health = 30.0
+move_speed = 45.0
+wall_damage = 6.0
+attack_cooldown = 1.2
 sprite_frames = ExtResource("2_a5ibq")

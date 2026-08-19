@@ -1,0 +1,14 @@
+[gd_resource type="Resource" script_class="WaveData" format=3 uid="uid://dmmml1yboni80"]
+
+[ext_resource type="Script" uid="uid://c71ybbbaxh70c" path="res://scripts/EnemyData.gd" id="1_n8h4s"]
+[ext_resource type="Resource" uid="uid://ci5fwgvur62gr" path="res://data/enemies/enemy_01.tres" id="2_w66vn"]
+[ext_resource type="Resource" uid="uid://bwbnn2xxsatb0" path="res://data/enemies/enemy_02.tres" id="3_7yxmv"]
+[ext_resource type="Script" uid="uid://cx1uwut1j6bqm" path="res://scripts/WaveData.gd" id="4_vcbym"]
+[ext_resource type="Resource" uid="uid://v3demrc33mue" path="res://data/enemies/enemy_03.tres" id="4_w66vn"]
+
+[resource]
+script = ExtResource("4_vcbym")
+wave_number = 2
+spawn_interval = 1.7
+enemies = Array[ExtResource("1_n8h4s")]([ExtResource("2_w66vn"), ExtResource("3_7yxmv"), ExtResource("4_w66vn")])
+enemy_counts = Array[int]([8, 5, 3])

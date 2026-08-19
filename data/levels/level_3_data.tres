@@ -2,16 +2,16 @@
 
 [ext_resource type="Script" uid="uid://4m66mtmwukmq" path="res://scripts/LevelData.gd" id="1_6by0v"]
 [ext_resource type="Script" uid="uid://cx1uwut1j6bqm" path="res://scripts/WaveData.gd" id="2_4f6kq"]
-[ext_resource type="Resource" uid="uid://c2mg5yyo34yrj" path="res://data/waves/wave_01.tres" id="3_bj70n"]
-[ext_resource type="Resource" uid="uid://cncgdw5slk21x" path="res://data/waves/wave_02.tres" id="4_8x8fd"]
-[ext_resource type="Resource" uid="uid://b2oymdpy0ypjp" path="res://data/waves/wave_03.tres" id="5_gjig8"]
-[ext_resource type="Resource" uid="uid://befp84g8uuikk" path="res://data/waves/wave_04.tres" id="6_uuqis"]
-[ext_resource type="Resource" uid="uid://dcp8dny8cxkep" path="res://data/waves/wave_05.tres" id="7_f8ya7"]
+[ext_resource type="Resource" uid="uid://ctqxl0q0mcjwu" path="res://data/waves/level_3/wave_01.tres" id="3_6by0v"]
+[ext_resource type="Resource" uid="uid://bd0eahoxk1l3b" path="res://data/waves/level_3/wave_02.tres" id="4_4f6kq"]
+[ext_resource type="Resource" uid="uid://7iea6exc2ftn" path="res://data/waves/level_3/wave_03.tres" id="5_bj70n"]
+[ext_resource type="Resource" uid="uid://dyhkkubqsxwwb" path="res://data/waves/level_3/wave_04.tres" id="6_8x8fd"]
+[ext_resource type="Resource" uid="uid://benk5ormgn8gb" path="res://data/waves/level_3/wave_05.tres" id="7_gjig8"]
 
 [resource]
 script = ExtResource("1_6by0v")
 level_id = 3
 level_name = "Level 3"
-waves = Array[ExtResource("2_4f6kq")]([ExtResource("3_bj70n"), ExtResource("4_8x8fd"), ExtResource("5_gjig8"), ExtResource("6_uuqis"), ExtResource("7_f8ya7")])
+waves = Array[ExtResource("2_4f6kq")]([ExtResource("3_6by0v"), ExtResource("4_4f6kq"), ExtResource("5_bj70n"), ExtResource("6_8x8fd"), ExtResource("7_gjig8")])
 starting_cat_level = 2
-buy_cat_level = 8
+buy_cat_level = 4

@@ -1,0 +1,422 @@
+[gd_scene format=3 uid="uid://cwlviw4okvqhj"]
+
+[ext_resource type="FontFile" uid="uid://dr2g0050rt6s2" path="res://fonts/LilitaOne-Regular.ttf" id="1_luio4"]
+[ext_resource type="Texture2D" uid="uid://bqjuofft4vbk3" path="res://assets/cats/cat_01.png" id="2_th8td"]
+[ext_resource type="Texture2D" uid="uid://c8b0w6ow6ur5v" path="res://assets/Ui/GemsIcon.png" id="3_jc1xr"]
+[ext_resource type="Texture2D" uid="uid://bynwxs3tnc4ky" path="res://assets/Ui/CoinIcon.png" id="4_06t33"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_06bb8"]
+bg_color = Color(0.69411767, 0.77254903, 0.28235295, 1)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.24313726, 0.14117648, 0.105882354, 1)
+corner_radius_top_left = 15
+corner_radius_top_right = 15
+corner_radius_bottom_right = 15
+corner_radius_bottom_left = 15
+corner_detail = 20
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_lroka"]
+bg_color = Color(0.40392157, 0.44705883, 0.1882353, 1)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.23921569, 0.16078432, 0.05882353, 1)
+corner_radius_top_left = 15
+corner_radius_top_right = 15
+corner_radius_bottom_right = 10
+corner_radius_bottom_left = 10
+corner_detail = 20
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_f8mkg"]
+bg_color = Color(0.46666667, 0.4392157, 0.3764706, 1)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.1254902, 0.02745098, 0, 1)
+corner_radius_top_left = 6
+corner_radius_top_right = 6
+corner_radius_bottom_right = 6
+corner_radius_bottom_left = 6
+corner_detail = 20
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_3a2jp"]
+bg_color = Color(0.9490196, 0.8862745, 0.7921569, 1)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0.25490198, 0.14117648, 0.105882354, 1)
+corner_radius_top_left = 4
+corner_radius_top_right = 4
+corner_radius_bottom_right = 4
+corner_radius_bottom_left = 4
+corner_detail = 20
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_h2nsf"]
+bg_color = Color(0.51059645, 0.45352274, 0.33197144, 1)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0.24313726, 0.14117648, 0.105882354, 1)
+corner_radius_top_left = 5
+corner_radius_top_right = 5
+corner_radius_bottom_right = 5
+corner_radius_bottom_left = 5
+corner_detail = 20
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_urfw8"]
+bg_color = Color(0.60784316, 0.54509807, 0.4117647, 1)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0.24313726, 0.14117648, 0.105882354, 1)
+corner_radius_top_left = 5
+corner_radius_top_right = 5
+corner_radius_bottom_right = 5
+corner_radius_bottom_left = 5
+corner_detail = 20
+
+[node name="CatUpgradePopup" type="Control" unique_id=527666475]
+z_index = 5
+layout_mode = 3
+anchors_preset = 0
+offset_left = 72.0
+offset_right = 112.0
+offset_bottom = 40.0
+
+[node name="BGPanel" type="Panel" parent="." unique_id=616512973]
+layout_mode = 0
+offset_left = 152.0
+offset_top = 62.0
+offset_right = 296.0
+offset_bottom = 271.0
+theme_override_styles/panel = SubResource("StyleBoxFlat_06bb8")
+
+[node name="TopPanel" type="Panel" parent="." unique_id=1137037046]
+layout_mode = 0
+offset_left = 152.0
+offset_top = 62.0
+offset_right = 296.0
+offset_bottom = 95.0
+theme_override_styles/panel = SubResource("StyleBoxFlat_lroka")
+
+[node name="TopLabel" type="Label" parent="." unique_id=298262680]
+layout_mode = 0
+offset_left = 169.0
+offset_top = 66.0
+offset_right = 198.0
+offset_bottom = 90.0
+theme_override_colors/font_color = Color(0.99, 0.79200006, 0, 1)
+theme_override_colors/font_shadow_color = Color(0.23921569, 0.16078432, 0.05882353, 1)
+theme_override_fonts/font = ExtResource("1_luio4")
+theme_override_font_sizes/font_size = 20
+text = "Cat"
+
+[node name="TopLevelLabel" type="Label" parent="." unique_id=685842569]
+layout_mode = 0
+offset_left = 209.0
+offset_top = 67.0
+offset_right = 289.0
+offset_bottom = 90.0
+theme_override_colors/font_color = Color(0.8950173, 0.78125256, 0.6077114, 1)
+theme_override_colors/font_shadow_color = Color(0.23921569, 0.16078432, 0.05882353, 1)
+theme_override_fonts/font = ExtResource("1_luio4")
+theme_override_font_sizes/font_size = 14
+text = "Level  1 →  2"
+
+[node name="CatDisplayPanel" type="Panel" parent="." unique_id=1666364728]
+layout_mode = 0
+offset_left = 164.0
+offset_top = 98.0
+offset_right = 212.0
+offset_bottom = 152.0
+theme_override_styles/panel = SubResource("StyleBoxFlat_f8mkg")
+
+[node name="CatTexture" type="TextureRect" parent="CatDisplayPanel" unique_id=281390456]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("2_th8td")
+expand_mode = 1
+stretch_mode = 6
+
+[node name="PropertiesContainer" type="VBoxContainer" parent="." unique_id=286386556]
+layout_mode = 0
+offset_left = 161.0
+offset_top = 155.91315
+offset_right = 288.0
+offset_bottom = 226.91315
+theme_override_constants/separation = 1
+
+[node name="Panel1" type="Panel" parent="PropertiesContainer" unique_id=64738018]
+custom_minimum_size = Vector2(120, 17)
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_3a2jp")
+
+[node name="Label" type="Label" parent="PropertiesContainer/Panel1" unique_id=1270227335]
+layout_mode = 1
+anchors_preset = 4
+anchor_top = 0.5
+anchor_bottom = 0.5
+offset_left = 7.0
+offset_top = -6.0
+offset_right = 47.0
+offset_bottom = 4.0
+grow_vertical = 2
+theme_override_colors/font_color = Color(0.24313726, 0.14117648, 0.105882354, 1)
+theme_override_fonts/font = ExtResource("1_luio4")
+theme_override_font_sizes/font_size = 8
+text = "Damage"
+
+[node name="Label2" type="Label" parent="PropertiesContainer/Panel1" unique_id=1451354100]
+layout_mode = 1
+anchors_preset = 6
+anchor_left = 1.0
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_left = -50.0
+offset_top = -6.0
+offset_right = -5.0
+offset_bottom = 6.0
+grow_horizontal = 0
+grow_vertical = 2
+theme_override_colors/font_color = Color(0.24313726, 0.14117648, 0.105882354, 1)
+theme_override_fonts/font = ExtResource("1_luio4")
+theme_override_font_sizes/font_size = 8
+text = "10 → 12"
+
+[node name="Panel2" type="Panel" parent="PropertiesContainer" unique_id=997609621]
+custom_minimum_size = Vector2(120, 17)
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_3a2jp")
+
+[node name="Label" type="Label" parent="PropertiesContainer/Panel2" unique_id=1131851578]
+layout_mode = 1
+anchors_preset = 4
+anchor_top = 0.5
+anchor_bottom = 0.5
+offset_left = 7.0
+offset_top = -6.0
+offset_right = 65.0
+offset_bottom = 4.0
+grow_vertical = 2
+theme_override_colors/font_color = Color(0.24313726, 0.14117648, 0.105882354, 1)
+theme_override_fonts/font = ExtResource("1_luio4")
+theme_override_font_sizes/font_size = 8
+text = "Attack cooldown"
+
+[node name="Label2" type="Label" parent="PropertiesContainer/Panel2" unique_id=776410660]
+layout_mode = 1
+anchors_preset = 6
+anchor_left = 1.0
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_left = -50.0
+offset_top = -6.0
+offset_right = -5.0
+offset_bottom = 6.0
+grow_horizontal = 0
+grow_vertical = 2
+theme_override_colors/font_color = Color(0.24313726, 0.14117648, 0.105882354, 1)
+theme_override_fonts/font = ExtResource("1_luio4")
+theme_override_font_sizes/font_size = 8
+text = "1.0 → 0.99"
+
+[node name="Panel3" type="Panel" parent="PropertiesContainer" unique_id=1650685491]
+custom_minimum_size = Vector2(120, 17)
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_3a2jp")
+
+[node name="Label" type="Label" parent="PropertiesContainer/Panel3" unique_id=1317923883]
+layout_mode = 1
+anchors_preset = 4
+anchor_top = 0.5
+anchor_bottom = 0.5
+offset_left = 7.0
+offset_top = -6.0
+offset_right = 53.0
+offset_bottom = 4.0
+grow_vertical = 2
+theme_override_colors/font_color = Color(0.24313726, 0.14117648, 0.105882354, 1)
+theme_override_fonts/font = ExtResource("1_luio4")
+theme_override_font_sizes/font_size = 8
+text = "Attack Range"
+
+[node name="Label2" type="Label" parent="PropertiesContainer/Panel3" unique_id=888204825]
+layout_mode = 1
+anchors_preset = 6
+anchor_left = 1.0
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_left = -50.0
+offset_top = -6.0
+offset_right = -5.0
+offset_bottom = 6.0
+grow_horizontal = 0
+grow_vertical = 2
+theme_override_colors/font_color = Color(0.24313726, 0.14117648, 0.105882354, 1)
+theme_override_fonts/font = ExtResource("1_luio4")
+theme_override_font_sizes/font_size = 8
+text = "300 → 310"
+
+[node name="Panel4" type="Panel" parent="PropertiesContainer" unique_id=326585584]
+custom_minimum_size = Vector2(120, 17)
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_3a2jp")
+
+[node name="Label" type="Label" parent="PropertiesContainer/Panel4" unique_id=2105255926]
+layout_mode = 1
+anchors_preset = 4
+anchor_top = 0.5
+anchor_bottom = 0.5
+offset_left = 7.0
+offset_top = -6.0
+offset_right = 62.0
+offset_bottom = 4.0
+grow_vertical = 2
+theme_override_colors/font_color = Color(0.24313726, 0.14117648, 0.105882354, 1)
+theme_override_fonts/font = ExtResource("1_luio4")
+theme_override_font_sizes/font_size = 8
+text = "Projectile Speed"
+
+[node name="Label2" type="Label" parent="PropertiesContainer/Panel4" unique_id=442071601]
+layout_mode = 1
+anchors_preset = 6
+anchor_left = 1.0
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_left = -49.0
+offset_top = -6.0
+offset_right = -5.0
+offset_bottom = 6.0
+grow_horizontal = 0
+grow_vertical = 2
+theme_override_colors/font_color = Color(0.24313726, 0.14117648, 0.105882354, 1)
+theme_override_fonts/font = ExtResource("1_luio4")
+theme_override_font_sizes/font_size = 8
+text = "500 → 525"
+
+[node name="UpgradeButton" type="Button" parent="." unique_id=1097883916]
+layout_mode = 0
+offset_left = 213.0
+offset_top = 239.0
+offset_right = 288.0
+offset_bottom = 264.0
+theme_override_colors/font_color = Color(0.8901961, 0.67058825, 0.29803923, 1)
+theme_override_colors/font_outline_color = Color(0.25490198, 0.14509805, 0.09803922, 1)
+theme_override_constants/outline_size = 4
+theme_override_fonts/font = ExtResource("1_luio4")
+theme_override_font_sizes/font_size = 12
+theme_override_styles/normal = SubResource("StyleBoxFlat_h2nsf")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_urfw8")
+text = "Upgrade"
+
+[node name="BottomLabel" type="Label" parent="." unique_id=155823565]
+layout_mode = 0
+offset_left = 168.0
+offset_top = 255.0
+offset_right = 203.0
+offset_bottom = 264.0
+theme_override_colors/font_color = Color(0.25490198, 0.14509805, 0.09803922, 1)
+theme_override_fonts/font = ExtResource("1_luio4")
+theme_override_font_sizes/font_size = 7
+text = "Level Up x 1"
+
+[node name="ProgressBar" type="ProgressBar" parent="." unique_id=238553488]
+modulate = Color(0, 0.9175426, 0, 1)
+layout_mode = 0
+offset_left = 222.0
+offset_top = 105.0
+offset_right = 286.0
+offset_bottom = 128.0
+value = 30.0
+show_percentage = false
+
+[node name="GemsContainer" type="HBoxContainer" parent="ProgressBar" unique_id=1082093655]
+custom_minimum_size = Vector2(25, 15)
+custom_maximum_size = Vector2(25, 15)
+layout_mode = 1
+anchors_preset = 6
+anchor_left = 1.0
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_left = -28.0
+offset_top = -8.0
+offset_right = -3.0
+offset_bottom = 7.0
+grow_horizontal = 0
+grow_vertical = 2
+theme_override_constants/separation = 0
+
+[node name="Label" type="Label" parent="ProgressBar/GemsContainer" unique_id=1757800513]
+layout_mode = 2
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("1_luio4")
+theme_override_font_sizes/font_size = 9
+text = "+5"
+
+[node name="TextureRect" type="TextureRect" parent="ProgressBar/GemsContainer" unique_id=1317442580]
+custom_minimum_size = Vector2(30, 30)
+custom_maximum_size = Vector2(30, 30)
+layout_mode = 2
+texture = ExtResource("3_jc1xr")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="BoostLabel" type="Label" parent="." unique_id=1955487962]
+layout_mode = 0
+offset_left = 223.0
+offset_top = 132.0
+offset_right = 285.0
+offset_bottom = 141.0
+theme_override_colors/font_color = Color(0.1254902, 0.02745098, 0, 1)
+theme_override_fonts/font = ExtResource("1_luio4")
+theme_override_font_sizes/font_size = 7
+text = "Next Boost at level 6"
+
+[node name="CoinContainer" type="HBoxContainer" parent="." unique_id=527463176]
+custom_minimum_size = Vector2(25, 15)
+custom_maximum_size = Vector2(25, 15)
+layout_mode = 1
+anchors_preset = 6
+anchor_left = 1.0
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_left = 123.0
+offset_top = 219.55206
+offset_right = 148.0
+offset_bottom = 234.55206
+grow_horizontal = 0
+grow_vertical = 2
+theme_override_constants/separation = 0
+
+[node name="TextureRect" type="TextureRect" parent="CoinContainer" unique_id=761499191]
+custom_minimum_size = Vector2(20, 20)
+custom_maximum_size = Vector2(20, 20)
+layout_mode = 2
+texture = ExtResource("4_06t33")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="Label" type="Label" parent="CoinContainer" unique_id=1920634389]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.1254902, 0.02745098, 0, 1)
+theme_override_fonts/font = ExtResource("1_luio4")
+theme_override_font_sizes/font_size = 9
+text = "x 100"

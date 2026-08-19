@@ -13,5 +13,5 @@ script = ExtResource("1_6by0v")
 level_id = 3
 level_name = "Level 3"
 waves = Array[ExtResource("2_4f6kq")]([ExtResource("3_6by0v"), ExtResource("4_4f6kq"), ExtResource("5_bj70n"), ExtResource("6_8x8fd"), ExtResource("7_gjig8")])
-starting_cat_level = 2
+starting_cat_level = 3
 buy_cat_level = 4
